@@ -10,7 +10,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   const privateRoutes = Object.keys(ROUTES.PRIVATE_ROUTES).map(
-    (r) => ROUTES.PRIVATE_ROUTES[r]
+    (r) => ROUTES.PRIVATE_ROUTES[r],
   );
 
   return (
