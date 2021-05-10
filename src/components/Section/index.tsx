@@ -13,7 +13,7 @@ interface ISection {
   imageClassname?: string;
   imageContainerClassname?: string;
   reverse?: boolean;
-  imgSize?: "1" | "3/4" | "2";
+  imgSize?: "flex-1" | "flex-1.5" | "flex-2";
   alignText?: boolean;
 }
 
@@ -30,11 +30,9 @@ const Section: FC<ISection> = (props) => {
     imageClassname,
     imageContainerClassname = "",
     reverse,
-    imgSize = "3/4",
+    imgSize = "flex-1.5",
     alignText = true,
   } = props;
-
-  const mdImgSize = `md:flex-${imgSize}`;
 
   return (
     <section
@@ -45,7 +43,7 @@ const Section: FC<ISection> = (props) => {
       {img && (
         <Fade left={!reverse} right={reverse}>
           <div
-            className={`w-5/6 h-80 relative mb-10 ${imageContainerClassname} md:h-75vh md:w-0 ${mdImgSize}`}
+            className={`w-5/6 h-80 relative mb-10 ${imageContainerClassname} md:h-75vh md:w-0 ${imgSize}`}
           >
             <img
               className={`m-auto h-full object-contain ${imageClassname}`}

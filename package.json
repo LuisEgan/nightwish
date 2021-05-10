@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 4000",
-    "build": "next build && next export -o build/",
+    "build": "npm run clean && next build && next export -o build/",
+    "clean": "rm -rf .next && rm -rf ./build",
     "start": "next start",
     "serve-local": "npm run build && cd build && live-server --port=8080 --entry-file=./index.html",
     "prettier": "prettier --write ./src/**/*.{ts,tsx,scss}",

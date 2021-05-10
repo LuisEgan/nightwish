@@ -93,7 +93,7 @@ const Home = () => {
         img="/png/iphone2x.png"
         imageContainerClassname="mx-7"
         imageClassname="object-contain"
-        imgSize="1"
+        imgSize="flex-1"
       >
         <ReactSVG
           src="/svg/circleText.svg"
