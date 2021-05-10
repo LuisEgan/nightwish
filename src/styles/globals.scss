@@ -2,12 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --brown: #c5b295;
+  --brown-light: #dbc6a6;
+}
+
+@font-face {
+  font-family: "ZCOOL";
+  font-style: normal;
+  src: url("/fonts/ZCOOLXiaoWei-Regular.ttf") format("truetype");
+}
+
 html,
 body {
-  padding: 0;
+  font-family: ZCOOL, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  padding: 0;
 }
 
 a {
@@ -19,38 +30,64 @@ a {
   box-sizing: border-box;
 }
 
-button {
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
   border-radius: 10px;
-  outline: none;
+  box-shadow: inset 0 0 5px rgb(119, 118, 118);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--brown-light);
+  border-radius: 10px;
+}
+
+button {
   border: 1px solid #f2f2f2;
-  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%);
+  border-radius: 50px;
+  box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%);
+  outline: none;
 
   &:active {
-    box-shadow: inset 0px 5px 4px -1px rgb(0 0 0 / 20%);
+    box-shadow: inset 0 5px 4px -1px rgb(0 0 0 / 20%);
   }
+
   &:focus {
     outline: none;
   }
+
+  @apply py-3 px-10 flex justify-center;
 }
 
 .input {
-  @apply flex flex-col;
+  @apply flex flex-col rounded-lg;
 
   > * {
     @apply mb-1;
   }
 
-  input {
-    padding: 1rem 0.2rem;
-    border-radius: 10px;
-
+  input,
+  textarea {
     &:focus {
       outline: none;
-      border-color: gold;
     }
   }
 }
 
+.error {
+  color: rgb(255, 0, 0);
+}
+
 .page-container {
-  @apply p-10 min-h-screen;
+  min-height: 80vh;
+  @apply pt-20 bg-black;
+}
+
+.vjs-big-play-button {
+  display: none !important;
 }

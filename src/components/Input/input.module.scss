@@ -1,0 +1,23 @@
+%base {
+  @apply w-full py-3 px-4;
+}
+
+.black {
+  @extend %base;
+  @apply bg-black text-brown-main placeholder-brown-main border-brown-main border-b-2 rounded-none;
+}
+
+.outline {
+  @extend %base;
+  @apply border-brown-main bg-black placeholder-brown-main;
+}
+
+.primary {
+  @extend %base;
+  @apply border-black bg-brown-main placeholder-black rounded-2xl border-2;
+}
+
+.error {
+  @extend %base;
+  @apply border-red-500;
+}

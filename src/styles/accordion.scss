@@ -1,0 +1,20 @@
+.accordion__button {
+  @apply text-2xl bg-black text-brown-main cursor-pointer p-5 w-full text-left
+    border-brown-main border-b-2;
+}
+
+.accordion__panel {
+  animation: fadein 0.35s ease-in;
+
+  @apply p-5 text-brown-main bg-black;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

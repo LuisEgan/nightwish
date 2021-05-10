@@ -3,9 +3,11 @@ import React, {
   useState,
   isValidElement,
   cloneElement,
+  useContext,
 } from "react";
 import Router from "next/router";
-import { LOCAL_STORAGE } from "../../lib/constants";
+import { LOCAL_STORAGE, ROUTES } from "../../lib/constants";
+import { UserContext } from "../../contexts/user/user.context";
 
 interface IChildrenProps {
   token: string;
@@ -14,17 +16,19 @@ interface IChildrenProps {
 const PrivateRoute = ({ children }) => {
   const [token, setToken] = useState("");
 
+  const { user, isLoggedIn } = useContext(UserContext);
+
   const childrenProps: IChildrenProps = { token };
 
   // * Redirect to home if not logged in
   useEffect(() => {
     const cachedToken = localStorage.getItem(LOCAL_STORAGE.USER_TOKEN);
-    if (!cachedToken && Router.pathname !== "/") {
-      Router.push("/home");
+    if ((!cachedToken || !isLoggedIn) && Router.pathname !== "/") {
+      Router.push(ROUTES.PUBLIC_ROUTES.login);
     } else {
       setToken(cachedToken);
     }
-  }, []);
+  }, [user, isLoggedIn]);
 
   if (!token) return null;
 

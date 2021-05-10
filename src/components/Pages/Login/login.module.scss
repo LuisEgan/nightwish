@@ -1,0 +1,14 @@
+.content {
+  @media screen and (min-width: 768px) {
+    min-width: 500px;
+  }
+  @apply p-10 bg-brown-main text-black rounded-2xl;
+}
+
+.title {
+  @apply text-4xl text-brown-main text-center pb-10;
+}
+
+.subtitle {
+  @apply text-2xl pb-5;
+}

@@ -17,6 +17,20 @@ const validateEmail = async (email: string) => {
   }
 };
 
+const redeemTicket = async (email: string) => {
+  try {
+    const res = await axios.get(
+      `https://jsonplaceholder.typicode.com/todos/${email}`,
+    );
+
+    return res;
+  } catch (error) {
+    console.error("validateEmail - error: ", error);
+    return error;
+  }
+};
+
 export default {
   validateEmail,
+  redeemTicket,
 };
