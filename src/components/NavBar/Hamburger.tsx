@@ -14,7 +14,7 @@ const Hamburguer = () => {
       setTimeout(() => {
         setIsOpen(false);
         setInitClose(false);
-      }, 490);
+      }, 495);
     }
   }, [initClose]);
 

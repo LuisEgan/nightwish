@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import Image from "next/image";
 import Fade from "react-reveal/Fade";
 import Button, { IButton } from "../Button";
 
@@ -11,7 +10,7 @@ interface ISection {
   onClick?: () => void;
   buttonProps?: Omit<IButton, "onClick">;
   buttonText?: string;
-  imageObjectFit?: "cover" | "fill" | "contain";
+  imageClassname?: string;
   imageContainerClassname?: string;
   reverse?: boolean;
   imgSize?: "1" | "3/4" | "2";
@@ -28,7 +27,7 @@ const Section: FC<ISection> = (props) => {
     onClick,
     buttonProps,
     buttonText,
-    imageObjectFit = "cover",
+    imageClassname,
     imageContainerClassname = "",
     reverse,
     imgSize = "3/4",
@@ -48,10 +47,9 @@ const Section: FC<ISection> = (props) => {
           <div
             className={`w-5/6 h-80 relative mb-10 ${imageContainerClassname} md:h-75vh md:w-0 ${mdImgSize}`}
           >
-            <Image
+            <img
+              className={`m-auto h-full object-contain ${imageClassname}`}
               src={img}
-              layout="fill"
-              objectFit={imageObjectFit}
               alt="section"
             />
           </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { isMobile } from "react-device-detect";
+import { WINDOW_BREAKPOINTS } from "./constants";
 
 export interface IWindowSize {
   width: number | undefined;
@@ -20,7 +21,7 @@ export const useWindowSize = (): IWindowSize => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
-        isMobile,
+        isMobile: isMobile || window.innerWidth < WINDOW_BREAKPOINTS.md,
         isLandscape:
           +window.screen.orientation.angle === 90 ||
           +window.screen.orientation.angle === -90,

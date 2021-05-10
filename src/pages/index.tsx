@@ -92,7 +92,7 @@ const Home = () => {
         buttonText="Redeem Ticket"
         img="/png/iphone2x.png"
         imageContainerClassname="mx-7"
-        imageObjectFit="contain"
+        imageClassname="object-contain"
         imgSize="1"
       >
         <ReactSVG

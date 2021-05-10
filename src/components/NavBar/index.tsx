@@ -1,7 +1,4 @@
 import React from "react";
-import Image from "next/image";
-
-import Link from "next/link";
 import { useRouter } from "next/router";
 import NavbarMenu from "./NavbarMenu";
 import { useWindowSize } from "../../lib/hooks";
@@ -11,7 +8,7 @@ import { ROUTES } from "../../lib/constants";
 export const NAVBAR_HEIGHT_CLASS = "h-20";
 
 const NavBar = () => {
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
 
   const { isMobile, isLandscape } = useWindowSize();
 
@@ -23,22 +20,24 @@ const NavBar = () => {
     return null;
   }
 
+  const onLogoClick = () => {
+    push(ROUTES.PUBLIC_ROUTES.index);
+  };
+
   return (
     <div
       className={`${NAVBAR_HEIGHT_CLASS} fixed w-full flex justify-between z-10 bg-black`}
     >
-      <div className="h-full w-2/5 px-5 md:w-1/4 md:py-4">
-        <div className="w-full h-full relative">
-          <Link href={ROUTES.PUBLIC_ROUTES.index}>
-            <a>
-              <Image
-                src="/png/nightwishLogo.png"
-                layout="fill"
-                objectFit="contain"
-                alt="logo"
-              />
-            </a>
-          </Link>
+      <div className="h-full w-3/5 px-5 md:w-1/4 md:py-4">
+        <div
+          className="w-full h-full flex justify-center"
+          onClick={onLogoClick}
+        >
+          <img
+            className="m-auto object-contain cursor-pointer h-full sm:p-2 md:p-0"
+            src="/png/nightwishLogo.png"
+            alt="logo"
+          />
         </div>
       </div>
 
