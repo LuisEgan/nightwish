@@ -26,3 +26,5 @@ export const WINDOW_BREAKPOINTS = {
   xl: 1280,
   "2xl": 1536,
 };
+
+export const BUY_TICKET_LINK = "https://www.nightwish.com/";

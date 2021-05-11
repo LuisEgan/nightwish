@@ -22,8 +22,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   const privateRoutes = Object.keys(ROUTES.PRIVATE_ROUTES).map((r) => {
-    if (r === ROUTES.PRIVATE_ROUTES.event) {
-      return `${ROUTES.PRIVATE_ROUTES[r]}/[id]`;
+    if (`/${r}/` === ROUTES.PRIVATE_ROUTES.event) {
+      return `${ROUTES.PRIVATE_ROUTES[r]}[id]`;
     }
 
     return ROUTES.PRIVATE_ROUTES[r];

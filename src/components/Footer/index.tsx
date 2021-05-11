@@ -52,7 +52,7 @@ const Footer = () => {
       items.push({ route: ROUTES.PUBLIC_ROUTES.login, title: "Sign in" });
     }
 
-    return items;
+    return [];
   };
 
   const items = setItems();
@@ -85,11 +85,11 @@ const Footer = () => {
           })}
         </div>
 
-        <div className="py-5 flex justify-end">
+        {/* <div className="py-5 flex justify-end">
           <Link href={ROUTES.PUBLIC_ROUTES.terms}>
             <a>Privacy Policy and Terms</a>
           </Link>
-        </div>
+        </div> */}
       </div>
 
       <div className="md:flex md:flex-row-reverse">

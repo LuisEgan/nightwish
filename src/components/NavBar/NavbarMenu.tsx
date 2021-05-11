@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { ROUTES } from "../../lib/constants";
-import Button from "../Button";
+// import Button from "../Button";
 
 import styles from "./navbar.module.scss";
 import { UserContext } from "../../contexts/user/user.context";
@@ -20,20 +20,20 @@ const staticItems = [
 const NavbarMenu = (props: INavbarMenu) => {
   const { mobile, onItemClick } = props;
 
-  const { isLoggedIn, logout } = useContext(UserContext);
+  const { isLoggedIn } = useContext(UserContext);
 
-  const { push } = useRouter();
+  // const { push } = useRouter();
 
-  const redeemTicket = () => {
-    if (onItemClick) onItemClick();
+  // const redeemTicket = () => {
+  //   if (onItemClick) onItemClick();
 
-    push(ROUTES.PRIVATE_ROUTES.events);
-  };
+  //   push(ROUTES.PRIVATE_ROUTES.events);
+  // };
 
-  const onLogout = () => {
-    logout();
-    push(ROUTES.PUBLIC_ROUTES.login);
-  };
+  // const onLogout = () => {
+  //   logout();
+  //   push(ROUTES.PUBLIC_ROUTES.login);
+  // };
 
   const setItems = () => {
     const items = [...staticItems];
@@ -47,7 +47,7 @@ const NavbarMenu = (props: INavbarMenu) => {
       items.push({ route: ROUTES.PUBLIC_ROUTES.login, title: "Sign in" });
     }
 
-    return items;
+    return [];
   };
 
   return (
@@ -75,11 +75,11 @@ const NavbarMenu = (props: INavbarMenu) => {
         </div>
       ))}
 
-      <div>
+      {/* <div>
         <Button outline onClick={isLoggedIn ? onLogout : redeemTicket}>
           {isLoggedIn ? "Logout" : "Redeem"}
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };

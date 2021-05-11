@@ -72,20 +72,22 @@ const VideoPlayer = (props: IVideoPlayer) => {
   }, [onPlayerLoaded, player, props]);
 
   return (
-    <div data-vjs-player>
+    <div
+      data-vjs-player
+      className={`video-js ${
+        fullscreen ? "fixed top-0 h-screen w-screen" : ""
+      } ${className}`}
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
+    >
       <video
         ref={(node) => {
           videoNode = node;
         }}
-        className={`video-js ${
-          fullscreen ? "fixed top-0 h-screen w-screen" : ""
-        } ${className}`}
         preload="none"
         poster={poster || "/png/nightwishLogo.png"}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
       />
     </div>
   );

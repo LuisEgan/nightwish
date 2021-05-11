@@ -3,7 +3,8 @@ import { ReactSVG } from "react-svg";
 import { VideoJsPlayerOptions } from "video.js";
 
 import Section from "../components/Section";
-import VideoPlayer from "../components/VideoPlayer";
+import VideoPlayer, { IOnPlayerLoader } from "../components/VideoPlayer";
+import { BUY_TICKET_LINK } from "../lib/constants";
 
 import { useWindowSize } from "../lib/hooks";
 
@@ -12,6 +13,8 @@ const videoJsOptions: VideoJsPlayerOptions = {
   loop: true,
   controls: false,
   controlBar: false,
+  muted: true,
+  fluid: true,
   sources: [
     {
       src: "/webm/Eclipse.webm",
@@ -21,48 +24,78 @@ const videoJsOptions: VideoJsPlayerOptions = {
 };
 
 const Home = () => {
-  const { isMobile, width, height } = useWindowSize();
+  // const { isMobile, width, height } = useWindowSize();
+  const { width, height } = useWindowSize();
 
   if (!width) return null;
 
-  const svgCicleTextSize = isMobile ? width * 0.4 : width * 0.12;
+  // const svgCicleTextSize = isMobile ? width * 0.4 : width * 0.12;
+
+  const onBuyTicket = () => {
+    window.open(BUY_TICKET_LINK, "_blank");
+  };
+
+  const onPlayerLoaded = ({ player }: IOnPlayerLoader) => {
+    setTimeout(() => {
+      player.play();
+    }, 1000);
+  };
 
   return (
     <div className="page-container bg-black">
       <section className="flex flex-col pb-20">
         <div className="h-96 w-full relative md:h-75vh">
-          <VideoPlayer {...videoJsOptions} poster="/png/Eclipse.png" />
+          <VideoPlayer
+            {...{ onPlayerLoaded, ...videoJsOptions }}
+            poster="/png/Eclipse.png"
+          />
         </div>
 
         <div className=" flex flex-col px-7 text-brown-main text-center -mt-28 z-0 md:-mt-52 md:px-40">
           <span className="text-5xl leading-snug md:text-7xl">
-            ENJOY AN EVENING WITH NIGHTWISH IN A VIRTUAL WORLD
+            WE HEARTLY WELCOME YOU TO SPEND AN EVENING WITH NIGHTWISH AT THE
+            ISLANDERS ARMS
           </span>
 
           <span className="text-lg pt-3">
-            Fri, May 28th, 2021, Europe Sat, May 29th, 2021, North and South
-            America
+            <b>Fri, May 28, 2021</b> <br />
+            Europe: 8pm CEST / 7pm BST, duration approx. 90min <br />
+            <br /> <b>Sat, May 29, 2021</b>
+            <br /> North and South America: 8pm ET (UTC-4) / 5pm PT (UTC -7) /
+            9pm BRT (UTC-3) / 7pm CST (UTC -5), Europe: <br />
+            <br />
+            <b>Sun, May 30, 2021</b>
+            <br />
+            2am CEST / 1am BST, duration approx. 90min
           </span>
         </div>
       </section>
 
       <Section
-        title="Integer sed varius ante nulla quam sem, semper congue pellentesque at"
+        title="The band offers fans a unique experience by inviting them to a
+        shared adventure at The Islanders Arms, a tavern built in virtual reality."
         description={
           <>
-            Donec libero arcu, elementum vitae dapibus ut, gravida id velit. Ut
-            mollis est a elit feugiat consectetur. Aenean vulputate justo et
-            risus scelerisque cursus.
+            A full-length live experience that reaches magical dimensions will
+            be set in virtual reality – The Islander Inn tavern. During the show
+            the band and the audience will dive together into diverse imaginary
+            3D worlds. On both evenings, the audience can expect an
+            unforgettable 90-minute performance, and will get to hear songs from
+            the latest album ”Human. :II: Nature.” live for the first time. The
+            setlist has variation for each night.
           </>
         }
-        // onClick={() => console.log("Redeem ticket")}
-        buttonText="Redeem Ticket"
+        onClick={onBuyTicket}
+        buttonText="Buy Ticket"
         buttonProps={{
           outline: true,
+          style: {
+            margin: "auto",
+          },
         }}
       />
 
-      <Section
+      {/* <Section
         title="How to Buy Your Ticket and Access the Live Concert"
         description={
           <>
@@ -125,13 +158,13 @@ const Home = () => {
         // onClick={() => console.log("Redeem ticket")}
         buttonText="Redeem Ticket"
         img="/png/church2x.png"
-      />
+      /> */}
 
       <ReactSVG
         src="/svg/logo.svg"
         height={height * 0.2}
         width={width * 0.8}
-        className="flex justify-center"
+        className="flex justify-center py-10"
         beforeInjection={(svg) => {
           svg.setAttribute(
             "style",

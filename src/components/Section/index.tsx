@@ -79,7 +79,7 @@ const Section: FC<ISection> = (props) => {
           </div>
 
           {onClick && (
-            <div className="px-7">
+            <div className="px-7 flex justify-center py-10">
               <Button {...buttonProps} onClick={onClick}>
                 {buttonText}
               </Button>

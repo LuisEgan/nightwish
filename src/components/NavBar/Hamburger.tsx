@@ -18,6 +18,8 @@ const Hamburguer = () => {
     }
   }, [initClose]);
 
+  return null;
+
   return (
     <>
       <div
