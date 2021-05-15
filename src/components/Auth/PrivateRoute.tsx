@@ -14,7 +14,8 @@ interface IChildrenProps {
 }
 //
 const PrivateRoute = ({ children }) => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState<string>("");
+  const [initialized, setInitialized] = useState<boolean>(false);
 
   const { user, isLoggedIn } = useContext(UserContext);
 
@@ -22,15 +23,21 @@ const PrivateRoute = ({ children }) => {
 
   // * Redirect to home if not logged in
   useEffect(() => {
+    // * wait for the context values to set on the 2nd render
+    if (!initialized) {
+      setInitialized(true);
+      return;
+    }
+
     const cachedToken = localStorage.getItem(LOCAL_STORAGE.USER_TOKEN);
-    if ((!cachedToken || !isLoggedIn) && Router.pathname !== "/") {
+    if (!isLoggedIn && Router.pathname !== "/") {
       Router.push(ROUTES.PUBLIC_ROUTES.login);
     } else {
       setToken(cachedToken);
     }
   }, [user, isLoggedIn]);
 
-  if (!token) return null;
+  if (!token || !initialized) return null;
 
   return React.Children.map(children, (child) => {
     if (isValidElement(child)) {

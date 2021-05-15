@@ -86,19 +86,22 @@ const Chat = () => {
     }
   };
 
-  const xSize = isMobile || isLandscape ? "5vw" : "1vw";
+  const xSize = isMobile || isLandscape ? "2vw" : "1vw";
 
   return (
     <div
-      className={isLandscape ? styles.containerLandscape : styles.container}
+      className="bg-transparent flex flex-col p-7 pb-0 px-0 h-1/2 w-full md:absolute md:right-0 md:top-0 md:p-3 md:pb-0 md:w-1/3 md:h-90vh"
       onKeyDown={handleKeyDown}
     >
       <div className="relative flex justify-center items-center text-3xl pb-5 text-brown-light">
-        {isLandscape ? "" : "Chat"}
+        {isChatEnabled ? "Chat" : ""}
         {isChatEnabled && (
           <ReactSVG
             src="/svg/x.svg"
             className="cursor-pointer absolute top-0 right-4"
+            style={{
+              transform: "translateY(50%)",
+            }}
             onClick={() => setIsChatEnabled(false)}
             beforeInjection={(svg) => {
               svg.setAttribute(
@@ -110,19 +113,14 @@ const Chat = () => {
         )}
       </div>
 
-      <div
-        ref={messagesBottom}
-        className={`h-40 w-full overflow-auto md:flex-1 ${
-          isLandscape ? "bg-red" : "bg-black"
-        }`}
-      >
+      <div ref={messagesBottom} className="flex-1 w-full overflow-auto">
         {isChatEnabled ? (
           messages.map((m) => (
             <Message key={`${Math.random()}_${m.text}`} {...m} />
           ))
         ) : (
           <div
-            className={styles.enableChatButton}
+            className="absolute bottom-3 right-5 flex justify-center items-center h-14 w-14 ml-3 rounded-full bg-brown-main cursor-pointer"
             onClick={() => setIsChatEnabled(true)}
           >
             <ReactSVG
@@ -146,7 +144,7 @@ const Chat = () => {
             onChange={(e) => setMssg(e.target.value)}
             variant="black"
             containerClassName="flex-1"
-            className={isLandscape ? styles.inputLandscape : ""}
+            className={styles.input}
             maxLength={100}
             error={error}
           />

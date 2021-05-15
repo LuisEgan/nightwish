@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { ReactSVG } from "react-svg";
 import { UserContext } from "../../contexts/user/user.context";
@@ -40,6 +41,8 @@ const socialNetworkLinks = [
 const Footer = () => {
   const { isLoggedIn } = useContext(UserContext);
 
+  const { pathname } = useRouter();
+
   const setItems = () => {
     const items = [...links];
 
@@ -54,6 +57,10 @@ const Footer = () => {
 
     return [];
   };
+
+  if (pathname === `${ROUTES.PRIVATE_ROUTES.event}[id]`) {
+    return null;
+  }
 
   const items = setItems();
 

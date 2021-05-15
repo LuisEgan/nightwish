@@ -91,3 +91,13 @@ button {
 .vjs-big-play-button {
   display: none !important;
 }
+
+.vjs-control-bar {
+  transition: 0.5s;
+}
+
+.vjs-control-bar-shot {
+  .vjs-control-bar {
+    width: 68vw !important;
+  }
+}

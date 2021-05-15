@@ -1,8 +1,5 @@
 import React from "react";
-import { useWindowSize } from "../../lib/hooks";
 import { IUser } from "../../Types/user.types";
-
-import styles from "./chat.module.scss";
 
 export interface IMessage {
   user: IUser;
@@ -13,18 +10,17 @@ export interface IMessage {
 const Message = (props: IMessage) => {
   const { user, text, color } = props;
 
-  const { isLandscape } = useWindowSize();
-
   return (
     <div
-      className={
-        isLandscape ? styles.messageContainerLandscape : styles.messageContainer
-      }
+      className="relative flex w-full h-auto bg-transparent text-white mb-2 p-1 break-all"
     >
-      <span className="font-bold" style={{ color }}>
-        {user.name}
-      </span>
-      : &nbsp;<span>{text}</span>
+      <div className="absolute h-full w-full top-0 left-0 bg-gray-600 opacity-50 rounded-r-lg" />
+      <div className="z-10">
+        <span className="font-bold" style={{ color }}>
+          {user.name}
+        </span>
+        : &nbsp;<span>{text}</span>
+      </div>
     </div>
   );
 };

@@ -24,12 +24,11 @@ const videoJsOptions: VideoJsPlayerOptions = {
 };
 
 const Home = () => {
-  // const { isMobile, width, height } = useWindowSize();
-  const { width, height } = useWindowSize();
+  const { isMobile, width, height } = useWindowSize();
 
   if (!width) return null;
 
-  // const svgCicleTextSize = isMobile ? width * 0.4 : width * 0.12;
+  const svgCicleTextSize = isMobile ? width * 0.4 : width * 0.12;
 
   const onBuyTicket = () => {
     window.open(BUY_TICKET_LINK, "_blank");
@@ -51,7 +50,7 @@ const Home = () => {
           />
         </div>
 
-        <div className=" flex flex-col px-7 text-brown-main text-center -mt-28 z-0 md:-mt-52 md:px-40">
+        <div className=" flex flex-col px-7 text-brown-main text-center -mt-56 z-0 md:-mt-52 md:px-40">
           <span className="text-5xl leading-snug md:text-7xl">
             WE HEARTLY WELCOME YOU TO SPEND AN EVENING WITH NIGHTWISH AT THE
             ISLANDERS ARMS
@@ -95,7 +94,7 @@ const Home = () => {
         }}
       />
 
-      {/* <Section
+      <Section
         title="How to Buy Your Ticket and Access the Live Concert"
         description={
           <>
@@ -158,7 +157,7 @@ const Home = () => {
         // onClick={() => console.log("Redeem ticket")}
         buttonText="Redeem Ticket"
         img="/png/church2x.png"
-      /> */}
+      />
 
       <ReactSVG
         src="/svg/logo.svg"

@@ -1,12 +1,13 @@
-import React, { CSSProperties, useEffect, useState } from "react";
-// import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { VideoJsPlayer, VideoJsPlayerOptions } from "video.js";
+import { useRouter } from "next/router";
 import VideoPlayer, { IOnPlayerLoader } from "../../components/VideoPlayer";
 import Chat from "../../components/Chat/indext";
-import { useWindowSize } from "../../lib/hooks";
+import { ROUTES } from "../../lib/constants";
 
 const videoJsOptions: VideoJsPlayerOptions = {
   muted: true,
+  // fluid: true,
   sources: [
     {
       src:
@@ -17,9 +18,7 @@ const videoJsOptions: VideoJsPlayerOptions = {
 };
 
 const Event = () => {
-  // const { query } = useRouter();
-
-  const { isLandscape } = useWindowSize();
+  const { push } = useRouter();
 
   const [, setPlayer] = useState<VideoJsPlayer>();
 
@@ -43,25 +42,28 @@ const Event = () => {
     }, 1000);
   };
 
-  const containerStyle: CSSProperties = isLandscape
-    ? { paddingTop: 0, height: "75vh" }
-    : {};
+  const onLogoClick = () => {
+    push(ROUTES.PRIVATE_ROUTES.events);
+  };
 
   return (
-    <div
-      className="page-container bg-black h-auto md:h-90vh"
-      style={containerStyle}
-    >
-      <div className="flex flex-col h-screen md:flex-row md:h-full">
-        <div className="h-2/5 md:flex-2 md:h-full">
-          <VideoPlayer
-            {...{ onPlayerLoaded, ...videoJsOptions }}
-            className="h-full w-full"
-          />
-        </div>
-
-        <Chat />
+    <div className="relative h-screen w-screen p-5 bg-black">
+      <div
+        className="absolute top-10 left-10 z-20 h-11 md:h-16 opacity-40 hover:opacity-100"
+        onClick={onLogoClick}
+      >
+        <img
+          className="object-contain cursor-pointer h-full sm:p-2 md:p-0"
+          src="/png/nightwishLogo.png"
+          alt="logo"
+        />
       </div>
+
+      <div className="h-1/2 md:h-full">
+        <VideoPlayer {...{ onPlayerLoaded, ...videoJsOptions }} />
+      </div>
+
+      <Chat />
     </div>
   );
 };

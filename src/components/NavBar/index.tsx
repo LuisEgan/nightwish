@@ -10,13 +10,9 @@ export const NAVBAR_HEIGHT_CLASS = "h-20";
 const NavBar = () => {
   const { pathname, push } = useRouter();
 
-  const { isMobile, isLandscape } = useWindowSize();
+  const { isMobile } = useWindowSize();
 
-  if (
-    isMobile &&
-    isLandscape &&
-    pathname === `${ROUTES.PRIVATE_ROUTES.event}[id]`
-  ) {
+  if (pathname === `${ROUTES.PRIVATE_ROUTES.event}[id]`) {
     return null;
   }
 
