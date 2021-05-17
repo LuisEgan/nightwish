@@ -41,7 +41,7 @@ const LoginPassword = (props: ILoginPage) => {
           accesstoken: "token",
           user: {
             email: "eganluis@gmail.com",
-            name: "Luis",
+            name: `Luis_${Math.random()}`,
           },
         });
 

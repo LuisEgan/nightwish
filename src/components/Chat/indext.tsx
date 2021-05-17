@@ -1,16 +1,36 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-// import { useRouter } from "next/router";
+import React, {
+  KeyboardEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { ReactSVG } from "react-svg";
+// eslint-disable-next-line
+import { Observable, ZenObservable } from "zen-observable-ts";
+
 import Message, { IMessage } from "./Message";
 import Input from "../Input";
 import { UserContext } from "../../contexts/user/user.context";
 import { useWindowSize } from "../../lib/hooks";
+import { getRandomColor } from "../../lib/strings";
+import { onCreateMessage } from "../../graphql/subscriptions";
+import { createMessage } from "../../graphql/mutations";
 
 import styles from "./chat.module.scss";
-import { getRandomColor } from "../../lib/strings";
+import { messagesByChannelID } from "../../graphql/queries";
 
 interface IColorsByUsers {
   [username: string]: string;
+}
+
+interface ImessagesByChannelID {
+  messagesByChannelID: { items: IMessage[] };
+}
+
+interface IOnCreateMessage {
+  value: { data: { onCreateMessage: IMessage } };
 }
 
 const Chat = () => {
@@ -19,12 +39,12 @@ const Chat = () => {
 
   const { user } = useContext(UserContext);
 
-  // const { query } = useRouter();
   const { isMobile, isLandscape } = useWindowSize();
+
+  const [messages, setMessages] = useState<IMessage[]>([]);
 
   const [mssg, setMssg] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const [messages, setMessages] = useState<IMessage[]>([]);
   const [isChatEnabled, setIsChatEnabled] = useState<boolean>(true);
   const [colorsByUsers, setColorsByUsers] = useState<IColorsByUsers>({});
 
@@ -37,50 +57,120 @@ const Chat = () => {
     }
   };
 
-  // * Scroll to bottom when new message appears
+  // * Get initial messages
   useEffect(() => {
-    if (messages.length) {
-      scrollToBottom();
+    const getMessages = async () => {
+      try {
+        const res = (await API.graphql(
+          graphqlOperation(messagesByChannelID, {
+            channelID: "1",
+            sortDirection: "ASC",
+          }),
+        )) as GraphQLResult<ImessagesByChannelID>;
+
+        const initColorsByUsers: IColorsByUsers = {};
+        const items: IMessage[] = res.data?.messagesByChannelID?.items.map(
+          (item) => {
+            if (!initColorsByUsers[item.author]) {
+              initColorsByUsers[item.author] = getRandomColor();
+            }
+            const color = initColorsByUsers[item.author];
+            return { ...item, color };
+          },
+        );
+
+        if (items) {
+          setMessages(items);
+          setColorsByUsers(initColorsByUsers);
+        }
+      } catch (e) {
+        console.error("getMessages - error: ", e);
+      }
+    };
+
+    getMessages();
+  }, []);
+
+  // * Subscribe to Appsync to get new messages
+  useEffect(() => {
+    let subscription: ZenObservable.Subscription;
+
+    if (messages?.length) {
+      subscription = (
+        API.graphql(
+          graphqlOperation(onCreateMessage),
+        ) as Observable<IOnCreateMessage>
+      ).subscribe({
+        next: (event) => {
+          const {
+            value: {
+              data: {
+                onCreateMessage: { author },
+              },
+            },
+          } = event;
+
+          const color = colorsByUsers[author] || getRandomColor();
+          const newMessage = {
+            ...event.value.data.onCreateMessage,
+            color,
+          };
+          setMessages([...messages, newMessage]);
+          setColorsByUsers({ ...colorsByUsers, [author]: getRandomColor() });
+        },
+      });
     }
+
+    return () => {
+      subscription?.unsubscribe();
+    };
+    // eslint-disable-next-line
   }, [messages]);
 
-  // * Scroll to bottom when chat is enabled
+  // * Scroll to bottom when chat is enabled and new message appears
   useEffect(() => {
-    if (isChatEnabled) {
+    if (isChatEnabled && messages.length) {
       scrollToBottom();
     }
-  }, [isChatEnabled]);
+  }, [isChatEnabled, messages]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!mssg) return;
 
-    if (mssg.length > 100) {
-      setError("Message too large! Max 100 characters");
-      return;
+    try {
+      if (mssg.length > 100) {
+        throw new Error("Message too large! Max 100 characters");
+      }
+
+      // * Reset error
+      setError("");
+
+      // * Resetting value like this because controlled Input was lagging too much
+      (document.getElementById("messageInput") as HTMLInputElement).value = "";
+      setMssg("");
+
+      // * Set the user's chat color
+      if (!colorsByUsers[user.name]) {
+        setColorsByUsers({
+          ...colorsByUsers,
+          [user.name]: getRandomColor(),
+        });
+      }
+
+      // * Send message
+      const input = {
+        channelID: "1",
+        author: user.name,
+        body: mssg.trim(),
+      };
+      await API.graphql(graphqlOperation(createMessage, { input }));
+    } catch (e) {
+      console.error("sendMessage - error: ", e);
+      setError(e);
     }
-
-    // * Resetting value like this because controlled Input was lagging too much
-    (document.getElementById("messageInput") as HTMLInputElement).value = "";
-
-    const color = colorsByUsers[user.name] || getRandomColor();
-
-    setMssg("");
-    setError("");
-    setColorsByUsers({
-      ...colorsByUsers,
-      [user.name]: color,
-    });
-    setMessages([
-      ...messages,
-      {
-        text: mssg,
-        user,
-        color,
-      },
-    ]);
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter") {
       sendMessage();
     }
@@ -116,7 +206,7 @@ const Chat = () => {
       <div ref={messagesBottom} className="flex-1 w-full overflow-auto">
         {isChatEnabled ? (
           messages.map((m) => (
-            <Message key={`${Math.random()}_${m.text}`} {...m} />
+            <Message key={`${Math.random()}_${m.body}`} {...m} />
           ))
         ) : (
           <div

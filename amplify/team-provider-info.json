@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nightwish-dev-114418-authRole",
+      "UnauthRoleArn": "arn:aws:iam::368066996110:role/amplify-nightwish-dev-114418-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::368066996110:role/amplify-nightwish-dev-114418-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-nightwish-dev-114418-deployment",
+      "UnauthRoleName": "amplify-nightwish-dev-114418-unauthRole",
+      "StackName": "amplify-nightwish-dev-114418",
+      "StackId": "arn:aws:cloudformation:eu-central-1:368066996110:stack/amplify-nightwish-dev-114418/c1eb5dc0-b726-11eb-b835-0a05df596088",
+      "AmplifyAppId": "d2n6sd77mkwby9"
+    }
+  }
+}

@@ -35,7 +35,7 @@ const PrivateRoute = ({ children }) => {
     } else {
       setToken(cachedToken);
     }
-  }, [user, isLoggedIn]);
+  }, [user, isLoggedIn, initialized]);
 
   if (!token || !initialized) return null;
 
