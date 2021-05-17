@@ -20,8 +20,7 @@ const socialNetworkLinks = [
     icon: "/svg/youtube.svg",
   },
   {
-    link:
-      "https://open.spotify.com/artist/2NPduAUeLVsfIauhRwuft1?si=P_b0Qe5SQEavH4JsqCeIgA&nd=1",
+    link: "https://open.spotify.com/artist/2NPduAUeLVsfIauhRwuft1?si=P_b0Qe5SQEavH4JsqCeIgA&nd=1",
     icon: "/svg/spotify.svg",
   },
   {

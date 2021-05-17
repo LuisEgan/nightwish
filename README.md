@@ -4,6 +4,8 @@ This is the repo for the frontend of the Nightwish concert
 
 ## Getting Started
 
+# Chat 
+
 First, run the development server:
 
 ```bash
