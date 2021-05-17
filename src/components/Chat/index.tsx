@@ -115,6 +115,12 @@ const Chat = () => {
             ...event.value.data.onCreateMessage,
             color,
           };
+
+          // * only update new incoming messages from other users
+          // * this user's messages are being added when sending the message
+          // * so it shows it faster
+          if (newMessage.author === user.name) return;
+
           setMessages([...messages, newMessage]);
           setColorsByUsers({ ...colorsByUsers, [author]: getRandomColor() });
         },
@@ -150,19 +156,33 @@ const Chat = () => {
       setMssg("");
 
       // * Set the user's chat color
-      if (!colorsByUsers[user.name]) {
+      let color = colorsByUsers[user.name];
+      if (!color) {
+        color = getRandomColor();
         setColorsByUsers({
           ...colorsByUsers,
-          [user.name]: getRandomColor(),
+          [user.name]: color,
         });
       }
+
+      // * Add message to current chat on the front
+      const body = mssg.trim();
+      setMessages([
+        ...messages,
+        {
+          author: user.name,
+          body,
+          color,
+        },
+      ]);
 
       // * Send message
       const input = {
         channelID: "1",
         author: user.name,
-        body: mssg.trim(),
+        body,
       };
+
       await API.graphql(graphqlOperation(createMessage, { input }));
     } catch (e) {
       console.error("sendMessage - error: ", e);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { VideoJsPlayer, VideoJsPlayerOptions } from "video.js";
 import { useRouter } from "next/router";
 import VideoPlayer, { IOnPlayerLoader } from "../../components/VideoPlayer";
-import Chat from "../../components/Chat/indext";
+import Chat from "../../components/Chat";
 import { ROUTES } from "../../lib/constants";
 
 const videoJsOptions: VideoJsPlayerOptions = {

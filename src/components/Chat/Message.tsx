@@ -2,11 +2,11 @@ import React from "react";
 
 export interface IMessage {
   color: string;
-  id: string;
   author: string;
   body: string;
-  createdAt: string;
-  updatedAt: string;
+  id?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 const Message = (props: IMessage) => {
