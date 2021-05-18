@@ -1,27 +1,10 @@
 import React from "react";
 import { ReactSVG } from "react-svg";
-import { VideoJsPlayerOptions } from "video.js";
 
 import Section from "../components/Section";
-import VideoPlayer, { IOnPlayerLoader } from "../components/VideoPlayer";
 import { BUY_TICKET_LINK } from "../lib/constants";
 
 import { useWindowSize } from "../lib/hooks";
-
-const videoJsOptions: VideoJsPlayerOptions = {
-  autoplay: true,
-  loop: true,
-  controls: false,
-  controlBar: false,
-  muted: true,
-  fluid: true,
-  sources: [
-    {
-      src: "/webm/Eclipse.webm",
-      type: "video/webm",
-    },
-  ],
-};
 
 const Home = () => {
   const { isMobile, width, height } = useWindowSize();
@@ -34,23 +17,15 @@ const Home = () => {
     window.open(BUY_TICKET_LINK, "_blank");
   };
 
-  const onPlayerLoaded = ({ player }: IOnPlayerLoader) => {
-    setTimeout(() => {
-      player.play();
-    }, 1000);
-  };
-
   return (
     <div className="page-container bg-black">
       <section className="flex flex-col pb-20">
         <div className="h-96 w-full relative md:h-75vh">
-          <VideoPlayer
-            {...{ onPlayerLoaded, ...videoJsOptions }}
-            poster="/png/Eclipse.png"
-          />
+          <img src="/png/hero2x.png" alt="tabern" className="object-cover" />
+          <div className="absolute h-full w-full top-0 left-0 z-10 bg-gradient-to-t from-black to-transparent" />
         </div>
 
-        <div className=" flex flex-col px-7 text-brown-main text-center -mt-56 z-0 md:-mt-52 md:px-40">
+        <div className="z-20 flex flex-col px-7 text-brown-main text-center -mt-40 md:-mt-52 md:px-40">
           <span className="text-5xl leading-snug md:text-7xl">
             WE HEARTLY WELCOME YOU TO SPEND AN EVENING WITH NIGHTWISH AT THE
             ISLANDERS ARMS
@@ -71,6 +46,8 @@ const Home = () => {
       </section>
 
       <Section
+        descriptionClassname="text-left"
+        titleClassname="text-right"
         title="The band offers fans a unique experience by inviting them to a
         shared adventure at The Islanders Arms, a tavern built in virtual reality."
         description={

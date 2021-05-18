@@ -29,3 +29,35 @@ export const WINDOW_BREAKPOINTS = {
 };
 
 export const BUY_TICKET_LINK = "https://www.nightwish.com/";
+
+export const PROFANITY_WORD = [
+  "fuck",
+  "fuuck",
+  "fcuk",
+  "fukc",
+  "fck",
+  "fkc",
+  "fvck",
+  "fcvk",
+  "fk",
+  "shit",
+  "sht",
+  "sh1t",
+  "chit",
+  "cht",
+  "ch1t",
+  "nigger",
+  "niger",
+  "niggr",
+  "nggr",
+  "ngr",
+  "nigg",
+  "nig",
+  "n1gger",
+  "n1ger",
+  "n1g",
+  "n1ggr",
+  "n1gr",
+  "niigger",
+  "niiggr",
+];

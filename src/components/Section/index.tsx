@@ -14,7 +14,9 @@ interface ISection {
   imageContainerClassname?: string;
   reverse?: boolean;
   imgSize?: "flex-1" | "flex-1.5" | "flex-2";
-  alignText?: boolean;
+  rightText?: boolean;
+  descriptionClassname?: string;
+  titleClassname?: string;
 }
 
 const Section: FC<ISection> = (props) => {
@@ -31,7 +33,9 @@ const Section: FC<ISection> = (props) => {
     imageContainerClassname = "",
     reverse,
     imgSize = "flex-1.5",
-    alignText = true,
+    rightText = true,
+    descriptionClassname,
+    titleClassname,
   } = props;
 
   return (
@@ -63,23 +67,21 @@ const Section: FC<ISection> = (props) => {
       >
         <div
           className={`pb-5 px-7 text-2xl text-brown-main leading-snug md:text-6xl ${
-            alignText ? "md:text-right" : ""
-          }`}
+            rightText ? "md:text-right" : ""
+          } ${titleClassname}`}
         >
           {title}
         </div>
 
         <div>
           <div
-            className={`pb-5 px-7 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light ${
-              alignText ? "md:text-right" : ""
-            }`}
+            className={`pb-5 px-7 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light ${descriptionClassname}`}
           >
             {description}
           </div>
 
           {onClick && (
-            <div className="px-7 flex justify-center py-10">
+            <div className="px-7 py-10">
               <Button {...buttonProps} onClick={onClick}>
                 {buttonText}
               </Button>

@@ -22,7 +22,7 @@ const NavBar = () => {
 
   return (
     <div
-      className={`${NAVBAR_HEIGHT_CLASS} fixed w-full flex justify-between z-10 bg-black`}
+      className={`${NAVBAR_HEIGHT_CLASS} fixed w-full flex justify-between z-10 bg-black opacity-80`}
     >
       <div className="h-full w-3/5 px-5 md:w-1/4 md:py-4">
         <div
