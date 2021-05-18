@@ -21,7 +21,11 @@ const Home = () => {
     <div className="page-container bg-black">
       <section className="flex flex-col pb-20">
         <div className="h-96 w-full relative md:h-75vh">
-          <img src="/png/hero2x.png" alt="tabern" className="object-cover" />
+          <img
+            src="/png/hero2x.png"
+            alt="tabern"
+            className="object-cover h-full"
+          />
           <div className="absolute h-full w-full top-0 left-0 z-10 bg-gradient-to-t from-black to-transparent" />
         </div>
 
