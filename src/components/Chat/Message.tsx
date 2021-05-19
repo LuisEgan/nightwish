@@ -14,7 +14,7 @@ const Message = (props: IMessage) => {
 
   return (
     <div className="relative flex w-full h-auto bg-transparent text-white mb-2 p-1 break-all">
-      <div className="absolute h-full w-full top-0 left-0 bg-gray-600 opacity-50 rounded-r-lg" />
+      <div className="absolute h-full w-full top-0 left-0" />
       <div className="z-10">
         <span className="font-bold" style={{ color }}>
           {author}

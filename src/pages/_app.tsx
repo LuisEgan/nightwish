@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { AppProps } from "next/dist/next-server/lib/router/router";
 import Amplify from "@aws-amplify/core";
-import awsExports from "../aws-exports.js";
+// import awsExports from "../aws-exports.js";
 
 import { ROUTES } from "../lib/constants";
 import PrivateRoute from "../components/Auth/PrivateRoute";
@@ -51,5 +51,12 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-Amplify.configure(awsExports);
+Amplify.configure({
+  aws_project_region: "eu-central-1",
+  aws_appsync_graphqlEndpoint:
+    "https://4oqkubczavgfdcjeh43sxpnwyy.appsync-api.eu-central-1.amazonaws.com/graphql",
+  aws_appsync_region: "eu-central-1",
+  aws_appsync_authenticationType: "API_KEY",
+  aws_appsync_apiKey: "da2-rpq2tnlx35dtvf3d3uoqyk4u2y",
+});
 export default App;

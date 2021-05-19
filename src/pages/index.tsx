@@ -24,7 +24,7 @@ const Home = () => {
           <img
             src="/png/hero2x.png"
             alt="tabern"
-            className="object-cover h-full"
+            className="object-cover h-full w-full"
           />
           <div className="absolute h-full w-full top-0 left-0 z-10 bg-gradient-to-t from-black to-transparent" />
         </div>

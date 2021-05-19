@@ -21,6 +21,8 @@ import { createMessage } from "../../graphql/mutations";
 import styles from "./chat.module.scss";
 import { messagesByChannelID } from "../../graphql/queries";
 
+import tw from "../../../tailwind.config.js";
+
 interface IColorsByUsers {
   [username: string]: string;
 }
@@ -72,7 +74,10 @@ const Chat = () => {
         const items: IMessage[] = res.data?.messagesByChannelID?.items.map(
           (item) => {
             if (!initColorsByUsers[item.author]) {
-              initColorsByUsers[item.author] = getRandomColor();
+              initColorsByUsers[item.author] =
+                item.author === user.name
+                  ? tw.theme.extend.colors.brown.light
+                  : "white";
             }
             const color = initColorsByUsers[item.author];
             return { ...item, color };
@@ -89,7 +94,7 @@ const Chat = () => {
     };
 
     getMessages();
-  }, []);
+  }, [user.name]);
 
   // * Subscribe to Appsync to get new messages
   useEffect(() => {
@@ -200,7 +205,9 @@ const Chat = () => {
 
   return (
     <div
-      className="bg-transparent flex flex-col p-7 pb-0 px-0 h-1/2 w-full md:absolute md:right-0 md:top-0 md:p-3 md:pb-0 md:w-1/3 md:h-90vh"
+      className={`${
+        isChatEnabled ? "bg-black bg-opacity-50" : ""
+      } flex flex-col p-7 pb-0 px-0 h-1/2 w-full md:absolute md:right-0 md:top-0 md:p-3 md:pb-0 md:w-1/5 md:h-90vh`}
       onKeyDown={handleKeyDown}
     >
       <div className="relative flex justify-center items-center text-3xl pb-5 text-brown-light">
