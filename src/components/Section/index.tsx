@@ -14,7 +14,6 @@ interface ISection {
   imageContainerClassname?: string;
   reverse?: boolean;
   imgSize?: "flex-1" | "flex-1.5" | "flex-2";
-  rightText?: boolean;
   descriptionClassname?: string;
   titleClassname?: string;
 }
@@ -33,7 +32,6 @@ const Section: FC<ISection> = (props) => {
     imageContainerClassname = "",
     reverse,
     imgSize = "flex-1.5",
-    rightText = true,
     descriptionClassname,
     titleClassname,
   } = props;
@@ -66,16 +64,14 @@ const Section: FC<ISection> = (props) => {
         } ${reverse ? "md:pl-20" : "md:pr-20"}`}
       >
         <div
-          className={`pb-5 px-7 text-2xl text-brown-main leading-snug md:text-6xl ${
-            rightText ? "md:text-right" : ""
-          } ${titleClassname}`}
+          className={`${titleClassname} pb-5 text-2xl text-brown-main leading-snug md:text-6xl`}
         >
           {title}
         </div>
 
         <div>
           <div
-            className={`pb-5 px-7 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light ${descriptionClassname}`}
+            className={`${descriptionClassname} pb-5 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light`}
           >
             {description}
           </div>

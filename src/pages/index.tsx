@@ -50,8 +50,8 @@ const Home = () => {
       </section>
 
       <Section
-        descriptionClassname="text-left"
-        titleClassname="text-right"
+        descriptionClassname="text-left mt-4 px-7"
+        titleClassname="text-right px-0"
         title="The band offers fans a unique experience by inviting them to a
         shared adventure at The Islanders Arms, a tavern built in virtual reality."
         description={
@@ -77,6 +77,8 @@ const Home = () => {
 
       <Section
         title="How to Buy Your Ticket and Access the Live Concert"
+        titleClassname="px-7"
+        descriptionClassname="px-7"
         description={
           <>
             Duis ac pretium dolor, ac tincidunt orci. Vivamus posuere ac mi
@@ -94,6 +96,7 @@ const Home = () => {
 
       <Section
         title="Chat with other fans. Engage with your friends and meet other fans around the world."
+        titleClassname="text-left"
         description={
           <>
             Donec libero arcu, elementum vitae dapibus ut, gravida id velit. Ut
@@ -124,7 +127,9 @@ const Home = () => {
 
       <Section
         reverse
+        titleClassname="px-7 text-right"
         title="How to Buy Your Ticket and Access the Live Concert"
+        descriptionClassname="px-7 text-right"
         description={
           <>
             Duis ac pretium dolor, ac tincidunt orci. Vivamus posuere ac mi
