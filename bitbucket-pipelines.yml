@@ -25,7 +25,7 @@ pipelines:
               # CI=true in default variables for Bitbucket Pipelines https://support.atlassian.com/bitbucket-cloud/docs/variables-in-pipelines/
               #- npm test
   branches:
-    release-*:
+    main:
       - parallel:
           - step:
               name: Build and test
