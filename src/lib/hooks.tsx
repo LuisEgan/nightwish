@@ -23,8 +23,8 @@ export const useWindowSize = (): IWindowSize => {
         height: window.innerHeight,
         isMobile: isMobile || window.innerWidth < WINDOW_BREAKPOINTS.md,
         isLandscape:
-          +window.screen.orientation.angle === 90 ||
-          +window.screen.orientation.angle === -90,
+          window?.screen?.orientation?.angle === 90 ||
+          window?.screen?.orientation?.angle === -90,
       });
     };
 
