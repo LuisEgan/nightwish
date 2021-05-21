@@ -7,7 +7,7 @@ import Input from "../../components/Input";
 import { ROUTES } from "../../lib/constants";
 
 interface IForm {
-  ticket: string;
+  code: string;
 }
 
 interface IRow {
@@ -66,9 +66,9 @@ const Events = () => {
     return c;
   };
 
-  const handleRedeem = async ({ ticket }: IForm) => {
+  const handleRedeem = async ({ code }: IForm) => {
     try {
-      await api.redeemTicket(ticket);
+      await api.redeemTicket({ code });
     } catch (error) {
       console.error("handleRedeem - error: ", error);
     }
@@ -86,11 +86,11 @@ const Events = () => {
 
           <div className="flex flex-col py-10 md:items-center md:flex-row">
             <Input
-              {...register("ticket", {
+              {...register("code", {
                 required: "Please input your ticket",
               })}
               placeholder="Ticket code"
-              error={errors.ticket?.message}
+              error={errors.code?.message}
               className="flex-1"
               outline
             />
