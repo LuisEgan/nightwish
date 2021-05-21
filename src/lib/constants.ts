@@ -5,10 +5,12 @@ export const ROUTES = {
   },
 
   PUBLIC_ROUTES: {
+    redeem: "/redeem",
     index: "/",
     login: "/login",
     terms: "/terms",
     support: "/support",
+    register: "/register",
   },
 };
 

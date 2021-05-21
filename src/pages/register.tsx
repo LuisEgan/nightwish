@@ -12,24 +12,28 @@ import api from "../api";
 
 interface IForm {
   email: string;
+  emailConfirm: string;
   password: string;
+  passwordConfirm: string;
 }
 
-const Login = () => {
+const Register = () => {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<IForm>();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [showPass, setShowPass] = useState<boolean>(false);
+  const [showPassConfirm, setShowPassConfirm] = useState<boolean>(false);
 
   const onSubmit = async (values: IForm) => {
     setLoading(true);
     try {
-      await api.login(values);
+      await api.register(values);
     } catch (e) {
       setError(e.message || e);
     } finally {
@@ -41,9 +45,13 @@ const Login = () => {
     <div className="page-container bg-black flex justify-center items-center px-10 md:p-32">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.content}>
-          <div className={styles.subtitle}>Login</div>
+          <div className={styles.subtitle}>Register</div>
 
           <Input
+            title="Enter your email address"
+            type="email"
+            placeholder="your@email.com"
+            containerClassName="mb-2"
             {...register("email", {
               required: "Please input your email",
               pattern: {
@@ -51,14 +59,31 @@ const Login = () => {
                 message: "Invalid email",
               },
             })}
-            type="email"
-            placeholder="Email address"
             error={errors.email?.message}
           />
 
           <Input
+            title="Confirm your email"
+            type="email"
+            placeholder="your@email.com"
+            containerClassName="mb-10"
+            {...register("emailConfirm", {
+              required: "Please validate your email",
+              validate: (value) =>
+                value !== getValues("email") ? "Emails don't match" : true,
+              pattern: {
+                value: EMAIL_REGEX,
+                message: "Invalid email",
+              },
+            })}
+            error={errors.emailConfirm?.message}
+          />
+
+          <Input
             type={showPass ? "text" : "password"}
-            placeholder="Password"
+            placeholder="Min. 8 characters password"
+            title="Enter your password"
+            containerClassName="mb-2"
             icon={
               <ReactSVG
                 src={showPass ? "/svg/eye.svg" : "/svg/eye-off.svg"}
@@ -76,6 +101,29 @@ const Login = () => {
             error={errors.password?.message}
           />
 
+          <Input
+            type={showPassConfirm ? "text" : "password"}
+            placeholder="Min. 8 characters password"
+            title="Cofirm your password"
+            icon={
+              <ReactSVG
+                src={showPassConfirm ? "/svg/eye.svg" : "/svg/eye-off.svg"}
+                height={20}
+                width={20}
+                onClick={() => setShowPassConfirm(!showPassConfirm)}
+                beforeInjection={(svg) => {
+                  svg.setAttribute("style", `width: ${20}px; height: ${20}px;`);
+                }}
+              />
+            }
+            {...register("passwordConfirm", {
+              required: "Please confirmirm your password",
+              validate: (value) =>
+                value !== getValues("password") ? "Password don't match" : true,
+            })}
+            error={errors.passwordConfirm?.message}
+          />
+
           {error && (
             <div className="text-base text-center text-red-500 py-3">
               {error}
@@ -83,15 +131,20 @@ const Login = () => {
           )}
 
           <div className="flex justify-center pt-5">
-            <Button type="submit" variant="black" disabled={loading}>
-              {loading ? "Loading..." : "Login"}
+            <Button
+              type="submit"
+              className=""
+              variant="black"
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Register"}
             </Button>
           </div>
 
           <div className="pt-2 text-center">
-            Don&apos;t have an account yet?{" "}
-            <Link href={ROUTES.PUBLIC_ROUTES.register}>
-              <a className="underline">Register here</a>
+            Already got an account?{" "}
+            <Link href={ROUTES.PUBLIC_ROUTES.login}>
+              <a className="underline">Login here</a>
             </Link>
           </div>
         </div>
@@ -100,4 +153,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

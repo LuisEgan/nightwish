@@ -30,7 +30,7 @@ const Home = () => {
         </div>
 
         <div className="z-20 flex flex-col px-7 text-brown-main text-center -mt-40 md:-mt-52 md:px-40">
-          <span className="text-5xl leading-snug md:text-7xl">
+          <span className="text-4xl leading-tight md:leading-snug md:text-7xl">
             WE HEARTLY WELCOME YOU TO SPEND AN EVENING WITH NIGHTWISH AT THE
             ISLANDERS ARMS
           </span>
@@ -51,7 +51,7 @@ const Home = () => {
 
       <Section
         descriptionClassname="text-left mt-4 px-7"
-        titleClassname="text-right px-0"
+        titleClassname="px-7 md:px-0 md:text-right"
         title="The band offers fans a unique experience by inviting them to a
         shared adventure at The Islanders Arms, a tavern built in virtual reality."
         description={
@@ -79,6 +79,7 @@ const Home = () => {
         title="How to Buy Your Ticket and Access the Live Concert"
         titleClassname="px-7"
         descriptionClassname="px-7"
+        className="pb-10"
         description={
           <>
             Duis ac pretium dolor, ac tincidunt orci. Vivamus posuere ac mi
@@ -96,7 +97,8 @@ const Home = () => {
 
       <Section
         title="Chat with other fans. Engage with your friends and meet other fans around the world."
-        titleClassname="text-left"
+        titleClassname="text-left px-7 md:px-0"
+        descriptionClassname="px-7 md:px-0"
         description={
           <>
             Donec libero arcu, elementum vitae dapibus ut, gravida id velit. Ut

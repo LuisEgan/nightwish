@@ -38,14 +38,14 @@ const Section: FC<ISection> = (props) => {
 
   return (
     <section
-      className={`${className} relative flex flex-col w-full py-14 ${
+      className={`${className} relative flex flex-col w-full md:py-14 ${
         reverse ? "md:flex-row-reverse" : "md:flex-row"
       }`}
     >
       {img && (
         <Fade left={!reverse} right={reverse}>
           <div
-            className={`w-5/6 h-80 relative mb-10 ${imageContainerClassname} md:h-75vh md:w-0 ${imgSize}`}
+            className={`w-5/6 h-40 relative ${imageContainerClassname} md:h-75vh md:mb-10 md:w-0 ${imgSize}`}
           >
             <img
               className={`m-auto h-full object-contain ${imageClassname}`}
