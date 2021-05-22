@@ -101,11 +101,9 @@ const Chat = () => {
     let subscription: ZenObservable.Subscription;
 
     if (messages?.length) {
-      subscription = (
-        API.graphql(
-          graphqlOperation(onCreateMessage),
-        ) as Observable<IOnCreateMessage>
-      ).subscribe({
+      subscription = (API.graphql(
+        graphqlOperation(onCreateMessage),
+      ) as Observable<IOnCreateMessage>).subscribe({
         next: (event) => {
           const {
             value: {

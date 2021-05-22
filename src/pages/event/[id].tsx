@@ -10,7 +10,8 @@ const videoJsOptions: VideoJsPlayerOptions = {
   // fluid: true,
   sources: [
     {
-      src: "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8",
+      src:
+        "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8",
       type: "application/x-mpegURL",
     },
   ],
