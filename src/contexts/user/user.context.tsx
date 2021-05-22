@@ -2,13 +2,13 @@ import { createContext } from "react";
 import { IUser } from "../../Types/user.types";
 
 export interface ILogin {
-  user: IUser;
-  accesstoken: string;
+  user?: IUser;
+  accessToken: string;
 }
 interface IUserMethods {
   user: IUser;
   setUser: (params: IUser) => void;
-  login: (params: ILogin) => void;
+  login: (params: ILogin) => Promise<void>;
   logout: () => void;
   isLoggedIn: boolean;
 }
@@ -16,7 +16,7 @@ interface IUserMethods {
 const methods = {
   user: null,
   setUser: () => {},
-  login: () => {},
+  login: async () => {},
   logout: () => {},
   isLoggedIn: false,
 };

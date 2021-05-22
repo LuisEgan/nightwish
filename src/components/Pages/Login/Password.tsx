@@ -38,7 +38,7 @@ const LoginPassword = (props: ILoginPage) => {
 
       setTimeout(() => {
         login({
-          accesstoken: "token",
+          accessToken: "token",
           user: {
             email: "eganluis@gmail.com",
             name: `Luis_${Math.random()}`,

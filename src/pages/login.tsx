@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { ReactSVG } from "react-svg";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Input from "../components/Input";
 import { EMAIL_REGEX, ROUTES } from "../lib/constants";
 
 import styles from "../components/Pages/Login/login.module.scss";
 import Button from "../components/Button";
 import api from "../api";
+import { UserContext } from "../contexts/user/user.context";
 
 interface IForm {
   email: string;
@@ -22,6 +24,9 @@ const Login = () => {
     formState: { errors },
   } = useForm<IForm>();
 
+  const { push } = useRouter();
+  const { login } = useContext(UserContext);
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [showPass, setShowPass] = useState<boolean>(false);
@@ -29,7 +34,13 @@ const Login = () => {
   const onSubmit = async (values: IForm) => {
     setLoading(true);
     try {
-      await api.login(values);
+      const res = await api.login(values);
+
+      const { accessToken, user } = res;
+
+      await login({ accessToken, user });
+
+      push(ROUTES.PRIVATE_ROUTES.redeem);
     } catch (e) {
       setError(e.message || e);
     } finally {

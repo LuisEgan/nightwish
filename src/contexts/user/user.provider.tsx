@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
+import { setAxiosAuthorizationHeader } from "../../api";
 import { LOCAL_STORAGE } from "../../lib/constants";
 import { IUser } from "../../Types/user.types";
 import { ILogin, UserContext } from "./user.context";
@@ -19,14 +20,27 @@ const UserProvider: FC = (props) => {
     if (cachedUser && !user) {
       setUser(JSON.parse(cachedUser));
     }
+
+    if (user) {
+      localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(user));
+    }
   }, [user]);
 
-  const login = (params: ILogin) => {
-    const { user: loginUser, accesstoken } = params;
-    setUser(loginUser);
-    localStorage.setItem(LOCAL_STORAGE.USER_TOKEN, accesstoken);
-    localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(loginUser));
-  };
+  const login = (params: ILogin): Promise<void> =>
+    new Promise((resolve, reject) => {
+      const { user: loginUser, accessToken } = params;
+
+      if (!accessToken) reject();
+
+      setUser(loginUser);
+      setIsLoggedIn(true);
+      localStorage.setItem(LOCAL_STORAGE.USER_TOKEN, accessToken);
+      localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(loginUser));
+
+      setAxiosAuthorizationHeader(accessToken);
+
+      resolve();
+    });
 
   const logout = () => {
     setUser(null);

@@ -52,7 +52,9 @@ const Button: FC<IButton> = (props) => {
   return (
     <button
       {...buttonProps}
-      className={`${buttonProps?.className ? buttonProps?.className : ""} ${
+      className={`flex items-center ${
+        buttonProps?.className ? buttonProps?.className : ""
+      } ${
         outline
           ? "bg-transparent border-solid border-brown-main "
           : "bg-brown-main border-none"

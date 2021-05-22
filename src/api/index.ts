@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IUser } from "../Types/user.types";
 
 const DNS = "https://burst-staging.rocks/api";
 
@@ -12,12 +13,15 @@ interface IAuth {
 }
 const register = async (body: IAuth) => {
   try {
-    const res = await axios.post<{ accessToken: string }>(
-      `${DNS}/register`,
-      body,
-    );
+    const res = await axios.post<{
+      accessToken: string;
+      success: boolean;
+      user: IUser;
+    }>(`${DNS}/register`, body);
 
-    return res;
+    if (!res?.data.success) throw new Error("Error");
+
+    return res.data;
   } catch (error) {
     throw new Error(error.response?.data?.error || "Sorry there was an error");
   }
@@ -25,8 +29,15 @@ const register = async (body: IAuth) => {
 
 const login = async (body: IAuth) => {
   try {
-    const res = await axios.post<{ accessToken: string }>(`${DNS}/login`, body);
-    return res;
+    const res = await axios.post<{
+      accessToken: string;
+      success: boolean;
+      user: IUser;
+    }>(`${DNS}/login`, body);
+
+    if (!res?.data.success) throw new Error("Error");
+
+    return res.data;
   } catch (error) {
     throw new Error(error.response?.data?.error || "Sorry there was an error");
   }
@@ -37,11 +48,28 @@ interface IRedeemTicket {
 }
 const redeemTicket = async (body: IRedeemTicket) => {
   try {
-    const res = await axios.post<{ accessToken: string }>(
+    const res = await axios.post<{ success: boolean; user: IUser }>(
       `${DNS}/ticket`,
       body,
     );
-    return res;
+
+    if (!res?.data.success) throw new Error("Error");
+
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.error || "Sorry there was an error");
+  }
+};
+
+const getUser = async () => {
+  try {
+    const res = await axios.get<{ success: boolean; user: IUser }>(
+      `${DNS}/user`,
+    );
+
+    if (!res?.data.success) throw new Error("Error");
+
+    return res.data;
   } catch (error) {
     throw new Error(error.response?.data?.error || "Sorry there was an error");
   }
@@ -51,4 +79,5 @@ export default {
   register,
   login,
   redeemTicket,
+  getUser,
 };
