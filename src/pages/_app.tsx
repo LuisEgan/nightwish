@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { AppProps } from "next/dist/next-server/lib/router/router";
-import Amplify from "@aws-amplify/core";
+// import Amplify from "@aws-amplify/core";
 // import awsExports from "../aws-exports.js";
 
 import { LOCAL_STORAGE, ROUTES } from "../lib/constants";
@@ -42,6 +42,10 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>Nightwish</title>
         <link rel="icon" href="/nightwish/favicon.ico" />
+        <script
+          type="application/javascript"
+          src="https://cdn.strivetech.io/services/storage/v0/entity-resource/1385164721045188608/1385165007474208768/gwc.min.js"
+         />
       </Head>
 
       <NavBar />
@@ -59,12 +63,12 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-Amplify.configure({
-  aws_project_region: "eu-central-1",
-  aws_appsync_graphqlEndpoint:
-    "https://4oqkubczavgfdcjeh43sxpnwyy.appsync-api.eu-central-1.amazonaws.com/graphql",
-  aws_appsync_region: "eu-central-1",
-  aws_appsync_authenticationType: "API_KEY",
-  aws_appsync_apiKey: "da2-rpq2tnlx35dtvf3d3uoqyk4u2y",
-});
+// Amplify.configure({
+//   aws_project_region: "eu-central-1",
+//   aws_appsync_graphqlEndpoint:
+//     "https://4oqkubczavgfdcjeh43sxpnwyy.appsync-api.eu-central-1.amazonaws.com/graphql",
+//   aws_appsync_region: "eu-central-1",
+//   aws_appsync_authenticationType: "API_KEY",
+//   aws_appsync_apiKey: "da2-rpq2tnlx35dtvf3d3uoqyk4u2y",
+// });
 export default App;
