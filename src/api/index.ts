@@ -1,10 +1,10 @@
 import axios from "axios";
 import { IUser } from "../Types/user.types";
 
-const DNS = "https://burst-staging.rocks/api";
+const DNS = "https://api.burst-staging.com/v1/";
 
 export const setAxiosAuthorizationHeader = (token: string) => {
-  axios.defaults.headers.common.Authorization = token;
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 interface IAuth {
@@ -75,9 +75,30 @@ const getUser = async () => {
   }
 };
 
+interface IGetEvent {
+  eventId: string;
+}
+const getEvent = async (params: IGetEvent) => {
+  try {
+    const res = await axios.get<{
+      success: boolean;
+      url?: string;
+      error?: string;
+    }>(`${DNS}/playlist/${params.eventId}`);
+
+    if (!res?.data.success && res?.data.error)
+      throw new Error(res?.data.error || "Error");
+
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.error || "Sorry there was an error");
+  }
+};
+
 export default {
   register,
   login,
   redeemTicket,
   getUser,
+  getEvent,
 };

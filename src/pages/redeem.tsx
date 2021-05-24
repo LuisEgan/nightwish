@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
 import party from "party-js";
+import Link from "next/link";
 import styles from "../components/Pages/Login/login.module.scss";
 import Input from "../components/Input";
 import api from "../api";
@@ -93,6 +94,12 @@ const LoginRedeem = () => {
             >
               {loading ? "Loading..." : "Redeem"}
             </Button>
+          </div>
+
+          <div className="pt-2 text-center">
+            <Link href={ROUTES.PRIVATE_ROUTES.events}>
+              <a className="underline">Continue to all events</a>
+            </Link>
           </div>
         </div>
       </form>
