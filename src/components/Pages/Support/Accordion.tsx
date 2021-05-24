@@ -31,7 +31,9 @@ const Title = (props: ITitle) => {
 
       <div className="px-5">
         <ReactSVG
-          src={expanded ? "/svg/minus.svg" : "/svg/plus.svg"}
+          src={
+            expanded ? "/nightwish/svg/minus.svg" : "/nightwish/svg/plus.svg"
+          }
           height={30}
           width={30}
           beforeInjection={(svg) => {

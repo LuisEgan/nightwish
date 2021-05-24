@@ -212,7 +212,7 @@ const Chat = () => {
         {isChatEnabled ? "Chat" : ""}
         {isChatEnabled && (
           <ReactSVG
-            src="/svg/x.svg"
+            src="/nightwish/svg/x.svg"
             className="cursor-pointer absolute top-0 right-4"
             style={{
               transform: "translateY(50%)",
@@ -239,7 +239,7 @@ const Chat = () => {
             onClick={() => setIsChatEnabled(true)}
           >
             <ReactSVG
-              src="/svg/chat.svg"
+              src="/nightwish/svg/chat.svg"
               height={20}
               width={20}
               beforeInjection={(svg) => {
@@ -269,7 +269,7 @@ const Chat = () => {
             onClick={sendMessage}
           >
             <ReactSVG
-              src="/svg/send.svg"
+              src="/nightwish/svg/send.svg"
               height={20}
               width={20}
               beforeInjection={(svg) => {

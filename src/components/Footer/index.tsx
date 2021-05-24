@@ -12,29 +12,38 @@ const links = [
 ];
 
 const socialNetworkLinks = [
-  { link: "https://www.instagram.com/nightwish", icon: "/svg/instagram.svg" },
-  { link: "https://www.facebook.com/nightwish/", icon: "/svg/facebook.svg" },
-  { link: "https://twitter.com/NightwishBand", icon: "/svg/twitter.svg" },
+  {
+    link: "https://www.instagram.com/nightwish",
+    icon: "/nightwish/svg/instagram.svg",
+  },
+  {
+    link: "https://www.facebook.com/nightwish/",
+    icon: "/nightwish/svg/facebook.svg",
+  },
+  {
+    link: "https://twitter.com/NightwishBand",
+    icon: "/nightwish/svg/twitter.svg",
+  },
   {
     link: "https://www.youtube.com/channel/UCQplaZZ2mv8fo8Zd-1hQPzg",
-    icon: "/svg/youtube.svg",
+    icon: "/nightwish/svg/youtube.svg",
   },
   {
     link:
       "https://open.spotify.com/artist/2NPduAUeLVsfIauhRwuft1?si=P_b0Qe5SQEavH4JsqCeIgA&nd=1",
-    icon: "/svg/spotify.svg",
+    icon: "/nightwish/svg/spotify.svg",
   },
   {
     link: "https://music.apple.com/cl/artist/nightwish/2898807?uo=4&app=music",
-    icon: "/svg/apple.svg",
+    icon: "/nightwish/svg/apple.svg",
   },
   {
     link: "https://www.contrapromotion.com/en/artists/nightwish/",
-    icon: "/svg/boarding-pass.svg",
+    icon: "/nightwish/svg/boarding-pass.svg",
   },
   {
     link: "https://www.backstagerockshop.com/collections/nightwish",
-    icon: "/svg/shopping-cart.svg",
+    icon: "/nightwish/svg/shopping-cart.svg",
   },
 ];
 

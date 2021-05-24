@@ -54,7 +54,7 @@ const Event = () => {
       >
         <img
           className="object-contain cursor-pointer h-full sm:p-2 md:p-0"
-          src="/png/nightwishLogo.png"
+          src="/nightwish/png/nightwishLogo.png"
           alt="logo"
         />
       </div>

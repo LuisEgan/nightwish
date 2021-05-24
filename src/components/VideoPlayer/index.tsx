@@ -87,7 +87,7 @@ const VideoPlayer = (props: IVideoPlayer) => {
           videoNode = node;
         }}
         preload="none"
-        poster={poster || "/png/nightwishLogo.png"}
+        poster={poster || "/nightwish/png/nightwishLogo.png"}
       />
     </div>
   );

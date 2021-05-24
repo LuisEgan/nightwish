@@ -41,7 +41,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     <UserProvider>
       <Head>
         <title>Nightwish</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/nightwish/favicon.ico" />
       </Head>
 
       <NavBar />

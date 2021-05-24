@@ -27,7 +27,7 @@ const Hamburguer = () => {
         className="flex justify-center items-center px-5"
         onClick={() => setIsOpen(true)}
       >
-        <ReactSVG src="/svg/hamburger.svg" height={70} width={70} />
+        <ReactSVG src="/nightwish/svg/hamburger.svg" height={70} width={70} />
       </div>
 
       {isOpen && (
@@ -45,7 +45,7 @@ const Hamburguer = () => {
           >
             <div className="w-full flex justify-end p-10">
               <ReactSVG
-                src="/svg/x.svg"
+                src="/nightwish/svg/x.svg"
                 className="cursor-pointer"
                 onClick={() => setInitClose(true)}
                 beforeInjection={(svg) => {

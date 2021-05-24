@@ -22,7 +22,7 @@ const Home = () => {
       <section className="flex flex-col pb-20">
         <div className="h-96 w-full relative md:h-75vh">
           <img
-            src="/png/hero2x.png"
+            src="/nightwish/png/hero2x.png"
             alt="tabern"
             className="object-cover h-full w-full"
           />
@@ -92,7 +92,7 @@ const Home = () => {
         }
         // onClick={() => console.log("Redeem ticket")}
         buttonText="Redeem Ticket"
-        img="/png/zepellin2x.png"
+        img="/nightwish/png/zepellin2x.png"
       />
 
       <Section
@@ -108,13 +108,13 @@ const Home = () => {
         }
         // onClick={() => console.log("Redeem ticket")}
         buttonText="Redeem Ticket"
-        img="/png/iphone2x.png"
+        img="/nightwish/png/iphone2x.png"
         imageContainerClassname="mx-7"
         imageClassname="object-contain"
         imgSize="flex-1"
       >
         <ReactSVG
-          src="/svg/circleText.svg"
+          src="/nightwish/svg/circleText.svg"
           height={svgCicleTextSize}
           width={svgCicleTextSize}
           className="absolute top-0 left-5 md:left-auto md:right-20"
@@ -144,11 +144,11 @@ const Home = () => {
         }
         // onClick={() => console.log("Redeem ticket")}
         buttonText="Redeem Ticket"
-        img="/png/church2x.png"
+        img="/nightwish/png/church2x.png"
       />
 
       <ReactSVG
-        src="/svg/logo.svg"
+        src="/nightwish/svg/logo.svg"
         height={height * 0.2}
         width={width * 0.8}
         className="flex justify-center py-10"

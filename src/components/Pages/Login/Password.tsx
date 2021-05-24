@@ -65,7 +65,11 @@ const LoginPassword = (props: ILoginPage) => {
           placeholder="Password"
           icon={
             <ReactSVG
-              src={showPass ? "/svg/eye.svg" : "/svg/eye-off.svg"}
+              src={
+                showPass
+                  ? "/nightwish/svg/eye.svg"
+                  : "/nightwish/svg/eye-off.svg"
+              }
               height={20}
               width={20}
               onClick={() => setShowPass(!showPass)}
@@ -85,7 +89,11 @@ const LoginPassword = (props: ILoginPage) => {
           placeholder="Confirm password"
           icon={
             <ReactSVG
-              src={showPassConfirm ? "/svg/eye.svg" : "/svg/eye-off.svg"}
+              src={
+                showPassConfirm
+                  ? "/nightwish/svg/eye.svg"
+                  : "/nightwish/svg/eye-off.svg"
+              }
               height={20}
               width={20}
               onClick={() => setShowPassConfirm(!showPassConfirm)}
