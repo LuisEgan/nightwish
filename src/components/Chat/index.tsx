@@ -10,7 +10,7 @@ import { getRandomColor } from "../../lib/strings";
 import styles from "./chat.module.scss";
 
 import Button from "../Button";
-import { BASE_PATH } from "../../lib/constants";
+import { BASE_PATH, ROUTES } from "../../lib/constants";
 
 let ws: ReconnectingWebSocket;
 
@@ -20,6 +20,12 @@ interface IWSMessage {
   color: string;
 }
 
+const randomUserColor = getRandomColor();
+const MESSAGES_QTY_LIMIT = 20;
+const MAX_MESSAGES = 5;
+let MAX_MESSAGES_TIME_INTERVAL = 5000;
+let messagesSentCounter = 0;
+
 const Chat = () => {
   const messagesBottom = useRef<HTMLDivElement>(null);
   const messageInput = useRef<HTMLInputElement>(null);
@@ -27,7 +33,6 @@ const Chat = () => {
   const { isMobile, isLandscape } = useWindowSize();
 
   const [username, setUsername] = useState<string>();
-  const [userColor, setUserColor] = useState<string>();
   const [isUsernameSet, setIsUsernameSet] = useState<boolean>(false);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [newMessage, setNewMessage] = useState<IMessage | null>();
@@ -35,6 +40,7 @@ const Chat = () => {
   const [mssg, setMssg] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [isChatEnabled, setIsChatEnabled] = useState<boolean>(true);
+  const [isWSConnected, setIsWSConnected] = useState<boolean>(false);
 
   const scrollToBottom = () => {
     if (messagesBottom.current) {
@@ -45,32 +51,49 @@ const Chat = () => {
     }
   };
 
+  const updateSentMessagesCounter = () => {
+    messagesSentCounter += 1;
+    setTimeout(() => {
+      messagesSentCounter -= 1;
+    }, MAX_MESSAGES_TIME_INTERVAL);
+  };
+
+  const addNewMessage = (message: IMessage) => {
+    const newMessages = [...messages, message];
+
+    if (newMessages.length > MESSAGES_QTY_LIMIT) {
+      newMessages.shift();
+    }
+
+    setMessages(newMessages);
+    updateSentMessagesCounter();
+  };
+
   // * Connect to socket
   useEffect(() => {
-    ws = new ReconnectingWebSocket("wss://chat.burst-staging.com/ws");
+    if (isChatEnabled && !isWSConnected) {
+      ws = new ReconnectingWebSocket("wss://chat.burst-staging.com/ws");
+      setIsWSConnected(true);
 
-    const randomUserColor = getRandomColor();
+      ws.onmessage = (data) => {
+        const { message, author, color } = JSON.parse(data.data)
+          .body as IWSMessage;
 
-    ws.onmessage = (data) => {
-      const { message, author, color } = JSON.parse(data.data)
-        .body as IWSMessage;
+        if (color === randomUserColor) return;
 
-      if (color === randomUserColor) return;
-
-      setNewMessage({
-        author,
-        body: message,
-        color: "white",
-      });
-    };
-
-    setUserColor(randomUserColor);
-  }, []);
+        setNewMessage({
+          author,
+          body: message,
+          color: "white",
+        });
+      };
+    }
+  }, [isChatEnabled, isWSConnected]);
 
   // * Render new message
   useEffect(() => {
-    if (newMessage) {
-      setMessages([...messages, newMessage]);
+    if (newMessage && isChatEnabled) {
+      addNewMessage(newMessage);
       setNewMessage(null);
     }
     // eslint-disable-next-line
@@ -84,7 +107,12 @@ const Chat = () => {
   }, [isChatEnabled, messages]);
 
   const sendMessage = async () => {
-    if (!mssg) return;
+    if (messagesSentCounter >= MAX_MESSAGES) {
+      MAX_MESSAGES_TIME_INTERVAL += MAX_MESSAGES_TIME_INTERVAL * 0.01;
+      return;
+    }
+
+    if (!mssg || !ws) return;
 
     try {
       if (mssg.length > 100) {
@@ -100,21 +128,18 @@ const Chat = () => {
 
       // * Add message to current chat on the front
       const body = mssg.trim();
-      setMessages([
-        ...messages,
-        {
-          author: username,
-          body,
-          color: userColor,
-        },
-      ]);
+      addNewMessage({
+        author: username,
+        body,
+        color: randomUserColor,
+      });
 
       ws.send(
         JSON.stringify({
           action: "message",
           message: body,
           author: username,
-          color: userColor,
+          color: randomUserColor,
         }),
       );
     } catch (e) {
@@ -182,6 +207,19 @@ const Chat = () => {
                     maxLength={10}
                   />
                   <Button onClick={confirmUsername}>Set username</Button>
+                  <div className="text-brown-light text-xs text-center mt-5">
+                    <b>Disclaimer:</b> Remember that the chat is for the fans
+                    only and not for unnecessary profanities or technical
+                    support. If you&apos;re having problems, please check out
+                    our{" "}
+                    <a
+                      className="underline"
+                      href={`${BASE_PATH}${ROUTES.PUBLIC_ROUTES.support}`}
+                      target="_blank" rel="noreferrer"
+                    >
+                      Support Page
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

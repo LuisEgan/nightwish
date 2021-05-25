@@ -1,3 +1,6 @@
+export const BASE_PATH = "/nightwish";
+// export const BASE_PATH = "";
+
 export const ROUTES = {
   PRIVATE_ROUTES: {
     events: "/event/all",
@@ -32,9 +35,6 @@ export const WINDOW_BREAKPOINTS = {
 export const BUY_TICKET_LINK = "https://www.nightwish.com/";
 
 export const FRIDAY_CONCERT_DATE = new Date("");
-
-export const BASE_PATH = "/nightwish";
-// export const BASE_PATH = "";
 
 export const EVENTS_BY_ID = {
   1: {
