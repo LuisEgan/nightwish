@@ -66,9 +66,9 @@ const Home = () => {
           <>
             A full-length live experience of magical dimensions in a virtual
             world The Islander Arms tavern. On both evenings, an unforgettable
-            90-minute performance, the songs from the latest album &lquo;Human.
-            :II: Nature.&rquo; will be played live for the first time. The
-            setlist has variations for each night.
+            90-minute performance, the songs from the latest album “Human. :II:
+            Nature.” will be played live for the first time. The setlist has
+            variations for each night.
           </>
         }
         onClick={onBuyTicket}
@@ -90,10 +90,9 @@ const Home = () => {
         description={
           <>
             The VIP packages include a virtual session with the yet unrevealed
-            bass player of Nightwish’s &lquo;Human. :II: Nature.&rquo; tour,
-            among other perks. The identity of the bass player will be revealed
-            on the live session included in the VIP package on Friday, May 28,
-            2021.
+            bass player of Nightwish’s “Human. :II: Nature.” tour, among other
+            perks. The identity of the bass player will be revealed on the live
+            session included in the VIP package on Friday, May 28, 2021.
           </>
         }
         onClick={() => {
