@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ROUTES } from "../../lib/constants";
 import { UserContext } from "../../contexts/user/user.context";
 
-import Button from "../Button";
 import styles from "./navbar.module.scss";
 
 interface INavbarMenu {
@@ -26,6 +25,11 @@ const loggedOutItems = [
     title: "Support",
     route: ROUTES.PUBLIC_ROUTES.support,
   },
+  {
+    title: "Register Your Ticket",
+    route: ROUTES.PRIVATE_ROUTES.redeem,
+    type: "outline",
+  },
 ];
 
 const loggedInItems = [
@@ -42,6 +46,11 @@ const loggedInItems = [
   {
     title: "Support",
     route: ROUTES.PUBLIC_ROUTES.support,
+  },
+  {
+    title: "Register Your Ticket",
+    route: ROUTES.PRIVATE_ROUTES.redeem,
+    type: "outline",
   },
 ];
 
@@ -62,22 +71,22 @@ const NavbarMenu = (props: INavbarMenu) => {
     push(ROUTES.PUBLIC_ROUTES.login);
   };
 
-  const registerTicket = () => {
-    if (onItemClick) onItemClick();
-    push(ROUTES.PRIVATE_ROUTES.events);
-  };
-
   return (
     <div
       id={mobile ? styles.navBarMobileContainer : styles.navBarItemsContainer}
-      className="flex flex-col md:flex-row"
+      className="flex flex-col md:flex-row pr-6"
     >
       {navItems.map((item) => {
         switch (item.type) {
           case "logout":
             return (
               <div key={item.title}>
-                <a onClick={handleLogout} href={item.route} target="_blank" rel="noreferrer">
+                <a
+                  onClick={handleLogout}
+                  href={item.route}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {item.title}
                 </a>
               </div>
@@ -90,6 +99,16 @@ const NavbarMenu = (props: INavbarMenu) => {
                 </a>
               </div>
             );
+          case "outline":
+            return (
+              <div key={item.title}>
+                <Link href={item.route}>
+                  <a className="border bg-transparent border-solid border-brown-main text-brown-main text-center py-3 px-9 rounded-full last:mr-0">
+                    {item.title}
+                  </a>
+                </Link>
+              </div>
+            );
           default:
             return (
               <div key={item.title}>
@@ -100,18 +119,6 @@ const NavbarMenu = (props: INavbarMenu) => {
             );
         }
       })}
-
-      <div>
-        {isLoggedIn ? (
-          <Button outline onClick={onLogout}>
-            Log out
-          </Button>
-        ) : (
-          <Button outline onClick={registerTicket}>
-            Register Your Ticket
-          </Button>
-        )}
-      </div>
     </div>
   );
 };
