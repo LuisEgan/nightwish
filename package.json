@@ -31,6 +31,7 @@
     "react-responsive-carousel": "^3.2.18",
     "react-reveal": "^1.2.2",
     "react-svg": "^13.0.3",
+    "reconnecting-websocket": "^4.4.0",
     "sass": "^1.32.11",
     "socket.io-client": "^4.0.1",
     "video.js": "^7.12.1"

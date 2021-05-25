@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { VideoJsPlayer, VideoJsPlayerOptions } from "video.js";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import VideoPlayer, { IOnPlayerLoader } from "../../components/VideoPlayer";
 import Chat from "../../components/Chat";
-import { ROUTES } from "../../lib/constants";
+import { BASE_PATH, EVENTS_BY_ID, ROUTES } from "../../lib/constants";
 import LoadingScreen from "../../components/LoadingScreen";
 import api from "../../api";
+import EventError from "../../components/Pages/Event/EventError";
 
 // const videoJsOptions: VideoJsPlayerOptions = {
 //   muted: true,
@@ -24,14 +26,16 @@ const Event = () => {
 
   const [player, setPlayer] = useState<VideoJsPlayer>();
   const [videoJsOptions, setVideoJsOptions] = useState<VideoJsPlayerOptions>();
+  const [eventError, setEventError] = useState<string>("");
 
   useEffect(() => {
-    const event = async (eventId: string) => {
+    const event = async (id: string) => {
       try {
-        const res = await api.getEvent({ eventId });
+        const res = await api.getEvent({ eventId: id });
 
         setVideoJsOptions({
           muted: true,
+          autoplay: false,
           sources: [
             {
               src: res.url,
@@ -41,6 +45,7 @@ const Event = () => {
         });
       } catch (error) {
         console.error("event error: ", error);
+        setEventError(error?.message || error);
       }
     };
 
@@ -53,7 +58,7 @@ const Event = () => {
     setPlayer(loadedPlayer);
 
     setTimeout(() => {
-      player.play();
+      // player?.play();
     }, 1000);
   };
 
@@ -61,30 +66,59 @@ const Event = () => {
     push(ROUTES.PRIVATE_ROUTES.events);
   };
 
+  if (eventError) {
+    return <EventError error={eventError} />;
+  }
+
   return (
-    <div className="relative h-screen w-screen p-5 bg-black">
-      {!player && <LoadingScreen />}
-
-      <div
-        className="absolute top-10 left-10 z-20 h-11 md:h-16 opacity-40 hover:opacity-100"
-        onClick={onLogoClick}
-      >
-        <img
-          className="object-contain cursor-pointer h-full sm:p-2 md:p-0"
-          src="/png/nightwishLogo.png"
-          alt="logo"
-        />
-      </div>
-
-      <div className="h-1/2 md:h-full">
-        {videoJsOptions && (
-          <VideoPlayer {...{ onPlayerLoaded, ...videoJsOptions }} />
+    <>
+      <Head>
+        {typeof window !== "undefined" && (
+          <script
+            type="application/javascript"
+            src="https://cdn.strivetech.io/services/storage/v0/entity-resource/1385164721045188608/1385165007474208768/gwc.min.js"
+          />
         )}
-      </div>
+      </Head>
+      <div className="relative h-screen w-screen p-5 bg-black">
+        {!player && <LoadingScreen />}
 
-      <Chat />
-    </div>
+        <div
+          className="absolute top-10 left-10 z-20 h-11 md:h-16 opacity-40 hover:opacity-100"
+          onClick={onLogoClick}
+        >
+          <img
+            className="object-contain cursor-pointer h-full sm:p-2 md:p-0"
+            src={`${BASE_PATH}/png/nightwishLogo.png`}
+            alt="logo"
+          />
+        </div>
+
+        <div className="h-1/2 md:h-full">
+          {videoJsOptions && (
+            <VideoPlayer {...{ onPlayerLoaded, ...videoJsOptions }} />
+          )}
+        </div>
+
+        <Chat />
+      </div>
+    </>
   );
 };
+
+export async function getStaticProps() {
+  return { props: {} };
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: Object.keys(EVENTS_BY_ID).map((id) => ({
+      params: {
+        id,
+      },
+    })),
+    fallback: false,
+  };
+}
 
 export default Event;

@@ -7,6 +7,7 @@ import styles from "./login.module.scss";
 import Input from "../../Input";
 import LoginNext from "./Next";
 import { UserContext } from "../../../contexts/user/user.context";
+import { BASE_PATH } from "../../../lib/constants";
 
 interface IForm {
   password: string;
@@ -65,7 +66,11 @@ const LoginPassword = (props: ILoginPage) => {
           placeholder="Password"
           icon={
             <ReactSVG
-              src={showPass ? "/svg/eye.svg" : "/svg/eye-off.svg"}
+              src={
+                showPass
+                  ? `${BASE_PATH}/svg/eye.svg`
+                  : `${BASE_PATH}/svg/eye-off.svg`
+              }
               height={20}
               width={20}
               onClick={() => setShowPass(!showPass)}
@@ -85,7 +90,11 @@ const LoginPassword = (props: ILoginPage) => {
           placeholder="Confirm password"
           icon={
             <ReactSVG
-              src={showPassConfirm ? "/svg/eye.svg" : "/svg/eye-off.svg"}
+              src={
+                showPassConfirm
+                  ? `${BASE_PATH}/svg/eye.svg`
+                  : `${BASE_PATH}/svg/eye-off.svg`
+              }
               height={20}
               width={20}
               onClick={() => setShowPassConfirm(!showPassConfirm)}

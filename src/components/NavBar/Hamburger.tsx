@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ReactSVG } from "react-svg";
-import tw from "../../../tailwind.config.js";
+// import { ReactSVG } from "react-svg";
+// import tw from "../../../tailwind.config.js";
+// import { BASE_PATH } from "../../lib/constants.js";
 
 import styles from "./navbar.module.scss";
 import NavbarMenu from "./NavbarMenu";
@@ -27,7 +28,11 @@ const Hamburguer = () => {
         className="flex justify-center items-center px-5"
         onClick={() => setIsOpen(true)}
       >
-        <ReactSVG src="/svg/hamburger.svg" height={70} width={70} />
+        {/* <ReactSVG
+          src={`${BASE_PATH}/svg/hamburger.svg`}
+          height={70}
+          width={70}
+        /> */}
       </div>
 
       {isOpen && (
@@ -44,8 +49,8 @@ const Hamburguer = () => {
             }`}
           >
             <div className="w-full flex justify-end p-10">
-              <ReactSVG
-                src="/svg/x.svg"
+              {/* <ReactSVG
+                src={`${BASE_PATH}/svg/x.svg`}
                 className="cursor-pointer"
                 onClick={() => setInitClose(true)}
                 beforeInjection={(svg) => {
@@ -54,7 +59,7 @@ const Hamburguer = () => {
                     `width: 5vw; height: 5vw; fill:${tw.theme.extend.colors.brown.main}`,
                   );
                 }}
-              />
+              /> */}
             </div>
 
             <NavbarMenu mobile onItemClick={() => setInitClose(true)} />

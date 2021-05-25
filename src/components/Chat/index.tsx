@@ -1,54 +1,40 @@
-import React, {
-  KeyboardEvent,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
+import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { ReactSVG } from "react-svg";
-// eslint-disable-next-line
-import { Observable, ZenObservable } from "zen-observable-ts";
+import ReconnectingWebSocket from "reconnecting-websocket";
 
 import Message, { IMessage } from "./Message";
 import Input from "../Input";
-import { UserContext } from "../../contexts/user/user.context";
 import { useWindowSize } from "../../lib/hooks";
 import { getRandomColor } from "../../lib/strings";
-import { onCreateMessage } from "../../graphql/subscriptions";
-import { createMessage } from "../../graphql/mutations";
 
 import styles from "./chat.module.scss";
-import { messagesByChannelID } from "../../graphql/queries";
 
-import tw from "../../../tailwind.config.js";
+import Button from "../Button";
+import { BASE_PATH } from "../../lib/constants";
 
-interface IColorsByUsers {
-  [username: string]: string;
-}
+let ws: ReconnectingWebSocket;
 
-interface ImessagesByChannelID {
-  messagesByChannelID: { items: IMessage[] };
-}
-
-interface IOnCreateMessage {
-  value: { data: { onCreateMessage: IMessage } };
+interface IWSMessage {
+  message: string;
+  author: string;
+  color: string;
 }
 
 const Chat = () => {
   const messagesBottom = useRef<HTMLDivElement>(null);
   const messageInput = useRef<HTMLInputElement>(null);
 
-  const { user } = useContext(UserContext);
-
   const { isMobile, isLandscape } = useWindowSize();
 
+  const [username, setUsername] = useState<string>();
+  const [userColor, setUserColor] = useState<string>();
+  const [isUsernameSet, setIsUsernameSet] = useState<boolean>(false);
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [newMessage, setNewMessage] = useState<IMessage | null>();
 
   const [mssg, setMssg] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [isChatEnabled, setIsChatEnabled] = useState<boolean>(true);
-  const [colorsByUsers, setColorsByUsers] = useState<IColorsByUsers>({});
 
   const scrollToBottom = () => {
     if (messagesBottom.current) {
@@ -59,82 +45,36 @@ const Chat = () => {
     }
   };
 
-  // * Get initial messages
+  // * Connect to socket
   useEffect(() => {
-    const getMessages = async () => {
-      try {
-        const res = (await API.graphql(
-          graphqlOperation(messagesByChannelID, {
-            channelID: "1",
-            sortDirection: "ASC",
-          }),
-        )) as GraphQLResult<ImessagesByChannelID>;
+    ws = new ReconnectingWebSocket("wss://chat.burst-staging.com/ws");
 
-        const initColorsByUsers: IColorsByUsers = {};
-        const items: IMessage[] = res.data?.messagesByChannelID?.items.map(
-          (item) => {
-            if (!initColorsByUsers[item.author]) {
-              initColorsByUsers[item.author] =
-                item.author === user.name
-                  ? tw.theme.extend.colors.brown.light
-                  : "white";
-            }
-            const color = initColorsByUsers[item.author];
-            return { ...item, color };
-          },
-        );
+    const randomUserColor = getRandomColor();
 
-        if (items) {
-          setMessages(items);
-          setColorsByUsers(initColorsByUsers);
-        }
-      } catch (e) {
-        console.error("getMessages - error: ", e);
-      }
-    };
+    ws.onmessage = (data) => {
+      const { message, author, color } = JSON.parse(data.data)
+        .body as IWSMessage;
 
-    getMessages();
-  }, [user.name]);
+      if (color === randomUserColor) return;
 
-  // * Subscribe to Appsync to get new messages
-  useEffect(() => {
-    let subscription: ZenObservable.Subscription;
-
-    if (messages?.length) {
-      subscription = (API.graphql(
-        graphqlOperation(onCreateMessage),
-      ) as Observable<IOnCreateMessage>).subscribe({
-        next: (event) => {
-          const {
-            value: {
-              data: {
-                onCreateMessage: { author },
-              },
-            },
-          } = event;
-
-          const color = colorsByUsers[author] || getRandomColor();
-          const newMessage = {
-            ...event.value.data.onCreateMessage,
-            color,
-          };
-
-          // * only update new incoming messages from other users
-          // * this user's messages are being added when sending the message
-          // * so it shows it faster
-          if (newMessage.author === user.name) return;
-
-          setMessages([...messages, newMessage]);
-          setColorsByUsers({ ...colorsByUsers, [author]: getRandomColor() });
-        },
+      setNewMessage({
+        author,
+        body: message,
+        color: "white",
       });
-    }
-
-    return () => {
-      subscription?.unsubscribe();
     };
+
+    setUserColor(randomUserColor);
+  }, []);
+
+  // * Render new message
+  useEffect(() => {
+    if (newMessage) {
+      setMessages([...messages, newMessage]);
+      setNewMessage(null);
+    }
     // eslint-disable-next-line
-  }, [messages]);
+  }, [newMessage]);
 
   // * Scroll to bottom when chat is enabled and new message appears
   useEffect(() => {
@@ -158,35 +98,25 @@ const Chat = () => {
       (document.getElementById("messageInput") as HTMLInputElement).value = "";
       setMssg("");
 
-      // * Set the user's chat color
-      let color = colorsByUsers[user.name];
-      if (!color) {
-        color = getRandomColor();
-        setColorsByUsers({
-          ...colorsByUsers,
-          [user.name]: color,
-        });
-      }
-
       // * Add message to current chat on the front
       const body = mssg.trim();
       setMessages([
         ...messages,
         {
-          author: user.name,
+          author: username,
           body,
-          color,
+          color: userColor,
         },
       ]);
 
-      // * Send message
-      const input = {
-        channelID: "1",
-        author: user.name,
-        body,
-      };
-
-      await API.graphql(graphqlOperation(createMessage, { input }));
+      ws.send(
+        JSON.stringify({
+          action: "message",
+          message: body,
+          author: username,
+          color: userColor,
+        }),
+      );
     } catch (e) {
       console.error("sendMessage - error: ", e);
       setError(e);
@@ -196,6 +126,12 @@ const Chat = () => {
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Enter") {
       sendMessage();
+    }
+  };
+
+  const confirmUsername = () => {
+    if (username) {
+      setIsUsernameSet(true);
     }
   };
 
@@ -212,7 +148,7 @@ const Chat = () => {
         {isChatEnabled ? "Chat" : ""}
         {isChatEnabled && (
           <ReactSVG
-            src="/svg/x.svg"
+            src={`${BASE_PATH}/svg/x.svg`}
             className="cursor-pointer absolute top-0 right-4"
             style={{
               transform: "translateY(50%)",
@@ -230,16 +166,33 @@ const Chat = () => {
 
       <div ref={messagesBottom} className="flex-1 w-full overflow-auto">
         {isChatEnabled ? (
-          messages.map((m) => (
-            <Message key={`${Math.random()}_${m.body}`} {...m} />
-          ))
+          isUsernameSet ? (
+            messages.map((m) => (
+              <Message key={`${Math.random()}_${m.body}`} {...m} />
+            ))
+          ) : (
+            <div className="h-full flex justify-center items-center">
+              <div className="flex flex-col">
+                <div className="flex flex-col justify-center">
+                  <Input
+                    placeholder="Chat username"
+                    onChange={(e) => setUsername(e.target.value.substr(0, 10))}
+                    variant="black"
+                    className={styles.input}
+                    maxLength={10}
+                  />
+                  <Button onClick={confirmUsername}>Set username</Button>
+                </div>
+              </div>
+            </div>
+          )
         ) : (
           <div
             className="absolute bottom-3 right-5 flex justify-center items-center h-14 w-14 ml-3 rounded-full bg-brown-main cursor-pointer"
             onClick={() => setIsChatEnabled(true)}
           >
             <ReactSVG
-              src="/svg/chat.svg"
+              src={`${BASE_PATH}/svg/chat.svg`}
               height={20}
               width={20}
               beforeInjection={(svg) => {
@@ -250,7 +203,7 @@ const Chat = () => {
         )}
       </div>
 
-      {isChatEnabled && (
+      {isChatEnabled && isUsernameSet && (
         <div className="flex items-center pt-5">
           <Input
             id="messageInput"
@@ -269,7 +222,7 @@ const Chat = () => {
             onClick={sendMessage}
           >
             <ReactSVG
-              src="/svg/send.svg"
+              src={`${BASE_PATH}/svg/send.svg`}
               height={20}
               width={20}
               beforeInjection={(svg) => {

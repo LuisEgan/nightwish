@@ -2,7 +2,7 @@ import React from "react";
 import { ReactSVG } from "react-svg";
 
 import Section from "../components/Section";
-import { BUY_TICKET_LINK } from "../lib/constants";
+import { BASE_PATH, BUY_TICKET_LINK } from "../lib/constants";
 
 import { useWindowSize } from "../lib/hooks";
 
@@ -22,7 +22,7 @@ const Home = () => {
       <section className="flex flex-col pb-20">
         <div className="h-96 w-full relative md:h-75vh">
           <img
-            src="/png/hero2x.png"
+            src={`${BASE_PATH}/png/hero2x.png`}
             alt="tabern"
             className="object-cover h-full w-full"
           />
@@ -31,20 +31,12 @@ const Home = () => {
 
         <div className="z-20 flex flex-col px-7 text-brown-main text-center -mt-40 md:-mt-52 md:px-40">
           <span className="text-4xl leading-tight md:leading-snug md:text-7xl">
-            WE HEARTLY WELCOME YOU TO SPEND AN EVENING WITH NIGHTWISH AT THE
-            ISLANDERS ARMS
+            ENJOY AN EVENING WITH NIGHTWISH IN A VIRTUAL WORLD
           </span>
 
           <span className="text-lg pt-3">
-            <b>Fri, May 28, 2021</b> <br />
-            Europe: 8pm CEST / 7pm BST, duration approx. 90min <br />
-            <br /> <b>Sat, May 29, 2021</b>
-            <br /> North and South America: 8pm ET (UTC-4) / 5pm PT (UTC -7) /
-            9pm BRT (UTC-3) / 7pm CST (UTC -5), Europe: <br />
-            <br />
-            <b>Sun, May 30, 2021</b>
-            <br />
-            2am CEST / 1am BST, duration approx. 90min
+            Fri, May 28th, 2021, Europe | Sat, May 29th, 2021, North and South
+            America
           </span>
         </div>
       </section>
@@ -92,7 +84,7 @@ const Home = () => {
         }
         // onClick={() => console.log("Redeem ticket")}
         buttonText="Redeem Ticket"
-        img="/png/zepellin2x.png"
+        img={`${BASE_PATH}/png/zepellin2x.png`}
       />
 
       <Section
@@ -108,13 +100,13 @@ const Home = () => {
         }
         // onClick={() => console.log("Redeem ticket")}
         buttonText="Redeem Ticket"
-        img="/png/iphone2x.png"
+        img={`${BASE_PATH}/png/iphone2x.png`}
         imageContainerClassname="mx-7"
         imageClassname="object-contain"
         imgSize="flex-1"
       >
         <ReactSVG
-          src="/svg/circleText.svg"
+          src={`${BASE_PATH}/svg/circleText.svg`}
           height={svgCicleTextSize}
           width={svgCicleTextSize}
           className="absolute top-0 left-5 md:left-auto md:right-20"
@@ -144,11 +136,11 @@ const Home = () => {
         }
         // onClick={() => console.log("Redeem ticket")}
         buttonText="Redeem Ticket"
-        img="/png/church2x.png"
+        img={`${BASE_PATH}/png/church2x.png`}
       />
 
       <ReactSVG
-        src="/svg/logo.svg"
+        src={`${BASE_PATH}/svg/logo.svg`}
         height={height * 0.2}
         width={width * 0.8}
         className="flex justify-center py-10"

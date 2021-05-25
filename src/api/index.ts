@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IUser } from "../Types/user.types";
 
-const DNS = "https://api.burst-staging.com/v1/";
+const DNS = "https://api.burst-staging.com/v1";
 
 export const setAxiosAuthorizationHeader = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import NavbarMenu from "./NavbarMenu";
 import { useWindowSize } from "../../lib/hooks";
 import Hamburger from "./Hamburger";
-import { ROUTES } from "../../lib/constants";
+import { BASE_PATH, ROUTES } from "../../lib/constants";
 
 export const NAVBAR_HEIGHT_CLASS = "h-20";
 
@@ -31,7 +31,7 @@ const NavBar = () => {
         >
           <img
             className="m-auto object-contain cursor-pointer h-full sm:p-2 md:p-0"
-            src="/png/nightwishLogo.png"
+            src={`${BASE_PATH}/png/nightwishLogo.png`}
             alt="logo"
           />
         </div>

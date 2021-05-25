@@ -8,6 +8,7 @@ import {
   AccordionItemState,
 } from "react-accessible-accordion";
 import { ReactSVG } from "react-svg";
+import { BASE_PATH } from "../../../lib/constants";
 
 export interface IAccordionItem {
   title: string | JSX.Element;
@@ -31,7 +32,11 @@ const Title = (props: ITitle) => {
 
       <div className="px-5">
         <ReactSVG
-          src={expanded ? "/svg/minus.svg" : "/svg/plus.svg"}
+          src={
+            expanded
+              ? `${BASE_PATH}/svg/minus.svg`
+              : `${BASE_PATH}/svg/plus.svg`
+          }
           height={30}
           width={30}
           beforeInjection={(svg) => {

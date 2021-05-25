@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from "video.js";
+import { BASE_PATH } from "../../lib/constants";
 
 export interface IOnPlayerLoader {
   videoNode: HTMLVideoElement;
@@ -87,7 +88,7 @@ const VideoPlayer = (props: IVideoPlayer) => {
           videoNode = node;
         }}
         preload="none"
-        poster={poster || "/png/nightwishLogo.png"}
+        poster={poster || `${BASE_PATH}/png/nightwishLogo.png`}
       />
     </div>
   );

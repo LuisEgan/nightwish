@@ -7,4 +7,27 @@ module.exports = {
 
     return config;
   },
+
+  basePath: "/nightwish",
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: "/",
+  //       destination: "/nightwish",
+  //       permanent: true,
+  //       basePath: false,
+  //     },
+  //   ];
+  // },
+
+  exportPathMap: async function () {
+    return {
+      "/": { page: "/" },
+      "/login": { page: "/login" },
+      "/redeem": { page: "/redeem" },
+      "/register": { page: "/register" },
+      "/support": { page: "/support" },
+      "/event/all": { page: "/event/all" },
+    };
+  },
 };

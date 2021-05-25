@@ -72,11 +72,15 @@ const Events = () => {
   };
 
   return (
-    <div className="page-container px-7 md:px-60">
+    <div className="page-container px-7 md:px-40">
       <div className="conffetti" />
       <div className="py-12">
         <div className="flex flex-col">
           <span className="text-brown-main text-3xl">Redeem your ticket</span>
+
+          <Link href="/event/1">
+            <a className="text-white">event</a>
+          </Link>
 
           <div className="flex flex-col py-10">
             <div className="flex flex-col md:flex-row">

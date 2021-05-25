@@ -38,7 +38,7 @@ const EventRow = (props: IEventRow) => {
       if (isTimeToRock) {
         txt = "Closed";
       } else {
-        txt = "Buy now";
+        txt = "Buy";
       }
     }
 

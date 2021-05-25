@@ -5,7 +5,7 @@ import { ReactSVG } from "react-svg";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Input from "../components/Input";
-import { EMAIL_REGEX, ROUTES } from "../lib/constants";
+import { BASE_PATH, EMAIL_REGEX, ROUTES } from "../lib/constants";
 
 import styles from "../components/Pages/Login/login.module.scss";
 import Button from "../components/Button";
@@ -97,7 +97,11 @@ const Register = () => {
             containerClassName="mb-2"
             icon={
               <ReactSVG
-                src={showPass ? "/svg/eye.svg" : "/svg/eye-off.svg"}
+                src={
+                  showPass
+                    ? `${BASE_PATH}/svg/eye.svg`
+                    : `${BASE_PATH}/svg/eye-off.svg`
+                }
                 height={20}
                 width={20}
                 onClick={() => setShowPass(!showPass)}
@@ -118,7 +122,11 @@ const Register = () => {
             title="Cofirm your password"
             icon={
               <ReactSVG
-                src={showPassConfirm ? "/svg/eye.svg" : "/svg/eye-off.svg"}
+                src={
+                  showPassConfirm
+                    ? `${BASE_PATH}/svg/eye.svg`
+                    : `${BASE_PATH}/svg/eye-off.svg`
+                }
                 height={20}
                 width={20}
                 onClick={() => setShowPassConfirm(!showPassConfirm)}

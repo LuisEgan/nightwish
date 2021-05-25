@@ -13,7 +13,7 @@ interface INavbarMenu {
 }
 
 const staticItems = [
-  { route: "luppi.fi", title: "Buy tickets", newTab: true },
+  { route: "nightwish.com", title: "Buy tickets", newTab: true },
   { route: ROUTES.PUBLIC_ROUTES.support, title: "Support" },
 ];
 

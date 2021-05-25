@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { ReactSVG } from "react-svg";
 import { UserContext } from "../../contexts/user/user.context";
-import { ROUTES } from "../../lib/constants";
+import { BASE_PATH, ROUTES } from "../../lib/constants";
 
 const links = [
   { route: "luppi.fi", title: "Buy tickets", newTab: true },
@@ -12,29 +12,38 @@ const links = [
 ];
 
 const socialNetworkLinks = [
-  { link: "https://www.instagram.com/nightwish", icon: "/svg/instagram.svg" },
-  { link: "https://www.facebook.com/nightwish/", icon: "/svg/facebook.svg" },
-  { link: "https://twitter.com/NightwishBand", icon: "/svg/twitter.svg" },
+  {
+    link: "https://www.instagram.com/nightwish",
+    icon: `${BASE_PATH}/svg/instagram.svg`,
+  },
+  {
+    link: "https://www.facebook.com/nightwish/",
+    icon: `${BASE_PATH}/svg/facebook.svg`,
+  },
+  {
+    link: "https://twitter.com/NightwishBand",
+    icon: `${BASE_PATH}/svg/twitter.svg`,
+  },
   {
     link: "https://www.youtube.com/channel/UCQplaZZ2mv8fo8Zd-1hQPzg",
-    icon: "/svg/youtube.svg",
+    icon: `${BASE_PATH}/svg/youtube.svg`,
   },
   {
     link:
       "https://open.spotify.com/artist/2NPduAUeLVsfIauhRwuft1?si=P_b0Qe5SQEavH4JsqCeIgA&nd=1",
-    icon: "/svg/spotify.svg",
+    icon: `${BASE_PATH}/svg/spotify.svg`,
   },
   {
     link: "https://music.apple.com/cl/artist/nightwish/2898807?uo=4&app=music",
-    icon: "/svg/apple.svg",
+    icon: `${BASE_PATH}/svg/apple.svg`,
   },
   {
     link: "https://www.contrapromotion.com/en/artists/nightwish/",
-    icon: "/svg/boarding-pass.svg",
+    icon: `${BASE_PATH}/svg/boarding-pass.svg`,
   },
   {
     link: "https://www.backstagerockshop.com/collections/nightwish",
-    icon: "/svg/shopping-cart.svg",
+    icon: `${BASE_PATH}/svg/shopping-cart.svg`,
   },
 ];
 
