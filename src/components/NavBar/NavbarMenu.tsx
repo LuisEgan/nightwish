@@ -77,7 +77,12 @@ const NavbarMenu = (props: INavbarMenu) => {
           case "logout":
             return (
               <div key={item.title}>
-                <a onClick={handleLogout} href={item.route} target="_blank" rel="noreferrer">
+                <a
+                  onClick={handleLogout}
+                  href={item.route}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {item.title}
                 </a>
               </div>
@@ -103,9 +108,7 @@ const NavbarMenu = (props: INavbarMenu) => {
 
       <div>
         {isLoggedIn ? (
-          <Button outline onClick={onLogout}>
-            Log out
-          </Button>
+          <Button outline>Log out</Button>
         ) : (
           <Button outline onClick={registerTicket}>
             Register Your Ticket
