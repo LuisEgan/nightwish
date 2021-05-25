@@ -18,11 +18,11 @@ const NavBar = () => {
   return (
     <div className="h-28 md:h-32">
       <div
-        className="fixed w-full h-28 md:h-32 flex justify-between z-20 bg-black py-7 px-12"
+        className="fixed w-full h-28 md:h-32 flex justify-between z-20 bg-black py-7"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
       >
         <Link href="/">
-          <a className="flex justify-center">
+          <a className="flex justify-center pl-12">
             <img
               className="md:max-h-20 max-h-16 h-auto w-auto border-none"
               src={`${BASE_PATH}/png/nw-logo.png`}
