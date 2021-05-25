@@ -24,11 +24,11 @@ const NavbarMenu = (props: INavbarMenu) => {
 
   const { push } = useRouter();
 
-  const redeemTicket = () => {
-    if (onItemClick) onItemClick();
+  // const redeemTicket = () => {
+  //   if (onItemClick) onItemClick();
 
-    push(ROUTES.PRIVATE_ROUTES.events);
-  };
+  //   push(ROUTES.PRIVATE_ROUTES.events);
+  // };
 
   const onLogout = () => {
     logout();
@@ -76,9 +76,11 @@ const NavbarMenu = (props: INavbarMenu) => {
       ))}
 
       <div>
-        <Button outline onClick={isLoggedIn ? onLogout : redeemTicket}>
-          {isLoggedIn ? "Logout" : "Register Your Ticket"}
-        </Button>
+        {isLoggedIn && (
+          <Button outline onClick={onLogout}>
+            Log out
+          </Button>
+        )}
       </div>
     </div>
   );

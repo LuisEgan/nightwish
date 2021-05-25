@@ -47,10 +47,10 @@ const Section: FC<ISection> = (props) => {
       {img && (
         <Fade left={!reverse} right={reverse}>
           <div
-            className={`w-5/6 h-40 relative ${imageContainerClassname} md:h-75vh md:mb-10 md:w-0 ${imgSize}`}
+            className={`w-full relative ${imageContainerClassname} md:mb-10 md:w-0 ${imgSize}`}
           >
             <img
-              className={`m-auto h-full object-contain ${imageClassname}`}
+              className={`m-auto object-contain ${imageClassname || ""}`}
               src={img}
               alt="section"
             />
@@ -61,12 +61,12 @@ const Section: FC<ISection> = (props) => {
       <div
         className={`${
           img
-            ? "md:w-0 md:flex-1 md:flex md:flex-col md:justify-center"
-            : "md:flex md:px-44"
+            ? "py-7 md:py-0 md:w-0 md:flex-1 md:flex md:flex-col md:justify-center"
+            : "md:flex md:px-4 lg:px-8 xl:px-30 2xl:px-40"
         } ${center ? "" : reverse ? "md:pl-20" : "md:pr-20"}`}
       >
         <div
-          className={`${titleClassname} pb-5 text-2xl text-brown-main leading-snug md:text-6xl ${
+          className={`${titleClassname} pb-5 text-3xl text-brown-main leading-snug md:text-4xl lg:text-6xl ${
             center && "flex-1"
           }`}
         >
@@ -74,14 +74,12 @@ const Section: FC<ISection> = (props) => {
         </div>
 
         <div className={`${descriptionClassname} ${center && "flex-1"}`}>
-          <div
-            className="pb-5 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light"
-          >
+          <div className="pb-5 text-xl text-brown-main leading-snug md:text-white md:text-lg md:font-light">
             {description}
           </div>
 
           {onClick && (
-            <div className="py-10">
+            <div className="pt-4 pb-5 mb-7">
               <Button {...buttonProps} onClick={onClick}>
                 {buttonText}
               </Button>

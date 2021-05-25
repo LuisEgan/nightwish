@@ -1,5 +1,6 @@
 import React from "react";
 import { ReactSVG } from "react-svg";
+import { useRouter } from "next/router";
 
 import Section from "../components/Section";
 import { BASE_PATH, BUY_TICKET_LINK } from "../lib/constants";
@@ -8,6 +9,7 @@ import { useWindowSize } from "../lib/hooks";
 
 const Home = () => {
   const { isMobile, width, height } = useWindowSize();
+  const router = useRouter();
 
   if (!width) return null;
 
@@ -20,7 +22,10 @@ const Home = () => {
   return (
     <div className="page-container bg-black">
       <section className="flex flex-col pb-20">
-        <div className="h-96 w-full relative md:h-75vh">
+        <div
+          className="h-96 w-full relative md:h-75vh"
+          style={{ minHeight: "24rem" }}
+        >
           <img
             src={`${BASE_PATH}/png/hero-background@2x.png`}
             alt="The Islanders Arms"
@@ -29,21 +34,21 @@ const Home = () => {
           <div className="absolute h-1/2 w-full top-1/2 left-0 bg-gradient-to-t from-black to-transparent" />
         </div>
 
-        <div className="z-10 text-brown-main text-center max-w-5xl mx-auto -mt-40 md:-mt-80">
+        <div className="hero-content z-10 text-brown-main text-center max-w-5xl mx-auto">
           <h1
-            className="text-4xl xl:text-8xl md:text-7xl mb-10 tracking-wider leading-none uppercase"
+            className="px-7 md:px-0 text-5xl xl:text-8xl md:text-7xl mb-10 tracking-wider leading-none uppercase"
             style={{ lineHeight: 1.1 }}
           >
             Welcome to an evening with nightwish at The Islanders Arms
           </h1>
 
-          <p className="text-lg mb-8 leading-relaxed">
+          <p className="text-lg px-7 md:px-0 mb-8 leading-relaxed">
             Fri, May 28, 2021
             <br />
             Europe: 9pm EEST (Finland) / 8pm CEST / 7pm BST, duration approx.
             90min
           </p>
-          <p className="text-lg">
+          <p className="text-lg px-7 md:px-0 leading-relaxed">
             Sat, May 29, 2021
             <br />
             North and South America: 8pm ET (UTC-4) / 5pm PT (UTC -7) /9pm BRT
@@ -56,17 +61,17 @@ const Home = () => {
       </section>
 
       <Section
-        descriptionClassname="text-left mt-4 pl-7"
-        titleClassname="pr-7 md:text-right"
+        descriptionClassname="text-left mt-4 px-7 md:px-0 md:pl-7"
+        titleClassname="px-7 md:px-0 md:pr-7 md:text-right"
         title="Nightwish invites you to a shared adventure at The Islanders Arms, a tavern built in virtual reality."
         center
         description={
           <>
             A full-length live experience of magical dimensions in a virtual
             world The Islander Arms tavern. On both evenings, an unforgettable
-            90-minute performance, the songs from the latest album “Human. :II:
-            Nature. ”will be played live for the first time. The setlist has
-            variations for each night.
+            90-minute performance, the songs from the latest album &lquo;Human.
+            :II: Nature.&rquo; will be played live for the first time. The
+            setlist has variations for each night.
           </>
         }
         onClick={onBuyTicket}
@@ -76,43 +81,36 @@ const Home = () => {
           style: {
             margin: "auto",
           },
+          className: "mx-auto md:mx-0",
         }}
       />
 
       <Section
-        title="How to Buy Your Ticket and Access the Live Concert"
-        titleClassname="px-7"
-        descriptionClassname="px-7"
+        title="How to get the full VIP experience"
+        titleClassname="px-7 md:pl-8 lg:pl-10"
+        descriptionClassname="px-7 md:pl-8 lg:pl-10"
         className="pb-10"
         description={
           <>
-            Duis ac pretium dolor, ac tincidunt orci. Vivamus posuere ac mi
-            accumsan molestie. Suspendisse nec finibus odio. Nulla facilisi.{" "}
-            <br />
-            <br /> Donec libero arcu, elementum vitae dapibus ut, gravida id
-            velit. Ut mollis est a elit feugiat consectetur. Aenean vulputate
-            justo et risus scelerisque cursus.
+            The VIP packages include a virtual session with the yet unrevealed
+            bass player of Nightwish’s &lquo;Human. :II: Nature.&rquo; tour,
+            among other perks. The identity of the bass player will be revealed
+            on the live session included in the VIP package on Friday, May 28,
+            2021.
           </>
         }
-        // onClick={() => console.log("Redeem ticket")}
-        buttonText="Redeem Ticket"
-        img={`${BASE_PATH}/png/zepellin2x.png`}
+        onClick={() => {
+          window.open("https://www.nightwish.com/#tickets", "_blank");
+        }}
+        buttonText="Get Your VIP Package"
+        img={`${BASE_PATH}/png/middle@2x.png`}
       />
 
       <Section
         title="Chat with other fans. Engage with your friends and meet other fans around the world."
-        titleClassname="text-left px-7 md:px-0"
+        titleClassname="text-left text-4xl text-center py-7 md:py-0 md:text-left md:text-2xl px-7 md:px-0"
         descriptionClassname="px-7 md:px-0"
-        description={
-          <>
-            Donec libero arcu, elementum vitae dapibus ut, gravida id velit. Ut
-            mollis est a elit feugiat consectetur. Aenean vulputate justo et
-            risus scelerisque cursus.
-          </>
-        }
-        // onClick={() => console.log("Redeem ticket")}
-        buttonText="Redeem Ticket"
-        img={`${BASE_PATH}/png/iphone2x.png`}
+        img={`${BASE_PATH}/png/iphone@2x.png`}
         imageContainerClassname="mx-7"
         imageClassname="object-contain"
         imgSize="flex-1"
@@ -133,33 +131,34 @@ const Home = () => {
 
       <Section
         reverse
-        titleClassname="px-7 text-right"
-        title="How to Buy Your Ticket and Access the Live Concert"
-        descriptionClassname="px-7 text-right"
+        titleClassname="px-7 md:pr-8 lg:pr-10 text-center md:text-right"
+        title="How to register a ticket and access the event"
+        descriptionClassname="px-7 md:pr-8 lg:pr-10 text-center md:text-right"
         description={
           <>
-            Duis ac pretium dolor, ac tincidunt orci. Vivamus posuere ac mi
-            accumsan molestie. Suspendisse nec finibus odio. Nulla facilisi.{" "}
-            <br />
-            <br /> Donec libero arcu, elementum vitae dapibus ut, gravida id
-            velit. Ut mollis est a elit feugiat consectetur. Aenean vulputate
-            justo et risus scelerisque cursus.
+            Registration of purchased tickets will open on this site latest 24
+            hours before the first show
           </>
         }
-        // onClick={() => console.log("Redeem ticket")}
-        buttonText="Redeem Ticket"
-        img={`${BASE_PATH}/png/church2x.png`}
+        onClick={() => router.push("/support")}
+        buttonProps={{
+          className: "m-auto md:m-none md:float-right",
+        }}
+        buttonText="FAQ"
+        img={`${BASE_PATH}/png/bottom@2x.png`}
       />
 
       <ReactSVG
         src={`${BASE_PATH}/svg/logo.svg`}
-        height={height * 0.2}
+        height={height * (width < 768 ? 0.2 : 0.8)}
         width={width * 0.8}
         className="flex justify-center py-10"
         beforeInjection={(svg) => {
           svg.setAttribute(
             "style",
-            `width: ${width * 0.8}px; height: ${height * 0.2}px;`,
+            `width: ${width * 0.8}px; height: ${
+              height * (width < 768 ? 0.2 : 0.8)
+            }px;`,
           );
         }}
       />

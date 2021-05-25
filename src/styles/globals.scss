@@ -105,3 +105,19 @@ button {
     width: 68vw !important;
   }
 }
+
+.hero-content {
+  margin-top: -10rem;
+}
+
+@media (min-height: 600px) {
+  .hero-content {
+    margin-top: -12rem;
+  }
+}
+
+@media (min-height: 800px) {
+  .hero-content {
+    margin-top: -18rem;
+  }
+}
