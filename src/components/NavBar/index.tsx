@@ -1,14 +1,13 @@
 import React from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import NavbarMenu from "./NavbarMenu";
 import { useWindowSize } from "../../lib/hooks";
 import Hamburger from "./Hamburger";
 import { BASE_PATH, ROUTES } from "../../lib/constants";
 
-export const NAVBAR_HEIGHT_CLASS = "h-20";
-
 const NavBar = () => {
-  const { pathname, push } = useRouter();
+  const { pathname } = useRouter();
 
   const { isMobile } = useWindowSize();
 
@@ -16,28 +15,24 @@ const NavBar = () => {
     return null;
   }
 
-  const onLogoClick = () => {
-    push(ROUTES.PUBLIC_ROUTES.index);
-  };
-
   return (
-    <div
-      className={`${NAVBAR_HEIGHT_CLASS} fixed w-full flex justify-between z-10 bg-black opacity-80`}
-    >
-      <div className="h-full w-3/5 px-5 md:w-1/4 md:py-4">
-        <div
-          className="w-full h-full flex justify-center"
-          onClick={onLogoClick}
-        >
-          <img
-            className="m-auto object-contain cursor-pointer h-full sm:p-2 md:p-0"
-            src={`${BASE_PATH}/png/nightwishLogo.png`}
-            alt="logo"
-          />
-        </div>
-      </div>
+    <div className="h-28 md:h-32">
+      <div
+        className="fixed w-full h-28 md:h-32 flex justify-between z-20 bg-black py-7 px-12"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.85);" }}
+      >
+        <Link href="/">
+          <a className="flex justify-center">
+            <img
+              className="md:max-h-20 max-h-16 h-auto w-auto border-none"
+              src={`${BASE_PATH}/png/nw-logo.png`}
+              alt="Nightwish"
+            />
+          </a>
+        </Link>
 
-      {isMobile ? <Hamburger /> : <NavbarMenu />}
+        {isMobile ? <Hamburger /> : <NavbarMenu />}
+      </div>
     </div>
   );
 };

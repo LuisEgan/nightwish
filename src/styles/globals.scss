@@ -48,6 +48,10 @@ a {
   border-radius: 10px;
 }
 
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
 button {
   border: 1px solid #f2f2f2;
   border-radius: 50px;
@@ -86,7 +90,6 @@ button {
 
 .page-container {
   min-height: 90vh;
-  @apply pt-20 bg-black;
 }
 
 .vjs-big-play-button {

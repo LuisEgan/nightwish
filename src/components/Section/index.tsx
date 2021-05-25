@@ -13,6 +13,7 @@ interface ISection {
   imageClassname?: string;
   imageContainerClassname?: string;
   reverse?: boolean;
+  center?: boolean;
   imgSize?: "flex-1" | "flex-1.5" | "flex-2";
   descriptionClassname?: string;
   titleClassname?: string;
@@ -31,6 +32,7 @@ const Section: FC<ISection> = (props) => {
     imageClassname,
     imageContainerClassname = "",
     reverse,
+    center,
     imgSize = "flex-1.5",
     descriptionClassname,
     titleClassname,
@@ -61,23 +63,25 @@ const Section: FC<ISection> = (props) => {
           img
             ? "md:w-0 md:flex-1 md:flex md:flex-col md:justify-center"
             : "md:flex md:px-44"
-        } ${reverse ? "md:pl-20" : "md:pr-20"}`}
+        } ${center ? "" : reverse ? "md:pl-20" : "md:pr-20"}`}
       >
         <div
-          className={`${titleClassname} pb-5 text-2xl text-brown-main leading-snug md:text-6xl`}
+          className={`${titleClassname} pb-5 text-2xl text-brown-main leading-snug md:text-6xl ${
+            center && "flex-1"
+          }`}
         >
           {title}
         </div>
 
-        <div>
+        <div className={`${descriptionClassname} ${center && "flex-1"}`}>
           <div
-            className={`${descriptionClassname} pb-5 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light`}
+            className="pb-5 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light"
           >
             {description}
           </div>
 
           {onClick && (
-            <div className="px-7 py-10">
+            <div className="py-10">
               <Button {...buttonProps} onClick={onClick}>
                 {buttonText}
               </Button>

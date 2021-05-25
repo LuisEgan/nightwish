@@ -22,39 +22,51 @@ const Home = () => {
       <section className="flex flex-col pb-20">
         <div className="h-96 w-full relative md:h-75vh">
           <img
-            src={`${BASE_PATH}/png/hero2x.png`}
-            alt="tabern"
+            src={`${BASE_PATH}/png/hero-background@2x.png`}
+            alt="The Islanders Arms"
             className="object-cover h-full w-full"
           />
-          <div className="absolute h-full w-full top-0 left-0 z-10 bg-gradient-to-t from-black to-transparent" />
+          <div className="absolute h-1/2 w-full top-1/2 left-0 bg-gradient-to-t from-black to-transparent" />
         </div>
 
-        <div className="z-20 flex flex-col px-7 text-brown-main text-center -mt-40 md:-mt-52 md:px-40">
-          <span className="text-4xl leading-tight md:leading-snug md:text-7xl">
-            ENJOY AN EVENING WITH NIGHTWISH IN A VIRTUAL WORLD
-          </span>
+        <div className="z-10 text-brown-main text-center max-w-5xl mx-auto -mt-40 md:-mt-80">
+          <h1
+            className="text-4xl xl:text-8xl md:text-7xl mb-10 tracking-wider leading-none uppercase"
+            style={{ lineHeight: 1.1 }}
+          >
+            Welcome to an evening with nightwish at The Islanders Arms
+          </h1>
 
-          <span className="text-lg pt-3">
-            Fri, May 28th, 2021, Europe | Sat, May 29th, 2021, North and South
-            America
-          </span>
+          <p className="text-lg mb-8 leading-relaxed">
+            Fri, May 28, 2021
+            <br />
+            Europe: 9pm EEST (Finland) / 8pm CEST / 7pm BST, duration approx.
+            90min
+          </p>
+          <p className="text-lg">
+            Sat, May 29, 2021
+            <br />
+            North and South America: 8pm ET (UTC-4) / 5pm PT (UTC -7) /9pm BRT
+            (UTC-3) / 7pm CST (UTC-5),
+            <br />
+            Europe: Sun, May 30, 2021, 3am EEST (Finland) / 2am CEST / 1am BST,
+            duration approx. 90min
+          </p>
         </div>
       </section>
 
       <Section
-        descriptionClassname="text-left mt-4 px-7"
-        titleClassname="px-7 md:px-0 md:text-right"
-        title="The band offers fans a unique experience by inviting them to a
-        shared adventure at The Islanders Arms, a tavern built in virtual reality."
+        descriptionClassname="text-left mt-4 pl-7"
+        titleClassname="pr-7 md:text-right"
+        title="Nightwish invites you to a shared adventure at The Islanders Arms, a tavern built in virtual reality."
+        center
         description={
           <>
-            A full-length live experience that reaches magical dimensions will
-            be set in virtual reality – The Islander Inn tavern. During the show
-            the band and the audience will dive together into diverse imaginary
-            3D worlds. On both evenings, the audience can expect an
-            unforgettable 90-minute performance, and will get to hear songs from
-            the latest album ”Human. :II: Nature.” live for the first time. The
-            setlist has variation for each night.
+            A full-length live experience of magical dimensions in a virtual
+            world The Islander Arms tavern. On both evenings, an unforgettable
+            90-minute performance, the songs from the latest album “Human. :II:
+            Nature. ”will be played live for the first time. The setlist has
+            variations for each night.
           </>
         }
         onClick={onBuyTicket}
