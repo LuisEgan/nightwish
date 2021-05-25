@@ -107,7 +107,6 @@ const Home = () => {
         titleClassname="text-left text-4xl text-center py-7 md:py-0 md:text-left md:text-2xl px-7 md:px-0"
         descriptionClassname="px-7 md:px-0"
         img={`${BASE_PATH}/png/iphone@2x.png`}
-        imageContainerClassname="mx-7"
         imageClassname="object-contain"
         imgSize="flex-1"
       >
