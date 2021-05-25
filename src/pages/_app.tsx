@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { AppProps } from "next/dist/next-server/lib/router/router";
-
 import { BASE_PATH, LOCAL_STORAGE, ROUTES } from "../lib/constants";
 import PrivateRoute from "../components/Auth/PrivateRoute";
 
@@ -21,7 +20,15 @@ import "../styles/accordion.scss";
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
+  const [isChrome, setIsChrome] = useState(
+    typeof window !== "undefined" &&
+      window.navigator.userAgent.indexOf("Chrome") !== -1,
+  );
+
   useEffect(() => {
+    if (window) {
+      setIsChrome(window.navigator.userAgent.indexOf("Chrome") !== -1);
+    }
     const accessToken = localStorage.getItem(LOCAL_STORAGE.USER_TOKEN);
     if (accessToken) {
       setAxiosAuthorizationHeader(accessToken);
@@ -42,18 +49,18 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>Nightwish</title>
         <link rel="icon" href={`${BASE_PATH}/favicon.ico`} />
       </Head>
-
-      <NavBar />
-
-      {privateRoutes.includes(router.pathname) ? (
-        <PrivateRoute>
+      <div id="website" className={isChrome ? "isChrome" : ""}>
+        <NavBar />
+        {privateRoutes.includes(router.pathname) ? (
+          <PrivateRoute>
+            <Component {...pageProps} />
+          </PrivateRoute>
+        ) : (
           <Component {...pageProps} />
-        </PrivateRoute>
-      ) : (
-        <Component {...pageProps} />
-      )}
+        )}
 
-      <Footer />
+        <Footer />
+      </div>
     </UserProvider>
   );
 };

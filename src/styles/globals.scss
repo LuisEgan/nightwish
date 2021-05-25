@@ -48,10 +48,6 @@ a {
   border-radius: 10px;
 }
 
-img {
-  image-rendering: -webkit-optimize-contrast;
-}
-
 button {
   border: 1px solid #f2f2f2;
   border-radius: 50px;
@@ -104,6 +100,10 @@ button {
   .vjs-control-bar {
     width: 68vw !important;
   }
+}
+
+.isChrome img {
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .hero-content {

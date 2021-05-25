@@ -22,9 +22,9 @@ const NavBar = () => {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
       >
         <Link href="/">
-          <a className="flex pl-12 py-7">
+          <a className="pl-12 py-7">
             <img
-              className="md:max-h-20 max-h-16 h-auto w-auto border-none"
+              style={{ height: "100%" }}
               src={`${BASE_PATH}/png/nw-logo.png`}
               alt="Nightwish"
             />
