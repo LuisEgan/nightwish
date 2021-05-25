@@ -19,7 +19,7 @@ const NavBar = () => {
     <div className="h-28 md:h-32">
       <div
         className="fixed w-full h-28 md:h-32 flex justify-between z-20 bg-black py-7 px-12"
-        style={{ backgroundColor: "rgba(0, 0, 0, 0.85);" }}
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
       >
         <Link href="/">
           <a className="flex justify-center">

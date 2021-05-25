@@ -77,7 +77,7 @@ const NavbarMenu = (props: INavbarMenu) => {
 
       <div>
         <Button outline onClick={isLoggedIn ? onLogout : redeemTicket}>
-          {isLoggedIn ? "Logout" : "Redeem"}
+          {isLoggedIn ? "Logout" : "Register Your Ticket"}
         </Button>
       </div>
     </div>
