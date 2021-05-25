@@ -14,6 +14,12 @@ export const ROUTES = {
   },
 };
 
+export const API_DNS = (() =>
+  typeof window !== "undefined" &&
+  window.location.hostname.indexOf("burst.fi") !== -1
+    ? "https://api.burst.fi/v1"
+    : "https://api.burst-staging.com/v1")();
+
 export const LOCAL_STORAGE = {
   USER_TOKEN: "USER_TOKEN",
   USER: "USER",

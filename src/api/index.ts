@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IUser } from "../Types/user.types";
 
-const DNS = "https://api.burst-staging.com/v1";
+import { API_DNS } from "../lib/constants";
 
 export const setAxiosAuthorizationHeader = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -17,7 +17,7 @@ const register = async (body: IAuth) => {
       accessToken: string;
       success: boolean;
       user: IUser;
-    }>(`${DNS}/register`, body);
+    }>(`${API_DNS}/register`, body);
 
     if (!res?.data.success) throw new Error("Error");
 
@@ -33,7 +33,7 @@ const login = async (body: IAuth) => {
       accessToken: string;
       success: boolean;
       user: IUser;
-    }>(`${DNS}/login`, body);
+    }>(`${API_DNS}/login`, body);
 
     if (!res?.data.success) throw new Error("Error");
 
@@ -49,7 +49,7 @@ interface IRedeemTicket {
 const redeemTicket = async (body: IRedeemTicket) => {
   try {
     const res = await axios.post<{ success: boolean; user: IUser }>(
-      `${DNS}/ticket`,
+      `${API_DNS}/ticket`,
       body,
     );
 
@@ -64,7 +64,7 @@ const redeemTicket = async (body: IRedeemTicket) => {
 const getUser = async () => {
   try {
     const res = await axios.get<{ success: boolean; user: IUser }>(
-      `${DNS}/user`,
+      `${API_DNS}/user`,
     );
 
     if (!res?.data.success) throw new Error("Error");
@@ -84,7 +84,7 @@ const getEvent = async (params: IGetEvent) => {
       success: boolean;
       url?: string;
       error?: string;
-    }>(`${DNS}/playlist/${params.eventId}`);
+    }>(`${API_DNS}/playlist/${params.eventId}`);
 
     if (!res?.data.success && res?.data.error)
       throw new Error(res?.data.error || "Error");
