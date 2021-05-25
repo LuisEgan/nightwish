@@ -22,10 +22,7 @@ const Home = () => {
   return (
     <div className="page-container bg-black">
       <section className="flex flex-col pb-20">
-        <div
-          className="h-96 w-full relative md:h-75vh"
-          style={{ minHeight: "24rem" }}
-        >
+        <div className="w-full relative h-75vh">
           <img
             src={`${BASE_PATH}/png/hero-background@2x.png`}
             alt="The Islanders Arms"
@@ -36,7 +33,7 @@ const Home = () => {
 
         <div className="hero-content z-10 text-brown-main text-center max-w-5xl mx-auto">
           <h1
-            className="px-7 md:px-0 text-5xl xl:text-8xl md:text-7xl mb-10 tracking-wider leading-none uppercase"
+            className="px-7 md:px-0 text-4xl md:text-6xl lg:text-6xl xl:text-8xl mb-10 tracking-wider leading-none uppercase"
             style={{ lineHeight: 1.1 }}
           >
             Welcome to an evening with nightwish at The Islanders Arms

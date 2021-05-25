@@ -107,17 +107,23 @@ button {
 }
 
 .hero-content {
-  margin-top: -10rem;
+  margin-top: -25vh;
 }
 
-@media (min-height: 600px) {
+@media (min-width: 768px) {
   .hero-content {
-    margin-top: -12rem;
+    margin-top: -25vh;
   }
 }
 
-@media (min-height: 800px) {
+@media (min-height: 600px) and (min-width: 768px) {
   .hero-content {
-    margin-top: -18rem;
+    margin-top: -25vh;
+  }
+}
+
+@media (min-height: 800px) and (min-width: 768px) {
+  .hero-content {
+    margin-top: -25vh;
   }
 }

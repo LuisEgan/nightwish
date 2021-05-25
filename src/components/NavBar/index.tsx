@@ -16,13 +16,13 @@ const NavBar = () => {
   }
 
   return (
-    <div className="h-28 md:h-32">
+    <div className="h-24 md:h-24 lg:h-28">
       <div
-        className="fixed w-full h-28 md:h-32 flex justify-between z-20 bg-black py-7"
+        className="relative lg:fixed w-full h-24 md:h-24 lg:h-28 flex justify-between z-20 bg-black"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
       >
         <Link href="/">
-          <a className="flex justify-center pl-12">
+          <a className="flex pl-12 py-7">
             <img
               className="md:max-h-20 max-h-16 h-auto w-auto border-none"
               src={`${BASE_PATH}/png/nw-logo.png`}
