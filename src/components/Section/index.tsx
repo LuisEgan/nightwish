@@ -74,9 +74,7 @@ const Section: FC<ISection> = (props) => {
         </div>
 
         <div className={`${descriptionClassname} ${center && "flex-1"}`}>
-          <div
-            className="pb-5 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light"
-          >
+          <div className="pb-5 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light">
             {description}
           </div>
 
