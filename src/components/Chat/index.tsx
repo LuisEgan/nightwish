@@ -215,7 +215,8 @@ const Chat = () => {
                     <a
                       className="underline"
                       href={`${BASE_PATH}${ROUTES.PUBLIC_ROUTES.support}`}
-                      target="_blank" rel="noreferrer"
+                      target="_blank"
+                      rel="noreferrer"
                     >
                       Support Page
                     </a>
