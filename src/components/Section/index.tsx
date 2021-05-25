@@ -4,7 +4,7 @@ import Button, { IButton } from "../Button";
 
 interface ISection {
   title: string | JSX.Element;
-  description: string | JSX.Element;
+  description?: string | JSX.Element;
   className?: string;
   img?: string;
   onClick?: () => void;
@@ -74,9 +74,11 @@ const Section: FC<ISection> = (props) => {
         </div>
 
         <div className={`${descriptionClassname} ${center && "flex-1"}`}>
-          <div className="pb-5 text-xl text-brown-main leading-snug md:text-white md:text-lg md:font-light">
-            {description}
-          </div>
+          {description && (
+            <div className="pb-5 text-xl text-brown-main leading-snug md:text-white md:text-lg md:font-light">
+              {description}
+            </div>
+          )}
 
           {onClick && (
             <div className="pt-4 pb-5 mb-7">
