@@ -132,8 +132,9 @@ const Home = () => {
         descriptionClassname="px-7 md:pr-8 lg:pr-10 text-center md:text-right"
         description={
           <>
-            Registration of purchased tickets will open on this site latest 24
-            hours before the first show
+            Registration of purchased tickets is now open! You can register your
+            ticket in two ways: by using personal web address or personal ticket
+            code. Read more about this on Support Page.
           </>
         }
         onClick={() => router.push("/support")}
