@@ -14,6 +14,8 @@ export const ROUTES = {
     legal: "/legal",
     support: "/support",
     register: "/register",
+    forgot: "/forgot",
+    reset: "/reset",
   },
 };
 

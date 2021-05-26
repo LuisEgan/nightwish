@@ -109,11 +109,19 @@ const Login = () => {
             </Button>
           </div>
 
-          <div className="pt-2 text-center">
-            Don&apos;t have an account yet?{" "}
-            <Link href={ROUTES.PUBLIC_ROUTES.register}>
-              <a className="underline">Register here</a>
-            </Link>
+          <div className="pt-2 text-center flex flex-col">
+            <div>
+              Don&apos;t have an account yet?{" "}
+              <Link href={ROUTES.PUBLIC_ROUTES.register}>
+                <a className="underline">Register here</a>
+              </Link>
+            </div>
+
+            <div className="pt-5">
+              <Link href={ROUTES.PUBLIC_ROUTES.forgot}>
+                <a className="underline">Forgot your password?</a>
+              </Link>
+            </div>
           </div>
         </div>
       </form>

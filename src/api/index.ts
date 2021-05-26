@@ -95,10 +95,50 @@ const getEvent = async (params: IGetEvent) => {
   }
 };
 
+interface IForgotPasword {
+  email: string;
+}
+const forgotPasword = async (body: IForgotPasword) => {
+  try {
+    const res = await axios.post<{ success: boolean }>(
+      `${API_DNS}/forgot-password`,
+      body,
+    );
+
+    if (!res?.data.success) throw new Error("Error");
+
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.error || "Sorry there was an error");
+  }
+};
+
+interface IResetPasword {
+  email: string;
+  password: string;
+  resetToken: string;
+}
+const resetPassword = async (body: IResetPasword) => {
+  try {
+    const res = await axios.post<{ success: boolean }>(
+      `${API_DNS}/reset-password`,
+      body,
+    );
+
+    if (!res?.data.success) throw new Error("Error");
+
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.error || "Sorry there was an error");
+  }
+};
+
 export default {
   register,
   login,
   redeemTicket,
   getUser,
   getEvent,
+  forgotPasword,
+  resetPassword,
 };
