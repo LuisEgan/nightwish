@@ -100,7 +100,11 @@ const Footer = () => {
         </div>
 
         <div className="py-5 flex justify-end flex-1">
-          <a href="https://privacy.zoan.fi/burst-live/" target="_blank" rel="noreferrer">
+          <a
+            href="https://privacy.zoan.fi/burst-live/"
+            target="_blank"
+            rel="noreferrer"
+          >
             Privacy Policy and Terms
           </a>
         </div>

@@ -84,6 +84,7 @@ const getEvent = async (params: IGetEvent) => {
       success: boolean;
       url?: string;
       error?: string;
+      live: boolean;
     }>(`${API_DNS}/playlist/${params.eventId}`);
 
     if (!res?.data.success && res?.data.error)

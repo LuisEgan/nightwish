@@ -27,15 +27,19 @@ const Event = () => {
   const [player, setPlayer] = useState<VideoJsPlayer>();
   const [videoJsOptions, setVideoJsOptions] = useState<VideoJsPlayerOptions>();
   const [eventError, setEventError] = useState<string>("");
+  const [showChat, setShowChat] = useState<boolean>(false);
 
   useEffect(() => {
     const event = async (id: string) => {
       try {
         const res = await api.getEvent({ eventId: id });
 
+        // * Render chat only on live events
+        setShowChat(res.live);
+
         setVideoJsOptions({
           muted: true,
-          autoplay: false,
+          autoplay: true,
           sources: [
             {
               src: res.url,
@@ -58,7 +62,7 @@ const Event = () => {
     setPlayer(loadedPlayer);
 
     setTimeout(() => {
-      // player?.play();
+      player?.play();
     }, 1000);
   };
 
@@ -100,7 +104,7 @@ const Event = () => {
           )}
         </div>
 
-        <Chat />
+        {showChat && <Chat />}
       </div>
     </>
   );
