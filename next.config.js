@@ -26,7 +26,7 @@ module.exports = {
       "/login": { page: "/login" },
       "/ticket": { page: "/ticket" },
       "/register": { page: "/register" },
-      "/help": { page: "/help" },
+      "/support": { page: "/support" },
       "/legal": { page: "/legal" },
       "/events": { page: "/events" },
     };
