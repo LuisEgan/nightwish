@@ -31,6 +31,14 @@ const NavBar = () => {
           </a>
         </Link>
 
+        {/* <div className="flex-1 flex items-center pl-14">
+          <Link href="/events">
+            <a className="border border-solid bg-brown-main border-brown-main text-center py-3 px-9 rounded-full">
+              Watch
+            </a>
+          </Link>
+        </div> */}
+
         {isMobile ? <Hamburger /> : <NavbarMenu />}
       </div>
     </div>

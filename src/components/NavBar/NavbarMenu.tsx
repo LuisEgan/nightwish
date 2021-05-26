@@ -18,16 +18,16 @@ const loggedOutItems = [
     type: "external",
   },
   {
-    title: "Log in",
-    route: ROUTES.PUBLIC_ROUTES.login,
-  },
-  {
     title: "Support",
     route: ROUTES.PUBLIC_ROUTES.support,
   },
   {
+    title: "Log in",
+    route: ROUTES.PUBLIC_ROUTES.login,
+  },
+  {
     title: "Register Your Ticket",
-    route: ROUTES.PRIVATE_ROUTES.redeem,
+    route: ROUTES.PUBLIC_ROUTES.register,
     type: "outline",
   },
 ];
@@ -39,13 +39,13 @@ const loggedInItems = [
     type: "external",
   },
   {
+    title: "Support",
+    route: ROUTES.PUBLIC_ROUTES.support,
+  },
+  {
     title: "Log out",
     route: ROUTES.PUBLIC_ROUTES.login,
     type: "logout",
-  },
-  {
-    title: "Support",
-    route: ROUTES.PUBLIC_ROUTES.support,
   },
   {
     title: "Register Your Ticket",
@@ -54,15 +54,43 @@ const loggedInItems = [
   },
 ];
 
+const loggedInAndHasTicketsItems = [
+  {
+    title: "Buy Ticket",
+    route: "https://www.nightwish.com/#tickets",
+    type: "external",
+  },
+  {
+    title: "Support",
+    route: ROUTES.PUBLIC_ROUTES.support,
+  },
+  {
+    title: "Log out",
+    route: ROUTES.PUBLIC_ROUTES.login,
+    type: "logout",
+  },
+  {
+    title: "Watch",
+    route: ROUTES.PRIVATE_ROUTES.events,
+    type: "solid",
+  },
+];
+
 const NavbarMenu = (props: INavbarMenu) => {
   const { mobile, onItemClick } = props;
-  const { isLoggedIn, logout } = useContext(UserContext);
+  const { isLoggedIn, user, logout } = useContext(UserContext);
   const { push } = useRouter();
   const [navItems, setNavItems] = useState(loggedOutItems);
 
   useEffect(() => {
-    setNavItems(isLoggedIn ? loggedInItems : loggedOutItems);
-  }, [isLoggedIn]);
+    setNavItems(
+      isLoggedIn
+        ? user && user.eventAccess && user.eventAccess.length > 0
+          ? loggedInAndHasTicketsItems
+          : loggedInItems
+        : loggedOutItems,
+    );
+  }, [isLoggedIn, user]);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -83,6 +111,7 @@ const NavbarMenu = (props: INavbarMenu) => {
               <div key={item.title}>
                 <a
                   onClick={handleLogout}
+                  className="text-brown-main"
                   href={item.route}
                   target="_blank"
                   rel="noreferrer"
@@ -94,7 +123,12 @@ const NavbarMenu = (props: INavbarMenu) => {
           case "external":
             return (
               <div key={item.title}>
-                <a href={item.route} target="_blank" rel="noreferrer">
+                <a
+                  href={item.route}
+                  className="text-brown-main"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {item.title}
                 </a>
               </div>
@@ -103,7 +137,17 @@ const NavbarMenu = (props: INavbarMenu) => {
             return (
               <div key={item.title}>
                 <Link href={item.route}>
-                  <a className="border bg-transparent border-solid border-brown-main text-brown-main text-center py-3 px-9 rounded-full last:mr-0">
+                  <a className="link-outline border border-solid border-brown-main text-brown-main text-center py-3 px-9 rounded-full last:mr-0">
+                    {item.title}
+                  </a>
+                </Link>
+              </div>
+            );
+          case "solid":
+            return (
+              <div key={item.title}>
+                <Link href={item.route}>
+                  <a className="link-solid border border-solid border-brown-main bg-brown-main text-black text-center py-3 px-9 rounded-full last:mr-0">
                     {item.title}
                   </a>
                 </Link>
@@ -113,7 +157,9 @@ const NavbarMenu = (props: INavbarMenu) => {
             return (
               <div key={item.title}>
                 <Link href={item.route}>
-                  <a onClick={onItemClick}>{item.title}</a>
+                  <a onClick={onItemClick} className="text-brown-main">
+                    {item.title}
+                  </a>
                 </Link>
               </div>
             );
