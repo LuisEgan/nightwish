@@ -90,7 +90,13 @@ const EventRow = (props: IEventRow) => {
       <Button
         className="md:w-1/5"
         onClick={onClick}
-        variant={showCountdown ? (isOwned ? "black" : "brown") : "primary"}
+        variant={
+          showCountdown
+            ? isTimeToRock && isOwned
+              ? "orange"
+              : "brown"
+            : "primary"
+        }
         outline={!isOwned}
       >
         {setButtonText()}

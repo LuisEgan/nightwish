@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes, CSSProperties, FC } from "react";
 import tw from "../../../tailwind.config.js";
 
-export type TButtonVariant = "primary" | "black" | "brown";
+export type TButtonVariant = "primary" | "black" | "brown" | "orange";
 export interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: TButtonVariant;
   outline?: boolean;
@@ -28,6 +28,14 @@ const Button: FC<IButton> = (props) => {
       style.background = tw.theme.extend.colors.brown.dark;
     }
 
+    if (variant === "orange") {
+      style.background = "#B92D03";
+      // style.background = "#CDEB8B";
+      // style.background = "#E65100";
+      // style.background = "#4DB4C3";
+      // style.background = "#2ECFCA";
+    }
+
     return style;
   };
 
@@ -40,6 +48,10 @@ const Button: FC<IButton> = (props) => {
 
     if (variant === "brown") {
       style.color = tw.theme.extend.colors.brown.main;
+    }
+
+    if (variant === "orange") {
+      style.color = "white";
     }
 
     if (textColor) {
