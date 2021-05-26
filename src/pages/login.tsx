@@ -24,7 +24,7 @@ const Login = () => {
     formState: { errors },
   } = useForm<IForm>();
 
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const { login } = useContext(UserContext);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -40,7 +40,13 @@ const Login = () => {
 
       await login({ accessToken, user });
 
-      push(ROUTES.PRIVATE_ROUTES.redeem);
+      const redirectTo = query.redirectTo
+        ? query.redirectTo
+        : user.eventAccess && user.eventAccess.length > 0
+        ? ROUTES.PRIVATE_ROUTES.events
+        : ROUTES.PRIVATE_ROUTES.redeem;
+
+      push(redirectTo);
     } catch (e) {
       setError(e.message || e);
     } finally {
