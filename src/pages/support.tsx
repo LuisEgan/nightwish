@@ -1,7 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import FAQItems from "../components/Pages/Support/FAQItems";
-import SupportContactForm from "../components/Pages/Support/ContactForm";
+// import SupportContactForm from "../components/Pages/Support/ContactForm";
 
 const SupportAccordion = dynamic(
   () => import("../components/Pages/Support/Accordion"),
@@ -18,9 +18,9 @@ const Support = () => (
       <SupportAccordion items={FAQItems} />
     </div>
 
-    <div className="py-10">
+    {/* <div className="py-10">
       <SupportContactForm />
-    </div>
+    </div> */}
   </div>
 );
 
