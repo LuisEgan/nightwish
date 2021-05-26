@@ -51,13 +51,13 @@ export const EVENTS_BY_ID = {
   2: {
     title: "Saturday Main Event",
     listOrder: 3,
-    date: new Date("2021-05-29T23:00:00.000Z"),
+    date: new Date("2021-05-29T24:00:00.000Z"),
   },
   11: {
     title: "Friday VIP Session",
     listOrder: 0,
-    date: new Date("2021-05-21T17:00:00.000Z"),
-    // date: new Date("2021-05-28T17:00:00.000Z"),
+    // date: new Date("2021-05-21T17:00:00.000Z"),
+    date: new Date("2021-05-28T16:00:00.000Z"),
   },
   12: {
     title: "Saturday VIP Session",

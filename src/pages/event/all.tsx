@@ -25,7 +25,7 @@ const Events = () => {
     formState: { errors },
   } = useForm<IForm>();
 
-  const { setUser } = useContext(UserContext);
+  const { setUser, user } = useContext(UserContext);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -46,10 +46,16 @@ const Events = () => {
         title,
         date,
         listOrder,
+        owned: user?.eventAccess.includes(+eventId),
       };
     });
 
-    c.sort((a, b) => (a.listOrder > b.listOrder ? 1 : -1));
+    // c.sort((a, b) => (a.listOrder > b.listOrder ? 1 : -1));
+
+    // This sorts the events first by owned and then by date
+    c.sort((a, b) =>
+      a.owned === b.owned ? (a.date < b.date ? -1 : 1) : a.owned ? -1 : 1,
+    );
     return c;
   };
 
@@ -59,8 +65,8 @@ const Events = () => {
     setSuccess("");
     try {
       const res = await api.redeemTicket(body);
-      const { user } = res;
-      setUser(user);
+      const { user: updatedUser } = res;
+      setUser(updatedUser);
       boom();
       setSuccess("Success! Enjoy the show 🤘");
     } catch (e) {
