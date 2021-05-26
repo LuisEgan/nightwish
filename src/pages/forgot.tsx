@@ -50,7 +50,7 @@ const Forgot = () => {
 
           <Input
             {...register("email", {
-              required: "Please input your email",
+              required: "Please type in your email",
               pattern: {
                 value: EMAIL_REGEX,
                 message: "Invalid email",

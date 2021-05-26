@@ -47,30 +47,19 @@ export const FRIDAY_CONCERT_DATE = new Date("");
 export const EVENTS_BY_ID = {
   1: {
     title: "Show Friday",
-    listOrder: 2,
-    // date: new Date("2021-05-28T17:00:00.000Z"),
-    date: new Date("2021-05-26T15:30:00.000Z"),
+    date: new Date("2021-05-26T21:00:00.000Z"),
   },
   2: {
     title: "Show Saturday",
-    listOrder: 3,
-    // date: new Date("2021-05-29T23:00:00.000Z"),
-    date: new Date("2021-05-27T19:30:00.000Z"),
+    date: new Date("2021-05-26T24:00:00.000Z"),
   },
   11: {
     title: "VIP Virtual Session Friday",
-    listOrder: 0,
-    // date: new Date("2021-05-21T17:00:00.000Z"),
-    // date: new Date("2021-05-28T17:00:00.000Z"),
-    date: new Date("2021-05-26T14:00:00.000Z"),
-    small: true,
+    date: new Date("2021-05-26T20:00:00.000Z"),
   },
   12: {
-    title: "VIP Virtual Session Friday",
-    listOrder: 1,
-    // date: new Date("2021-05-29T23:00:00.000Z"),
-    date: new Date("2021-05-27T18:00:00.000Z"),
-    small: true,
+    title: "VIP Virtual Session Saturday",
+    date: new Date("2021-05-26T23:00:00.000Z"),
   },
 };
 

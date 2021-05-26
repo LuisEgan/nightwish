@@ -15,7 +15,6 @@ interface IForm {
 }
 
 interface IEvent extends IEventRow {
-  listOrder: number;
   owned: boolean;
 }
 
@@ -41,24 +40,20 @@ const Events = () => {
 
   const events = () => {
     const c: IEvent[] = Object.keys(EVENTS_BY_ID).map((eventId) => {
-      const { title, date, listOrder, small } = EVENTS_BY_ID[eventId];
+      const { title, date } = EVENTS_BY_ID[eventId];
       return {
         eventId,
         title,
         date,
-        listOrder,
-        small,
         owned: user?.eventAccess.includes(+eventId),
       };
     });
 
-    // c.sort((a, b) => (a.listOrder > b.listOrder ? 1 : -1));
-
     // This sorts the events first by owned and then by date
-    // c.sort((a, b) =>
-    //   a.owned === b.owned ? (a.date < b.date ? -1 : 1) : a.owned ? -1 : 1,
-    // );
-    c.sort((a, b) => (a.date < b.date ? -1 : 1));
+    c.sort((a, b) =>
+      a.owned === b.owned ? (a.date < b.date ? -1 : 1) : a.owned ? -1 : 1,
+    );
+    // c.sort((a, b) => (a.date < b.date ? -1 : 1));
     return c;
   };
 
@@ -91,7 +86,7 @@ const Events = () => {
             <div className="flex flex-col md:flex-row">
               <Input
                 {...register("code", {
-                  required: "Please type in your ticket",
+                  required: "Please type in your ticket code",
                 })}
                 placeholder="Type your ticket code here"
                 error={errors.code?.message}
@@ -101,7 +96,6 @@ const Events = () => {
               />
 
               <Button
-                id="redeem"
                 className="md:ml-5 mb-5"
                 onClick={handleSubmit(handleRedeem)}
                 disabled={loading}

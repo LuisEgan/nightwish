@@ -6,9 +6,9 @@ import { UserContext } from "../../contexts/user/user.context";
 import { BASE_PATH, ROUTES } from "../../lib/constants";
 
 const links = [
-  { route: "luppi.fi", title: "Buy tickets", newTab: true },
+  { route: "https://www.nightwish.com/", title: "Buy Ticket", newTab: true },
   { route: ROUTES.PUBLIC_ROUTES.support, title: "Support" },
-  { route: ROUTES.PRIVATE_ROUTES.events, title: "Redeem ticket" },
+  { route: ROUTES.PRIVATE_ROUTES.events, title: "Events" },
 ];
 
 const socialNetworkLinks = [
