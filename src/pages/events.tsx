@@ -83,25 +83,26 @@ const Events = () => {
   return (
     <div className="page-container px-7 md:px-40">
       <div className="conffetti" />
-      <div className="py-12">
-        <div className="flex flex-col">
+      <div className="py-4">
+        <div className="flex flex-col items-end">
           <span className="text-brown-main text-3xl">Register your ticket</span>
 
-          <div className="flex flex-col py-10">
+          <div className="flex flex-col py-6">
             <div className="flex flex-col md:flex-row">
               <Input
                 {...register("code", {
                   required: "Please type in your ticket",
                 })}
-                placeholder="Ticket code"
+                placeholder="Type your ticket code here"
                 error={errors.code?.message}
-                className="flex-1"
+                className="flex-1 mb-4"
+                style={{ minWidth: "16rem" }}
                 outline
               />
 
               <Button
                 id="redeem"
-                className="md:ml-5"
+                className="md:ml-5 mb-5"
                 onClick={handleSubmit(handleRedeem)}
                 disabled={loading}
               >
