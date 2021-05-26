@@ -61,14 +61,21 @@ const LoginRedeem = () => {
   return (
     <div className="page-container bg-black flex justify-center items-center px-10 md:p-32">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <h3
+          className={styles.title}
+          style={{ maxWidth: "32rem", marginLeft: "auto" }}
+        >
+          Register your ticket
+        </h3>
         <div className={styles.content}>
           <div className={styles.subtitle}>Enter your ticket code</div>
 
           <Input
             {...register("code", {
-              required: "Please input your ticket",
+              required: "Please type in your ticket code",
             })}
-            placeholder="Ticket code"
+            placeholder="Ticket code here"
+            className="text-center"
             error={errors.code?.message}
           />
 
@@ -92,14 +99,16 @@ const LoginRedeem = () => {
               variant="black"
               disabled={loading}
             >
-              {loading ? "Loading..." : "Redeem"}
+              {loading ? "Loading..." : "Register ticket"}
             </Button>
           </div>
 
-          <div className="pt-2 text-center">
-            <Link href={ROUTES.PRIVATE_ROUTES.events}>
-              <a className="underline">Continue to all events</a>
-            </Link>
+          <div className="pt-6 text-center">
+            Need help? See our{" "}
+            <Link href={ROUTES.PUBLIC_ROUTES.support}>
+              <a className="underline">Support</a>
+            </Link>{" "}
+            page
           </div>
         </div>
       </form>

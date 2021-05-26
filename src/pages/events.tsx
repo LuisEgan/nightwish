@@ -41,12 +41,13 @@ const Events = () => {
 
   const events = () => {
     const c: IEvent[] = Object.keys(EVENTS_BY_ID).map((eventId) => {
-      const { title, date, listOrder } = EVENTS_BY_ID[eventId];
+      const { title, date, listOrder, small } = EVENTS_BY_ID[eventId];
       return {
         eventId,
         title,
         date,
         listOrder,
+        small,
         owned: user?.eventAccess.includes(+eventId),
       };
     });
@@ -54,9 +55,10 @@ const Events = () => {
     // c.sort((a, b) => (a.listOrder > b.listOrder ? 1 : -1));
 
     // This sorts the events first by owned and then by date
-    c.sort((a, b) =>
-      a.owned === b.owned ? (a.date < b.date ? -1 : 1) : a.owned ? -1 : 1,
-    );
+    // c.sort((a, b) =>
+    //   a.owned === b.owned ? (a.date < b.date ? -1 : 1) : a.owned ? -1 : 1,
+    // );
+    c.sort((a, b) => (a.date < b.date ? -1 : 1));
     return c;
   };
 
@@ -83,17 +85,13 @@ const Events = () => {
       <div className="conffetti" />
       <div className="py-12">
         <div className="flex flex-col">
-          <span className="text-brown-main text-3xl">Redeem your ticket</span>
-
-          <Link href="/event/1">
-            <a className="text-white">event</a>
-          </Link>
+          <span className="text-brown-main text-3xl">Register your ticket</span>
 
           <div className="flex flex-col py-10">
             <div className="flex flex-col md:flex-row">
               <Input
                 {...register("code", {
-                  required: "Please input your ticket",
+                  required: "Please type in your ticket",
                 })}
                 placeholder="Ticket code"
                 error={errors.code?.message}
@@ -107,7 +105,7 @@ const Events = () => {
                 onClick={handleSubmit(handleRedeem)}
                 disabled={loading}
               >
-                {loading ? "Validating..." : "Validate"}
+                {loading ? "Validating..." : "Register"}
               </Button>
             </div>
 
@@ -122,17 +120,18 @@ const Events = () => {
         </div>
 
         <div>
-          <span className="text-brown-main text-4xl">Available events</span>
+          <span className="text-brown-main text-4xl">Events</span>
           {events().map((event) => (
             <EventRow key={event.title} {...event} />
           ))}
         </div>
 
-        <div className="text-center text-brown-main py-5">
-          Need Help?{" "}
+        <div className="text-center text-xl text-brown-main py-5 mt-4">
+          Need Help? Visit our{" "}
           <Link href={ROUTES.PUBLIC_ROUTES.support}>
-            <a className="underline">Click here</a>
-          </Link>
+            <a className="underline">Support</a>
+          </Link>{" "}
+          page
         </div>
       </div>
     </div>

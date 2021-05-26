@@ -1,17 +1,24 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useContext } from "react";
-import Countdown from "react-countdown";
+// import Countdown from "react-countdown";
+import dayjs from "dayjs";
+
+import relativeTime from "dayjs/plugin/relativeTime";
+
 import { UserContext } from "../../../contexts/user/user.context";
 import { ROUTES } from "../../../lib/constants";
 import Button from "../../Button";
+
+dayjs.extend(relativeTime);
 
 export interface IEventRow {
   eventId: string;
   title: string;
   date: Date;
+  small?: boolean;
 }
 const EventRow = (props: IEventRow) => {
-  const { eventId, title, date } = props;
+  const { eventId, title, date, small } = props;
 
   const { user } = useContext(UserContext);
   const { push } = useRouter();
@@ -19,9 +26,9 @@ const EventRow = (props: IEventRow) => {
   const isTicketOwned = user?.eventAccess.includes(+eventId);
   const [isOwned, setIsOwned] = useState(isTicketOwned);
 
-  const hoursDiff = Math.abs(date.getTime() - new Date().getTime()) / 36e5;
+  const hoursDiff = (date.getTime() - new Date().getTime()) / 36e5;
   const showCountdown = hoursDiff <= 24 && hoursDiff > 0;
-  const isTimeToRock = hoursDiff <= 0;
+  const isTimeToRock = hoursDiff <= 1;
 
   useEffect(() => {
     if (!user) return;
@@ -33,20 +40,14 @@ const EventRow = (props: IEventRow) => {
 
     if (isTicketOwned) {
       if (isTimeToRock) {
-        txt = "Watch 🤘";
-      } else if (showCountdown) {
-        txt = "Watch Soon";
+        txt = "Go watch!";
       } else {
         txt = "You own this";
       }
     }
 
     if (!isTicketOwned) {
-      if (isTimeToRock) {
-        txt = "Closed";
-      } else {
-        txt = "Buy Ticket";
-      }
+      txt = "Buy Ticket";
     }
 
     return txt;
@@ -64,9 +65,6 @@ const EventRow = (props: IEventRow) => {
     }
 
     if (!isTicketOwned) {
-      if (isTimeToRock) {
-        return null;
-      }
       // * go to buy page
       window.open("https://www.nightwish.com/#tickets", "_blank").focus();
     }
@@ -75,22 +73,24 @@ const EventRow = (props: IEventRow) => {
 
   return (
     <div
-      className={`rounded-3xl border-brown-main border-2 flex flex-col p-10 mt-5 md:flex-row md:items-center ${
+      className={`rounded-3xl border-brown-main border-2 flex flex-col mt-5 md:flex-row md:items-center ${
         showCountdown ? "bg-brown-main text-black" : "text-brown-main"
-      }`}
+      } ${small ? "px-10 py-8" : "px-10 py-10"}`}
     >
-      <div className="flex-1 mb-5 md:mb-0 md:text-2xl">{title}</div>
+      <div className="flex-1 mb-5 md:mb-0 md:text-2xl">
+        {title}
+        <div className="text-lg">{dayjs(date).format("dddd h:mm a")}</div>
+      </div>
 
-      {showCountdown && (
-        <div className="text-2xl mb-5 md:mb-0 md:px-10">
-          Starts in <Countdown date={date} />
-        </div>
-      )}
+      <div className="text-2xl mb-5 md:mb-0 md:px-10">
+        Starts {dayjs().to(dayjs(date))}
+        {/* showCountdown && Starts in <Countdown date={date} /> */}
+      </div>
 
       <Button
         className="md:w-1/5"
         onClick={onClick}
-        variant={showCountdown ? "brown" : "primary"}
+        variant={showCountdown ? (isOwned ? "black" : "brown") : "primary"}
         outline={!isOwned}
       >
         {setButtonText()}

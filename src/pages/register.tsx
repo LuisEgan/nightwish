@@ -55,6 +55,12 @@ const Register = () => {
   return (
     <div className="page-container bg-black flex justify-center items-center px-10 md:p-32">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <h3
+          className={styles.title}
+          style={{ maxWidth: "32rem", marginLeft: "auto" }}
+        >
+          You need to create an account in order to register your ticket
+        </h3>
         <div className={styles.content}>
           <div className={styles.subtitle}>Register</div>
 
@@ -93,7 +99,7 @@ const Register = () => {
           <Input
             type={showPass ? "text" : "password"}
             placeholder="Min. 8 characters password"
-            title="Enter your password"
+            title="Choose a password"
             containerClassName="mb-2"
             icon={
               <ReactSVG
@@ -160,8 +166,8 @@ const Register = () => {
             </Button>
           </div>
 
-          <div className="pt-2 text-center">
-            Already got an account?{" "}
+          <div className="pt-6 text-center">
+            Already registered?{" "}
             <Link href={ROUTES.PUBLIC_ROUTES.login}>
               <a className="underline">Login here</a>
             </Link>
