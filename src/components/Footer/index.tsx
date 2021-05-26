@@ -8,7 +8,7 @@ import { BASE_PATH, ROUTES } from "../../lib/constants";
 const links = [
   { route: "https://www.nightwish.com/", title: "Buy Ticket", newTab: true },
   { route: ROUTES.PUBLIC_ROUTES.support, title: "Support" },
-  { route: ROUTES.PRIVATE_ROUTES.events, title: "Events" },
+  { route: ROUTES.PRIVATE_ROUTES.ticket, title: "Register your ticket" },
 ];
 
 const socialNetworkLinks = [
@@ -60,11 +60,9 @@ const Footer = () => {
         route: ROUTES.PRIVATE_ROUTES.events,
         title: "Events",
       });
-    } else {
-      items.push({ route: ROUTES.PUBLIC_ROUTES.login, title: "Sign in" });
     }
 
-    return [];
+    return items;
   };
 
   if (pathname === `${ROUTES.PRIVATE_ROUTES.watch}[id]`) {
@@ -75,7 +73,7 @@ const Footer = () => {
 
   return (
     <footer className="text-brown-main bg-black py-10 px-7 md:px-20">
-      <div className="flex-col md:flex md:flex-row">
+      <div className="flex flex-col md:flex-row">
         <div className="grid grid-cols-2 md:grid-cols-4 md:flex-1">
           {items.map(({ route, title, newTab }, index) => {
             const isLastLink = index === items.length - 1;
@@ -101,11 +99,11 @@ const Footer = () => {
           })}
         </div>
 
-        {/* <div className="py-5 flex justify-end">
-          <Link href={ROUTES.PUBLIC_ROUTES.terms}>
-            <a>Privacy Policy and Terms</a>
-          </Link>
-        </div> */}
+        <div className="py-5 flex justify-end flex-1">
+          <a href="https://privacy.zoan.fi/burst-live/" target="_blank" rel="noreferrer">
+            Privacy Policy and Terms
+          </a>
+        </div>
       </div>
 
       <div className="md:flex md:flex-row-reverse">

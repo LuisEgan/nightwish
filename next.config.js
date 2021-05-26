@@ -9,16 +9,6 @@ module.exports = {
   },
 
   basePath: "/nightwish",
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: "/",
-  //       destination: "/nightwish",
-  //       permanent: true,
-  //       basePath: false,
-  //     },
-  //   ];
-  // },
 
   exportPathMap: async function () {
     return {
@@ -29,7 +19,6 @@ module.exports = {
       "/forgot": { page: "/forgot" },
       "/reset": { page: "/reset" },
       "/support": { page: "/support" },
-      "/legal": { page: "/legal" },
       "/events": { page: "/events" },
     };
   },
