@@ -5,7 +5,7 @@ import ReconnectingWebSocket from "reconnecting-websocket";
 import Message, { IMessage } from "./Message";
 import Input from "../Input";
 import { useWindowSize } from "../../lib/hooks";
-import { getRandomColor } from "../../lib/strings";
+import { checkForURL, getRandomColor } from "../../lib/strings";
 
 import styles from "./chat.module.scss";
 
@@ -117,6 +117,10 @@ const Chat = () => {
     try {
       if (mssg.length > 100) {
         throw new Error("Message too large! Max 100 characters");
+      }
+
+      if (checkForURL(mssg)) {
+        throw new Error("Message can't contain URLs");
       }
 
       // * Reset error

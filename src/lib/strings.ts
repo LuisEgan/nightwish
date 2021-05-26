@@ -32,6 +32,29 @@ export const getUrlParameter = (sParam: string) => {
   return "";
 };
 
+export const validURL = (str: string) => {
+  const pattern = new RegExp(
+    "^(https?:\\/\\/)?" +
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+      "((\\d{1,3}\\.){3}\\d{1,3}))" +
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+      "(\\?[;&a-z\\d%_.~+=-]*)?" +
+      "(\\#[-a-z\\d_]*)?$",
+    "i",
+  );
+  return !!pattern.test(str);
+};
+
+export const checkForURL = (str: string) => {
+  let hasURL = false;
+
+  str.split(" ").forEach((word) => {
+    hasURL = validURL(word);
+  });
+
+  return hasURL;
+};
+
 interface IReplaceVowelCombinations {
   word: string;
   vowel: string;
