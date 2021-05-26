@@ -49,7 +49,7 @@ const loggedInItems = [
   },
   {
     title: "Register Your Ticket",
-    route: ROUTES.PRIVATE_ROUTES.redeem,
+    route: ROUTES.PRIVATE_ROUTES.ticket,
     type: "outline",
   },
 ];

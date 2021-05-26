@@ -26,7 +26,7 @@ const EventRow = (props: IEventRow) => {
   useEffect(() => {
     if (!user) return;
     setIsOwned(user.eventAccess.includes(+eventId));
-  }, [user]);
+  }, [user, eventId]);
 
   const setButtonText = () => {
     let txt = "";
@@ -56,7 +56,7 @@ const EventRow = (props: IEventRow) => {
     if (isTicketOwned) {
       if (isTimeToRock) {
         // * go to event
-        push(`${ROUTES.PRIVATE_ROUTES.event}${eventId}`);
+        push(`${ROUTES.PRIVATE_ROUTES.watch}${eventId}`);
       } else {
         return null;
       }

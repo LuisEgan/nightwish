@@ -3,12 +3,12 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import party from "party-js";
 
-import api from "../../api";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import { UserContext } from "../../contexts/user/user.context";
-import { EVENTS_BY_ID, ROUTES } from "../../lib/constants";
-import EventRow, { IEventRow } from "../../components/Pages/Event/EventRow";
+import api from "../api";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import { UserContext } from "../contexts/user/user.context";
+import { EVENTS_BY_ID, ROUTES } from "../lib/constants";
+import EventRow, { IEventRow } from "../components/Pages/Event/EventRow";
 
 interface IForm {
   code: string;
@@ -16,6 +16,7 @@ interface IForm {
 
 interface IEvent extends IEventRow {
   listOrder: number;
+  owned: boolean;
 }
 
 const Events = () => {

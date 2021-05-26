@@ -44,7 +44,7 @@ const Register = () => {
 
       await login({ accessToken, user });
 
-      push(ROUTES.PRIVATE_ROUTES.redeem);
+      push(ROUTES.PRIVATE_ROUTES.ticket);
     } catch (e) {
       setError(e.message || e);
     } finally {

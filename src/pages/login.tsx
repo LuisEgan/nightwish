@@ -44,9 +44,9 @@ const Login = () => {
         ? query.redirectTo
         : user.eventAccess && user.eventAccess.length > 0
         ? ROUTES.PRIVATE_ROUTES.events
-        : ROUTES.PRIVATE_ROUTES.redeem;
+        : ROUTES.PRIVATE_ROUTES.ticket;
 
-      push(redirectTo);
+      push(`${redirectTo}`);
     } catch (e) {
       setError(e.message || e);
     } finally {

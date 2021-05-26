@@ -20,16 +20,15 @@ module.exports = {
   //   ];
   // },
 
-  trailingSlash: true,
-
   exportPathMap: async function () {
     return {
       "/": { page: "/" },
       "/login": { page: "/login" },
-      "/redeem": { page: "/redeem" },
+      "/ticket": { page: "/ticket" },
       "/register": { page: "/register" },
-      "/support": { page: "/support" },
-      "/event/all": { page: "/event/all" },
+      "/help": { page: "/help" },
+      "/legal": { page: "/legal" },
+      "/events": { page: "/events" },
     };
   },
 };

@@ -11,7 +11,7 @@ const NavBar = () => {
 
   const { isMobile } = useWindowSize();
 
-  if (pathname === `${ROUTES.PRIVATE_ROUTES.event}[id]`) {
+  if (pathname === `${ROUTES.PRIVATE_ROUTES.watch}[id]`) {
     return null;
   }
 
