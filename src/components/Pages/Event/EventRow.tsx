@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Countdown from "react-countdown";
 import { UserContext } from "../../../contexts/user/user.context";
 import { ROUTES } from "../../../lib/constants";
@@ -17,9 +17,16 @@ const EventRow = (props: IEventRow) => {
   const { push } = useRouter();
 
   const isTicketOwned = user?.eventAccess.includes(+eventId);
+  const [isOwned, setIsOwned] = useState(isTicketOwned);
+
   const hoursDiff = Math.abs(date.getTime() - new Date().getTime()) / 36e5;
   const showCountdown = hoursDiff <= 24 && hoursDiff > 0;
   const isTimeToRock = hoursDiff <= 0;
+
+  useEffect(() => {
+    if (!user) return;
+    setIsOwned(user.eventAccess.includes(+eventId));
+  }, [user]);
 
   const setButtonText = () => {
     let txt = "";
@@ -30,7 +37,7 @@ const EventRow = (props: IEventRow) => {
       } else if (showCountdown) {
         txt = "Watch Soon";
       } else {
-        txt = "Owned";
+        txt = "You own this";
       }
     }
 
@@ -38,7 +45,7 @@ const EventRow = (props: IEventRow) => {
       if (isTimeToRock) {
         txt = "Closed";
       } else {
-        txt = "Buy";
+        txt = "Buy Ticket";
       }
     }
 
@@ -84,6 +91,7 @@ const EventRow = (props: IEventRow) => {
         className="md:w-1/5"
         onClick={onClick}
         variant={showCountdown ? "brown" : "primary"}
+        outline={!isOwned}
       >
         {setButtonText()}
       </Button>
