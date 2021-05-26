@@ -9,6 +9,7 @@ import { BASE_PATH, ROUTES } from "../lib/constants";
 import styles from "../components/Pages/Login/login.module.scss";
 import Button from "../components/Button";
 import api from "../api";
+import { getUrlParameter } from "../lib/strings";
 
 interface IForm {
   password: string;
@@ -23,7 +24,7 @@ const Reset = () => {
     formState: { errors },
   } = useForm<IForm>();
 
-  const { push, query } = useRouter();
+  const { push } = useRouter();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -36,11 +37,16 @@ const Reset = () => {
 
   // * Check there's a code and an email in the url
   useEffect(() => {
-    if (query) {
-      setResetToken(`${query.t}`);
-      setEmail(`${query.email}`);
+    const urlToken = getUrlParameter("t");
+    const urlEmail = getUrlParameter("email");
+    if (!urlToken || !urlEmail) {
+      push(ROUTES.PUBLIC_ROUTES.login);
+    } else {
+      setResetToken(`${urlToken}`);
+      setEmail(`${urlEmail}`);
     }
-  }, [query]);
+    // eslint-disable-next-line
+  }, []);
 
   const onSubmit = async (values: IForm) => {
     setLoading(true);
