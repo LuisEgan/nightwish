@@ -29,6 +29,7 @@ const loggedOutItems = [
     title: "Register Your Ticket",
     route: ROUTES.PUBLIC_ROUTES.register,
     type: "outline",
+    firstOnMobile: true,
   },
 ];
 
@@ -51,6 +52,7 @@ const loggedInItems = [
     title: "Register Your Ticket",
     route: ROUTES.PRIVATE_ROUTES.ticket,
     type: "outline",
+    firstOnMobile: true,
   },
 ];
 
@@ -73,6 +75,7 @@ const loggedInAndHasTicketsItems = [
     title: "Watch",
     route: ROUTES.PRIVATE_ROUTES.events,
     type: "solid",
+    firstOnMobile: true,
   },
 ];
 
@@ -84,11 +87,14 @@ const NavbarMenu = (props: INavbarMenu) => {
 
   useEffect(() => {
     setNavItems(
-      isLoggedIn
+      (isLoggedIn
         ? user && user.eventAccess && user.eventAccess.length > 0
           ? loggedInAndHasTicketsItems
           : loggedInItems
-        : loggedOutItems,
+        : loggedOutItems
+      ).sort((a, b) =>
+        a.firstOnMobile && a.firstOnMobile !== b.firstOnMobile ? -1 : 1,
+      ),
     );
   }, [isLoggedIn, user]);
 
@@ -102,7 +108,9 @@ const NavbarMenu = (props: INavbarMenu) => {
   return (
     <div
       id={mobile ? styles.navBarMobileContainer : styles.navBarItemsContainer}
-      className={`flex flex-col md:flex-row pr-6 ${mobile ? "" : ""}`}
+      className={`flex flex-col md:flex-row pr-10 ${
+        mobile ? "w-full px-10" : ""
+      }`}
     >
       {navItems.map((item) => {
         switch (item.type) {
@@ -125,6 +133,7 @@ const NavbarMenu = (props: INavbarMenu) => {
               <div key={item.title}>
                 <a
                   href={item.route}
+                  onClick={onItemClick}
                   className={`text-brown-main ${mobile ? "text-2xl px-7" : ""}`}
                   target="_blank"
                   rel="noreferrer"
@@ -141,6 +150,7 @@ const NavbarMenu = (props: INavbarMenu) => {
                     className={`link-outline border border-solid border-brown-main text-brown-main text-center rounded-full last:mr-0 ${
                       mobile ? "text-2xl py-4 px-6" : "py-3 px-9"
                     }`}
+                    onClick={onItemClick}
                   >
                     {item.title}
                   </a>
@@ -152,8 +162,9 @@ const NavbarMenu = (props: INavbarMenu) => {
               <div key={item.title}>
                 <Link href={item.route}>
                   <a
-                    className={`link-solid border border-solid border-brown-main bg-brown-main text-black text-center rounded-full last:mr-0 ${
-                      mobile ? "text-2xl py-3 px-6" : "py-3 px-9"
+                    onClick={onItemClick}
+                    className={`link-solid border border-solid border-brown-main bg-brown-main text-black text-center rounded-full text-black last:mr-0 ${
+                      mobile ? "text-2xl py-3 px-12" : "py-3 px-9"
                     }`}
                   >
                     {item.title}

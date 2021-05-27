@@ -9,7 +9,7 @@
 }
 
 .fadeIn-60 {
-  animation: fadeIn-60 0.5s ease-in;
+  animation: fadeIn-60 0.5s ease-in-out;
 }
 
 @keyframes fadeOut-60 {
@@ -23,7 +23,7 @@
 }
 
 .fadeOut-60 {
-  animation: fadeOut-60 0.5s ease-in;
+  animation: fadeOut-60 0.2s ease-out;
 }
 
 @keyframes slideInRight {
@@ -37,7 +37,7 @@
 }
 
 .slideInRight {
-  animation: slideInRight 0.5s ease-in;
+  animation: slideInRight 0.2s ease-in-out;
 }
 
 @keyframes slideOutRight {
@@ -51,7 +51,7 @@
 }
 
 .slideOutRight {
-  animation: slideOutRight 0.5s ease-in;
+  animation: slideOutRight 0.2s ease-in-out;
 }
 
 @keyframes slideInLeft {
@@ -65,7 +65,7 @@
 }
 
 .slideInLeft {
-  animation: slideInLeft 0.5s ease-in;
+  animation: slideInLeft 0.2s ease-in-out;
 }
 
 @keyframes slideOutLeft {
@@ -79,7 +79,7 @@
 }
 
 .slideOutLeft {
-  animation: slideOutLeft 0.5s ease-in;
+  animation: slideOutLeft 0.2s ease-in-out;
 }
 
 @keyframes blink {
@@ -97,5 +97,5 @@
 }
 
 .blink {
-  animation: blink 1.5s ease-in infinite;
+  animation: blink 1.5s ease-in-out infinite;
 }
