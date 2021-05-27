@@ -1,3 +1,5 @@
+export const API_URL = "https://api.burst.fi/nightwish";
+
 export const BASE_PATH = "/nightwish";
 // export const BASE_PATH = "";
 
@@ -20,6 +22,7 @@ export const ROUTES = {
 };
 
 export const getApiURL = () => {
+  return "https://api.burst.fi/nightwish";
   if (
     typeof window !== "undefined" &&
     window.location.hostname.indexOf("burst.fi/nightwish") !== -1
