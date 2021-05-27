@@ -12,6 +12,8 @@ import styles from "./chat.module.scss";
 import Button from "../Button";
 import { BASE_PATH, ROUTES } from "../../lib/constants";
 
+const dev = process.env.NODE_ENV !== "production";
+
 let ws: ReconnectingWebSocket;
 
 interface IWSMessage {
@@ -72,7 +74,11 @@ const Chat = () => {
   // * Connect to socket
   useEffect(() => {
     if (isChatEnabled && !isWSConnected) {
-      ws = new ReconnectingWebSocket("wss://chat.burst-staging.com/ws");
+      ws = new ReconnectingWebSocket(
+        dev
+          ? "wss://chat.burst-staging.com/ws"
+          : "wss://chat.burst.fi/nightwish",
+      );
       setIsWSConnected(true);
 
       ws.onmessage = (data) => {

@@ -1,3 +1,5 @@
+const dev = process.env.NODE_ENV !== "production";
+
 export const BASE_PATH = "/nightwish";
 // export const BASE_PATH = "";
 
@@ -19,11 +21,9 @@ export const ROUTES = {
   },
 };
 
-export const API_DNS = (() =>
-  typeof window !== "undefined" &&
-  window.location.hostname.indexOf("burst.fi") !== -1
-    ? "https://api.burst.fi/v1"
-    : "https://api.burst-staging.com/v1")();
+export const API_DNS = dev
+  ? "https://api.burst-staging.com/v1"
+  : "https://api.burst.fi/nightwish";
 
 export const LOCAL_STORAGE = {
   USER_TOKEN: "USER_TOKEN",
