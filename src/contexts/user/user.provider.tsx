@@ -8,8 +8,8 @@ const UserProvider: FC = (props) => {
   const { children } = props;
 
   const [user, setUser] = useState<IUser>();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [ticketCode, setTicketCode] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
+  const [ticketCode, setTicketCode] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const isLoggedInCached =
@@ -45,6 +45,8 @@ const UserProvider: FC = (props) => {
 
   const logout = () => {
     setUser(null);
+    setIsLoggedIn(false);
+    setTicketCode(undefined);
     localStorage.removeItem(LOCAL_STORAGE.USER_TOKEN);
     localStorage.removeItem(LOCAL_STORAGE.USER);
   };

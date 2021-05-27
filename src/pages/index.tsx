@@ -16,6 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (isLoggedIn === undefined) return;
     // check if we have ticket ID
     const hasTicketInUrl = window.location.href.match(
       /nightwish\/[0-9]{20,30}/,
