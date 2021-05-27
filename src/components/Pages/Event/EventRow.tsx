@@ -27,7 +27,7 @@ const EventRow = (props: IEventRow) => {
   const [isOwned, setIsOwned] = useState(isTicketOwned);
 
   const hoursDiff = (date.getTime() - new Date().getTime()) / 36e5;
-  const showCountdown = hoursDiff <= 24 && hoursDiff > 0;
+  const showCountdown = hoursDiff <= 12 && hoursDiff > -2;
   const isTimeToRock = hoursDiff <= 1;
 
   useEffect(() => {
@@ -83,8 +83,7 @@ const EventRow = (props: IEventRow) => {
       </div>
 
       <div className="text-2xl mb-5 md:mb-0 md:px-10">
-        Starts {dayjs().to(dayjs(date))}
-        {/* showCountdown && Starts in <Countdown date={date} /> */}
+        {showCountdown && <>Starts {dayjs().to(dayjs(date))}</>}
       </div>
 
       <Button
