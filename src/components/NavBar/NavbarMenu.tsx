@@ -96,7 +96,7 @@ const NavbarMenu = (props: INavbarMenu) => {
     e.preventDefault();
     logout();
     if (onItemClick) onItemClick();
-    push(ROUTES.PUBLIC_ROUTES.login);
+    push(ROUTES.PUBLIC_ROUTES.index);
   };
 
   return (
