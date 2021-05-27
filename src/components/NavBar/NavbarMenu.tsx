@@ -102,7 +102,7 @@ const NavbarMenu = (props: INavbarMenu) => {
   return (
     <div
       id={mobile ? styles.navBarMobileContainer : styles.navBarItemsContainer}
-      className="flex flex-col md:flex-row pr-6"
+      className={`flex flex-col md:flex-row pr-6 ${mobile ? "" : ""}`}
     >
       {navItems.map((item) => {
         switch (item.type) {
@@ -111,7 +111,7 @@ const NavbarMenu = (props: INavbarMenu) => {
               <div key={item.title}>
                 <a
                   onClick={handleLogout}
-                  className="text-brown-main"
+                  className={`text-brown-main ${mobile ? "text-2xl px-7" : ""}`}
                   href={item.route}
                   target="_blank"
                   rel="noreferrer"
@@ -125,7 +125,7 @@ const NavbarMenu = (props: INavbarMenu) => {
               <div key={item.title}>
                 <a
                   href={item.route}
-                  className="text-brown-main"
+                  className={`text-brown-main ${mobile ? "text-2xl px-7" : ""}`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -137,7 +137,11 @@ const NavbarMenu = (props: INavbarMenu) => {
             return (
               <div key={item.title}>
                 <Link href={item.route}>
-                  <a className="link-outline border border-solid border-brown-main text-brown-main text-center py-3 px-9 rounded-full last:mr-0">
+                  <a
+                    className={`link-outline border border-solid border-brown-main text-brown-main text-center rounded-full last:mr-0 ${
+                      mobile ? "text-2xl py-4 px-6" : "py-3 px-9"
+                    }`}
+                  >
                     {item.title}
                   </a>
                 </Link>
@@ -147,7 +151,11 @@ const NavbarMenu = (props: INavbarMenu) => {
             return (
               <div key={item.title}>
                 <Link href={item.route}>
-                  <a className="link-solid border border-solid border-brown-main bg-brown-main text-black text-center py-3 px-9 rounded-full last:mr-0">
+                  <a
+                    className={`link-solid border border-solid border-brown-main bg-brown-main text-black text-center rounded-full last:mr-0 ${
+                      mobile ? "text-2xl py-3 px-6" : "py-3 px-9"
+                    }`}
+                  >
                     {item.title}
                   </a>
                 </Link>
@@ -157,7 +165,12 @@ const NavbarMenu = (props: INavbarMenu) => {
             return (
               <div key={item.title}>
                 <Link href={item.route}>
-                  <a onClick={onItemClick} className="text-brown-main">
+                  <a
+                    onClick={onItemClick}
+                    className={`text-brown-main ${
+                      mobile ? "text-2xl px-7" : ""
+                    }`}
+                  >
                     {item.title}
                   </a>
                 </Link>
