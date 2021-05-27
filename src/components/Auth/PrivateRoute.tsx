@@ -31,7 +31,10 @@ const PrivateRoute = ({ children }) => {
 
     const cachedToken = localStorage.getItem(LOCAL_STORAGE.USER_TOKEN);
     if (!isLoggedIn && Router.pathname !== "/") {
-      Router.push(ROUTES.PUBLIC_ROUTES.login);
+      Router.push({
+        pathname: ROUTES.PUBLIC_ROUTES.login,
+        query: { redirectTo: Router.pathname },
+      });
     } else {
       setToken(cachedToken);
     }

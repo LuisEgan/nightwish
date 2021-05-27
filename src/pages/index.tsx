@@ -1,15 +1,35 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import { ReactSVG } from "react-svg";
 import { useRouter } from "next/router";
 
+import { UserContext } from "../contexts/user/user.context";
+
 import Section from "../components/Section";
-import { BASE_PATH, BUY_TICKET_LINK } from "../lib/constants";
+import { BASE_PATH, BUY_TICKET_LINK, ROUTES } from "../lib/constants";
 
 import { useWindowSize } from "../lib/hooks";
 
 const Home = () => {
   const { isMobile, width, height } = useWindowSize();
   const router = useRouter();
+  const { setTicketCode, isLoggedIn } = useContext(UserContext);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // check if we have ticket ID
+    const hasTicketInUrl = window.location.href.match(
+      /nightwish\/[0-9]{20,30}/,
+    );
+    if (hasTicketInUrl) {
+      const ticketCodeFromURL = hasTicketInUrl[0].substr(10);
+      setTicketCode(ticketCodeFromURL);
+      if (isLoggedIn) {
+        router.push(ROUTES.PRIVATE_ROUTES.ticket);
+      } else {
+        router.push(ROUTES.PUBLIC_ROUTES.register);
+      }
+    }
+  }, []);
 
   if (!width) return null;
 
@@ -131,8 +151,9 @@ const Home = () => {
         descriptionClassname="px-7 md:pr-8 lg:pr-10 text-center md:text-right"
         description={
           <>
-            Registration of purchased tickets will open on this site latest 24
-            hours before the first show
+            Registration of purchased tickets is now open! You can register your
+            ticket in two ways: by using personal web address or personal ticket
+            code. Read more about this on Support Page.
           </>
         }
         onClick={() => router.push("/support")}

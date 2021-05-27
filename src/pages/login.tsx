@@ -24,7 +24,7 @@ const Login = () => {
     formState: { errors },
   } = useForm<IForm>();
 
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const { login } = useContext(UserContext);
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -40,7 +40,13 @@ const Login = () => {
 
       await login({ accessToken, user });
 
-      push(ROUTES.PRIVATE_ROUTES.redeem);
+      const redirectTo = query.redirectTo
+        ? query.redirectTo
+        : user.eventAccess && user.eventAccess.length > 0
+        ? ROUTES.PRIVATE_ROUTES.events
+        : ROUTES.PRIVATE_ROUTES.ticket;
+
+      push(`${redirectTo}`);
     } catch (e) {
       setError(e.message || e);
     } finally {
@@ -56,7 +62,7 @@ const Login = () => {
 
           <Input
             {...register("email", {
-              required: "Please input your email",
+              required: "Please type in your email",
               pattern: {
                 value: EMAIL_REGEX,
                 message: "Invalid email",
@@ -86,7 +92,7 @@ const Login = () => {
               />
             }
             {...register("password", {
-              required: "Please input your password",
+              required: "Please type in your password",
             })}
             error={errors.password?.message}
           />
@@ -94,20 +100,33 @@ const Login = () => {
           {error && (
             <div className="text-base text-center text-red-500 py-3">
               {error}
+              <br />
+              <Link href={ROUTES.PUBLIC_ROUTES.register}>
+                <a className="underline">Register here</a>
+              </Link>{" "}
+              if you don´t have an account
             </div>
           )}
 
-          <div className="flex justify-center pt-5">
+          <div className="flex justify-center pt-5 mb-5">
             <Button type="submit" variant="black" disabled={loading}>
               {loading ? "Loading..." : "Login"}
             </Button>
           </div>
 
-          <div className="pt-2 text-center">
-            Don&apos;t have an account yet?{" "}
-            <Link href={ROUTES.PUBLIC_ROUTES.register}>
-              <a className="underline">Register here</a>
-            </Link>
+          <div className="pt-2 text-center flex flex-col">
+            <div>
+              Don&apos;t have an account yet?{" "}
+              <Link href={ROUTES.PUBLIC_ROUTES.register}>
+                <a className="underline">Register here</a>
+              </Link>
+            </div>
+
+            <div className="pt-5">
+              <Link href={ROUTES.PUBLIC_ROUTES.forgot}>
+                <a className="underline">Forgot your password?</a>
+              </Link>
+            </div>
           </div>
         </div>
       </form>

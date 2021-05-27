@@ -41,12 +41,12 @@ const LoginEmail = (props: ILoginPage) => {
       <div className={styles.title}>Create account</div>
       <div className={styles.content}>
         <div className={styles.subtitle}>
-          You need to Sign In in order to redeem your ticket
+          You need to log in in order to register your ticket code
         </div>
 
         <Input
           {...register("email", {
-            required: "Please input your email",
+            required: "Please type your email",
             pattern: {
               value: EMAIL_REGEX,
               message: "Invalid email",

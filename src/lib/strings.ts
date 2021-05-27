@@ -14,6 +14,47 @@ export const getRandomColor = () => {
   return color;
 };
 
+export const getUrlParameter = (sParam: string) => {
+  const sPageURL = window.location.search.substring(1);
+  const sURLVariables = sPageURL.split("&");
+  let sParameterName: string[];
+
+  for (let i = 0; i < sURLVariables.length; i++) {
+    sParameterName = sURLVariables[i].split("=");
+
+    if (sParameterName[0] === sParam) {
+      return sParameterName[1] === undefined
+        ? ""
+        : decodeURIComponent(sParameterName[1]);
+    }
+  }
+
+  return "";
+};
+
+export const validURL = (str: string) => {
+  const pattern = new RegExp(
+    "^(https?:\\/\\/)?" +
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+      "((\\d{1,3}\\.){3}\\d{1,3}))" +
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+      "(\\?[;&a-z\\d%_.~+=-]*)?" +
+      "(\\#[-a-z\\d_]*)?$",
+    "i",
+  );
+  return !!pattern.test(str);
+};
+
+export const checkForURL = (str: string) => {
+  let hasURL = false;
+
+  str.split(" ").forEach((word) => {
+    hasURL = validURL(word);
+  });
+
+  return hasURL;
+};
+
 interface IReplaceVowelCombinations {
   word: string;
   vowel: string;
@@ -55,7 +96,6 @@ const replaceVowelCombinations = (params: IReplaceVowelCombinations) => {
     excludes: [...excludes, vowel],
   });
 };
-
 export const getFoulWords = () => {
   // * This will generate all the profanity words from a base pool
   const basePool = [

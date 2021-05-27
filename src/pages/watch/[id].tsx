@@ -6,36 +6,33 @@ import VideoPlayer, { IOnPlayerLoader } from "../../components/VideoPlayer";
 import Chat from "../../components/Chat";
 import { BASE_PATH, EVENTS_BY_ID, ROUTES } from "../../lib/constants";
 import LoadingScreen from "../../components/LoadingScreen";
-import api from "../../api";
 import EventError from "../../components/Pages/Event/EventError";
+import MainEventNotification from "../../components/Pages/Event/MainEventNotification";
+import api from "../../api";
 
-// const videoJsOptions: VideoJsPlayerOptions = {
-//   muted: true,
-//   // fluid: true,
-//   sources: [
-//     {
-//       src:
-//         "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8",
-//       type: "application/x-mpegURL",
-//     },
-//   ],
-// };
+// const testUrl =
+//   "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8";
 
 const Event = () => {
-  const { push, query } = useRouter();
+  const router = useRouter();
+  const { push, query } = router;
 
   const [player, setPlayer] = useState<VideoJsPlayer>();
   const [videoJsOptions, setVideoJsOptions] = useState<VideoJsPlayerOptions>();
   const [eventError, setEventError] = useState<string>("");
+  const [showChat, setShowChat] = useState<boolean>(false);
 
   useEffect(() => {
-    const event = async (id: string) => {
+    const fetchEventPlaylistURL = async (id: string) => {
       try {
         const res = await api.getEvent({ eventId: id });
 
+        // * Render chat only on live events
+        setShowChat(res.live);
+
         setVideoJsOptions({
           muted: true,
-          autoplay: false,
+          autoplay: true,
           sources: [
             {
               src: res.url,
@@ -50,7 +47,14 @@ const Event = () => {
     };
 
     if (query?.id) {
-      event(query.id as string);
+      if (
+        new Date().getTime() - 1000 * 60 * 61 <
+        EVENTS_BY_ID[String(query.id)].date.getTime()
+      ) {
+        router.replace(ROUTES.PRIVATE_ROUTES.events);
+        return;
+      }
+      fetchEventPlaylistURL(query.id as string);
     }
   }, [query]);
 
@@ -58,7 +62,7 @@ const Event = () => {
     setPlayer(loadedPlayer);
 
     setTimeout(() => {
-      // player?.play();
+      player?.play();
     }, 1000);
   };
 
@@ -80,6 +84,9 @@ const Event = () => {
           />
         )}
       </Head>
+
+      <MainEventNotification />
+
       <div className="relative h-screen w-screen p-5 bg-black">
         {!player && <LoadingScreen />}
 
@@ -100,7 +107,7 @@ const Event = () => {
           )}
         </div>
 
-        <Chat />
+        {showChat && <Chat />}
       </div>
     </>
   );

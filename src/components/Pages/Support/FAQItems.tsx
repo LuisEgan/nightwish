@@ -1,21 +1,18 @@
 /* eslint-disable */
-
 import Link from "next/link";
 import { ROUTES } from "../../../lib/constants";
 import { IAccordionItem } from "./Accordion";
 
-const ELink = ({ url }: { url: string }) => {
-  return (
-    <a
-      className="underline"
-      href={`https://${url}`}
-      target="_blank"
-      rel="noreferrer"
-    >
-      {url}
-    </a>
-  );
-};
+const ELink = ({ url }: { url: string }) => (
+  <a
+    className="underline"
+    href={`https://${url}`}
+    target="_blank"
+    rel="noreferrer"
+  >
+    {url}
+  </a>
+);
 
 const FAQItems: IAccordionItem[] = [
   {
@@ -63,17 +60,49 @@ const FAQItems: IAccordionItem[] = [
   },
 
   {
+    title: "Can I watch the concert later?",
+    description:
+      "Ticket holders will be able to access a recording of the stream for 48 hours after the concert. Please notice that it´s not possible to watch the recording immediately after the concert. It is uploaded to the platform 4-6 hours after the show.",
+  },
+
+  {
+    title: "Can I watch the VIP virtual session later?",
+    description: (
+      <>
+        You cannot watch the VIP virtual session later. VIP virtual session will
+        be shown before the shows: <br />
+        <br />
+        <b>On Friday the VIP virtual session will start:</b>
+        <b>Europe:</b> 8pm EEST (Finland) (UTC+3) / 7pm CEST (UTC+2) / 6pm BST
+        (UTC+1)
+        <b>North and South America:</b> 1pm ET (UTC-4) / 10am PT (UTC -7) / 2pm
+        BRT (UTC-3) / 12 noon CT (UTC -5) <b>Asia and Australia:</b> Sat, May
+        29, 2021, 1am CST (UTC+8) / 2am JST (UTC+9) / 3am AEST (UTC+10) <br />
+        <br />
+        <b>On Saturday the VIP virtual session will start:</b>
+        <b>North and South America:</b> 7pm ET (UTC-4) / 4pm PT (UTC -7) / 8pm
+        BRT (UTC-3) / 6pm CT (UTC -5)
+        <b>Europe:</b> Sun, May 30, 2021: 2am EEST (Finland) (UTC+3) / 1am CEST
+        (UTC+2) / 12 midnight BST (UTC+1) <b>Asia and Australia:</b> Sun, May
+        30, 2021, 7am CST (UTC+8) / 8am JST (UTC+9) / 9am AEST (UTC+10) VIP
+        virtual session can be watched with the following ticket types: VIP
+        Europe, VIP Europe upgrade, VIP World, VIP World upgrade.
+      </>
+    ),
+  },
+
+  {
     title: "When can I access the platform?",
     description:
-      "The platform will open 24 hours before the start of the show. During the pre-show time you will be able to interact with other fans by using the chat and get familiar with the features of the platform. We recommend you to access the platform well in advance so you will avoid the potential congestion with the login.",
+      "The platform is now open. During the pre-show time you will be able to interact with other fans by using the chat and get familiar with the features of the platform. We recommend you to access the platform well in advance so you will avoid the potential congestion with the login.",
   },
 
   {
     title: "How can I register my ticket and access the event?",
     description: (
       <>
-        Registration of purchased tickets will open latest 24 hours before the
-        first show. <br />
+        Registration of purchased tickets is now open.
+        <br />
         <br />
         You can register your ticket in two ways: <br />
         <br />
@@ -203,82 +232,6 @@ const FAQItems: IAccordionItem[] = [
   },
 
   {
-    title: "I don't have a ticket yet. Where can I buy a ticket?",
-    description: (
-      <>
-        Buy your ticket from <ELink url="www.nightwish.com" /> or{" "}
-        <ELink url="www.lippu.fi/nightwish" />
-      </>
-    ),
-  },
-
-  {
-    title: "How long will the tickets be on sale?",
-    description: (
-      <>
-        Tickets will be on sale: <br />
-        <br />
-        <b>
-          Until May 28, 2021 at 10:30pm EEST (Finland) / 9:30pm CEST / 8:30pm
-          BST*
-        </b>
-        Two evening ticket, One evening ticket FRI, VIP Europe**, VIP Europe
-        upgrade**, VIP World**, VIP World upgrade** <br />
-        <br />* North and South America: 3:30pm ET (UTC-4) / 12:30pm PT (UTC -7)
-        / 4:30pm BRT (UTC-3) / 2:30pm CT (UTC -5) // Asia and Australia: Sat,
-        May 29, 2021, 3:30am CST (UTC+8) / 4:30am JST (UTC+9) / 5:30am AEST
-        (UTC+10) <br />
-        <br />
-        ** please notice that VIP virtual session will start: <br />
-        <b>On Friday May 28, 2021:</b> Europe: 8pm EEST (Finland) (UTC+3) / 7pm
-        CEST (UTC+2) / 6pm BST (UTC+1) // North and South America: 1pm ET
-        (UTC-4) / 10am PT (UTC -7) / 2pm BRT (UTC-3) / 12 noon CT (UTC -5) //
-        Asia and Australia: Sat, May 29, 2021, 1am CST (UTC+8) / 2am JST (UTC+9)
-        / 3am AEST (UTC+10) <br />
-        <br />
-        <b>On Saturday May 29, 2021:</b>North and South America: 7pm ET (UTC-4)
-        / 4pm PT (UTC -7) / 8pm BRT (UTC-3) / 6pm CT (UTC -5) // Europe: Sun,
-        May 30, 2021: 2am EEST (Finland) (UTC+3) / 1am CEST (UTC+2) / 12
-        midnight BST (UTC+1) // Asia and Australia: Sun, May 30, 2021, 7am CST
-        (UTC+8) / 8am JST (UTC+9) / 9am AEST (UTC+10) <br />
-        <b>VIP virtual session cannot be watched afterwards.</b> <br />
-        <br />
-        <b>Until May 29, 2021 at 9:30pm ET (UTC-4)*:</b>One evening ticket Sat{" "}
-        <br />
-        <br />
-        *North and South America: 9:30pm ET (UTC-4) / 6:30pm PT (UTC -7) /
-        10:30pm BRT (UTC-3) / 8:30pm CT (UTC -5) // Europe: Sun, May 30, 2021:
-        4:30am EEST (Finland) (UTC+3) / 3:30am CEST (UTC+2) / 2:30am BST (UTC+1)
-        // Asia and Australia: Sun, May 30, 2021, 9:30am CST (UTC+8) / 10:30am
-        JST (UTC+9) / 11:30am AEST (UTC+10)
-      </>
-    ),
-  },
-
-  {
-    title: "How can I upgrade my ticket to a VIP package?",
-    description: (
-      <>
-        If you would like to upgrade your ticket to a VIP package, you can buy
-        an add-on on <ELink url="www.nightwish.com" /> or{" "}
-        <ELink url="www.lippu.fi/nightwish" />. You can choose either VIP Europe
-        upgrade or VIP World upgrade. Find more about these ticket types on
-        section "How to buy a ticket". If you buy an upgrade ticket, a concert
-        ticket must be purchased separately. <br />
-        <br /> VIP tickets will be on sale until May 28, 2021: <b>
-          Europe:
-        </b>{" "}
-        10:30pm EEST (Finland) (UTC+3) / 9:30pm CEST (UTC+2) / 8:30pm BST
-        (UTC+1) //
-        <b>North and South America:</b> 3:30pm ET (UTC-4) / 12:30pm PT (UTC -7)
-        / 4:30pm BRT (UTC-3) / 2:30pm CT (UTC -5) // <b>Asia and Australia:</b>{" "}
-        Sat, May 29, 2021, 3:30am CST (UTC+8) / 4:30am JST (UTC+9) / 5:30am AEST
-        (UTC+10)
-      </>
-    ),
-  },
-
-  {
     title: "What do I need to participate? ",
     description:
       "You can access the event with a computer or a mobile device. You will have the best user experience with the Google Chrome internet browser. An internet connection (10 Mbps or faster) is required. (If you can usually access and run streaming services or watch high quality videos on your device, it is very likely you will be able to access this event.) ",
@@ -304,41 +257,59 @@ const FAQItems: IAccordionItem[] = [
   },
 
   {
-    title: "Can I watch the concert later?",
+    title: "Can I participate from anywhere in the world?",
     description:
-      "Ticket holders will be able to access a recording of the stream for 48 hours after the concert. Please notice that it&apos;s not possible to watch the recording immediately after the concert. It is uploaded to the platform 4-6 hours after the show.",
+      "Yes, you will be able to participate from anywhere in the world. Please notice that the organizer is not responsible, if it&apos;s not possible to watch the shows for the following reasons: government restricts the watching, your internet connection doesn't work or is not strong enough, your electricity is cut off, or any other reason beyond the organizer&apos;s control.",
   },
 
   {
-    title: "Can I watch the VIP virtual session later?",
+    title: "What can I do if the sound or video is breaking?",
     description: (
       <>
-        You cannot watch the VIP virtual session later. VIP virtual session will
-        be shown before the shows: <br />
+        Check if there&apos;s someone else who is using the same internet
+        connection to play a videogame, downloading big video files or other
+        things that will heavily affect the internet connection. You can check
+        the speed of your connection for example here:{" "}
+        <ELink url="www.speedtest.net" />
         <br />
-        <b>On Friday the VIP virtual session will start:</b>
-        <b>Europe:</b> 8pm EEST (Finland) (UTC+3) / 7pm CEST (UTC+2) / 6pm BST
-        (UTC+1)
-        <b>North and South America:</b> 1pm ET (UTC-4) / 10am PT (UTC -7) / 2pm
-        BRT (UTC-3) / 12 noon CT (UTC -5) <b>Asia and Australia:</b> Sat, May
-        29, 2021, 1am CST (UTC+8) / 2am JST (UTC+9) / 3am AEST (UTC+10) <br />
         <br />
-        <b>On Saturday the VIP virtual session will start:</b>
-        <b>North and South America:</b> 7pm ET (UTC-4) / 4pm PT (UTC -7) / 8pm
-        BRT (UTC-3) / 6pm CT (UTC -5)
-        <b>Europe:</b> Sun, May 30, 2021: 2am EEST (Finland) (UTC+3) / 1am CEST
-        (UTC+2) / 12 midnight BST (UTC+1) <b>Asia and Australia:</b> Sun, May
-        30, 2021, 7am CST (UTC+8) / 8am JST (UTC+9) / 9am AEST (UTC+10) VIP
-        virtual session can be watched with the following ticket types: VIP
-        Europe, VIP Europe upgrade, VIP World, VIP World upgrade.
+        Check that the version of the web browser you are using is the latest.
+        If it&apos;s not, you might need to update your browser. You can also
+        try another browser.
+        <br />
+        <br />
+        VPN might also cause some problems.
+        <br />
+        <br />
+        If your internet connection is not working well, the video will be
+        automatically streamed with lower quality.
+        <br />
+        <br />
+        If you cannot hear any sound, check that your device&apos;s sound is on.
+        Please also check that your web browser is not muted and also that a
+        certain tab is not muted.
+        <br />
+        <br />
+        If any of the tips above don&apos;t work, you can try to shut down and
+        restart your device.
       </>
     ),
   },
 
   {
-    title: "Can I participate from anywhere in the world?",
-    description:
-      "Yes, you will be able to participate from anywhere in the world. Please notice that the organizer is not responsible, if it&apos;s not possible to watch the shows for the following reasons: government restricts the watching, your internet connection doesn't work or is not strong enough, your electricity is cut off, or any other reason beyond the organizer&apos;s control.",
+    title: "What do I do if my device disconnects or its battery dies? ",
+    description: (
+      <>
+        If your device disconnects or its battery dies, you are able to log back
+        in with the account you have created on the same device or a different
+        one.
+        <br />
+        <br />
+        Please note that you are able to be logged in on one device at a time.
+        If you are signed in on multiple devices simultaneously, the platform
+        will sign you off of your other devices automatically.
+      </>
+    ),
   },
 
   {
@@ -364,7 +335,7 @@ const FAQItems: IAccordionItem[] = [
         tel. +358 10 633 1030 / (asiakaspalvelu@lippu.fi). The service is open
         on weekdays 9:00 AM - 1:00 PM CEST. lippu.fi provides customer service
         in English, Finnish and Swedish. On the event day you can contact the
-        customer service here: www.burst.fi/nightwish/support <br />
+        customer service at the bottom of this page <br />
         <br /> We recommend you to check well in advance that you can find your
         ticket from your email. Please note that the customer service will be
         congested during the event, so you may not receive an answer to your
@@ -468,190 +439,12 @@ const FAQItems: IAccordionItem[] = [
   },
 
   {
-    title: "What can I do if the sound or video is breaking?",
-    description: (
-      <>
-        Check if there&apos;s someone else who is using the same internet
-        connection to play a videogame, downloading big video files or other
-        things that will heavily affect the internet connection. You can check
-        the speed of your connection for example here:{" "}
-        <ELink url="www.speedtest.net" />
-        <br />
-        <br />
-        Check that the version of the web browser you are using is the latest.
-        If it&apos;s not, you might need to update your browser. You can also
-        try another browser.
-        <br />
-        <br />
-        Check that there is no firewall in use. VPN might also cause some
-        problems.
-        <br />
-        <br />
-        If your internet connection is not working well, the video will be
-        automatically streamed with lower quality.
-        <br />
-        <br />
-        If you cannot hear any sound, check that your device&apos;s sound is on.
-        Please also check that your web browser is not muted and also that a
-        certain tab is not muted.
-        <br />
-        <br />
-        If any of the tips above don&apos;t work, you can try to shut down and
-        restart your device.
-      </>
-    ),
-  },
-
-  {
-    title: "What do I do if my device disconnects or its battery dies? ",
-    description: (
-      <>
-        If your device disconnects or its battery dies, you are able to log back
-        in with the account you have created on the same device or a different
-        one.
-        <br />
-        <br />
-        Please note that you are able to be logged in on one device at a time.
-        If you are signed in on multiple devices simultaneously, the platform
-        will sign you off of your other devices automatically.
-      </>
-    ),
-  },
-
-  {
     title: "Where can I find real-time support for technical issues?",
     description: (
       <>
-        On the event day you can reach the technical support at{" "}
-        <ELink url="www.burst.fi/nightwish/support" />. Questions will be
+        On the event day you can contact our technical support. You can find
+        their contact information at the bottom of this page. Questions will be
         answered as soon as possible.
-      </>
-    ),
-  },
-
-  {
-    title: "What kind of ticket types I can buy?",
-    description: (
-      <>
-        <ol className="list-disc">
-          <li>One evening ticket (Fri or Sat)</li>
-          <li>starting from 35 â‚¬ (+ order fee 1 â‚¬)</li>
-          <li>includes right to watch Friday or Saturday show</li>
-          <li>
-            recording of the show can be watched for 48 hours after the show
-          </li>
-        </ol>
-        <br />
-        <b>Two evening ticket</b>
-        <ol className="list-disc">
-          <li>starting from 45 â‚¬ (+ order fee 1 â‚¬)</li>
-          <li>includes right to watch both shows</li>
-          <li>recording can be watched for 48 hours after the show</li>
-        </ol>
-        <br />
-        <b>VIP Europe</b>
-        <ol className="list-disc">
-          <li>starting from 109 â‚¬ (+ order fee 1 â‚¬)</li>
-          <li>
-            incl. Two evening ticket, t-shirt, VIP pass, virtual session with
-            the bass player of the Human. :II: Nature. Tour before the shows.
-          </li>
-          <li>incl. right to watch both shows</li>
-          <li>recording can be watched for 48 hours after the show</li>
-          <li>sizes S-XXL. Unisex.</li>
-          <li>limited edition</li>
-          <li>shipping to Europe only</li>
-          <li>
-            ticket buyers&apos; contact infos will be handed to the organizer
-            (Fullsteam Agency and Till Dawn They Count) and to Backstage Rock
-            Shop and Kapanen GmbH for the shipment of the t-shirts and VIP
-            passes
-          </li>
-        </ol>
-        <br />
-        If you purchase VIP Europe or VIP Europe upgrade package later than on
-        May 14, 2021, we won&apos;t be able to promise that the T-shirt and VIP
-        pass will arrive to your home before the event.
-        <br />
-        <br />
-        <b>VIP Europe upgrade</b>
-        <ol className="list-disc">
-          <li>starting from 79 â‚¬ (+ order fee 1 â‚¬)</li>
-          <li>
-            incl. t-shirt, VIP pass, virtual session with the bass player of the
-            Human. :II: Nature. Tour before the shows
-          </li>
-          <li>concert ticket must be purchased separately</li>
-          <li>sizes S-XXL. Unisex.</li>
-          <li>limited edition</li>
-          <li>shipping to Europe only</li>
-          <li>
-            ticket buyers&apos; contact infos will be handed to the organizer
-            (Fullsteam Agency and Till Dawn They Count) and to Backstage Rock
-            Shop and Kapanen GmbH for the shipment of the t-shirts and VIP
-            passes
-          </li>
-        </ol>
-        <br />
-        <br />
-        If you purchase VIP Europe or VIP Europe upgrade package later than on
-        May 14, 2021, we won&apos;t be able to promise that the T-shirt and VIP
-        pass will arrive to your home before the event.
-        <br />
-        <br />
-        <b>VIP World</b>
-        <ol className="list-disc">
-          <li>starting from 79 â‚¬ (+ order fee 1 â‚¬)</li>
-          <li>
-            incl. Two evening ticket, virtual session with the bass player of
-            the Human. :II: Nature. Tour before the shows.
-          </li>
-          <li>incl. right to watch both shows</li>
-          <li>recording can be watched for 48 hours after the show</li>
-          <li>for customers anywhere in the world</li>
-        </ol>
-        <br />
-        <b>VIP World upgrade</b>
-        <ol className="list-disc">
-          <li>starting from 49 â‚¬ (+ order fee 1 â‚¬)</li>
-          <li>
-            incl. virtual session with the bass player of the Human. :II:
-            Nature. Tour before the shows
-          </li>
-          <li>concert ticket must be purchased separately</li>
-          <li>for customers anywhere in the world</li>
-        </ol>
-      </>
-    ),
-  },
-
-  {
-    title: "Ticket upgrades",
-    description: (
-      <>
-        If you have purchased a two evening ticket and would like to upgrade to
-        a VIP package: Choose the addition option <b>VIP Europe</b> upgrade or{" "}
-        <b>VIP World upgrade</b>. Customers in Europe can choose either one of
-        the options. Limited quantity.
-        <br />
-        <br />
-        If you have purchased a two evening ticket + t-shirt bundle and would
-        like to upgrade to a VIP package:
-        <br />
-        <br />
-        The t-shirt sold with the VIP package is different from the one in the
-        prior ticket + t-shirt bundle (additional print on the back). It is not
-        possible to cancel or exchange a previously purchased t-shirt for the
-        shirt sold with the <b>VIP Europe package</b>. You can complement your
-        order by choosing the addition option VIP Europe upgrade (in addition to
-        a two evening ticket and a virtual session, you will receive 2 different
-        shirts and a VIP pass) or <b>VIP World upgrade</b> (you will receive a
-        two evening ticket and a virtual session, but not the VIP shirt or a VIP
-        pass). Customers living in Europe can purchase either one of the
-        options. Limited quantity.
-        <br />
-        <br />
-        The t-shirts and VIP passes will be mailed during the spring.
       </>
     ),
   },
@@ -671,59 +464,67 @@ const FAQItems: IAccordionItem[] = [
   },
 
   {
-    title: "lippu.fi's delivery fees and payment method fees below",
+    title: "How long will the tickets be on sale?",
     description: (
       <>
-        Order fee (pdf ticket) of 1 â‚¬ will be charged. Service fee is included
-        in the ticket price.
+        Tickets will be on sale: <br />
+        <br />
+        <b>
+          Until May 28, 2021 at 10:30pm EEST (Finland) / 9:30pm CEST / 8:30pm
+          BST*
+        </b>
+        Two evening ticket, One evening ticket FRI, VIP Europe**, VIP Europe
+        upgrade**, VIP World**, VIP World upgrade** <br />
+        <br />* North and South America: 3:30pm ET (UTC-4) / 12:30pm PT (UTC -7)
+        / 4:30pm BRT (UTC-3) / 2:30pm CT (UTC -5) // Asia and Australia: Sat,
+        May 29, 2021, 3:30am CST (UTC+8) / 4:30am JST (UTC+9) / 5:30am AEST
+        (UTC+10) <br />
+        <br />
+        ** please notice that VIP virtual session will start: <br />
+        <b>On Friday May 28, 2021:</b> Europe: 8pm EEST (Finland) (UTC+3) / 7pm
+        CEST (UTC+2) / 6pm BST (UTC+1) // North and South America: 1pm ET
+        (UTC-4) / 10am PT (UTC -7) / 2pm BRT (UTC-3) / 12 noon CT (UTC -5) //
+        Asia and Australia: Sat, May 29, 2021, 1am CST (UTC+8) / 2am JST (UTC+9)
+        / 3am AEST (UTC+10) <br />
+        <br />
+        <b>On Saturday May 29, 2021:</b>North and South America: 7pm ET (UTC-4)
+        / 4pm PT (UTC -7) / 8pm BRT (UTC-3) / 6pm CT (UTC -5) // Europe: Sun,
+        May 30, 2021: 2am EEST (Finland) (UTC+3) / 1am CEST (UTC+2) / 12
+        midnight BST (UTC+1) // Asia and Australia: Sun, May 30, 2021, 7am CST
+        (UTC+8) / 8am JST (UTC+9) / 9am AEST (UTC+10) <br />
+        <b>VIP virtual session cannot be watched afterwards.</b> <br />
+        <br />
+        <b>Until May 29, 2021 at 9:30pm ET (UTC-4)*:</b>One evening ticket Sat{" "}
         <br />
         <br />
-        In addition to the delivery fee, a payment method fee may be charged for
-        the ticket purchase depending on the payment method selected:
-        <br />
-        <br />
-        1) Payment with an Amex credit card <br />
-        - 1,5% of the order value
-        <br />
-        <br />
-        2) Ticket invoice to consumers (payment in instalments) <br />
-        â€“ â‚¬5/order
-        <br />
-        <br />
-        3) Ticket invoice to companies <br />- â‚¬25/order
+        *North and South America: 9:30pm ET (UTC-4) / 6:30pm PT (UTC -7) /
+        10:30pm BRT (UTC-3) / 8:30pm CT (UTC -5) // Europe: Sun, May 30, 2021:
+        4:30am EEST (Finland) (UTC+3) / 3:30am CEST (UTC+2) / 2:30am BST (UTC+1)
+        // Asia and Australia: Sun, May 30, 2021, 9:30am CST (UTC+8) / 10:30am
+        JST (UTC+9) / 11:30am AEST (UTC+10)
       </>
     ),
   },
 
   {
-    title: "How can I pay?",
+    title: "How can I upgrade my ticket to a VIP package?",
     description: (
       <>
-        <b>Payment cards: </b>
-        <br />
-        Visa, Visa Electron, Mastercard, Eurocard, American Express
-        <br />
-        <br />
-        <b>PayPal</b>
-        <br />
-        You can pay for your purchases with Paypal payment. More information{" "}
-        <ELink url="www.paypal.com" />
-        <br />
-        <br />
-        <b>You can also pay your tickets with the following methods:</b>
-        <br /> Finnair Plus points
-      </>
-    ),
-  },
-
-  {
-    title: "Any further tips on the ticket buying process",
-    description: (
-      <>
-        Buy your ticket only from this event&apos;s official ticket shops{" "}
-        <ELink url="www.nightwish.com" /> and{" "}
-        <ELink url="www.lippu.fi/nightwish" />, in order to make sure that your
-        ticket is valid.
+        If you would like to upgrade your ticket to a VIP package, you can buy
+        an add-on on <ELink url="www.nightwish.com" /> or{" "}
+        <ELink url="www.lippu.fi/nightwish" />. You can choose either VIP Europe
+        upgrade or VIP World upgrade. Find more about these ticket types on
+        section "How to buy a ticket". If you buy an upgrade ticket, a concert
+        ticket must be purchased separately. <br />
+        <br /> VIP tickets will be on sale until May 28, 2021: <b>
+          Europe:
+        </b>{" "}
+        10:30pm EEST (Finland) (UTC+3) / 9:30pm CEST (UTC+2) / 8:30pm BST
+        (UTC+1) //
+        <b>North and South America:</b> 3:30pm ET (UTC-4) / 12:30pm PT (UTC -7)
+        / 4:30pm BRT (UTC-3) / 2:30pm CT (UTC -5) // <b>Asia and Australia:</b>{" "}
+        Sat, May 29, 2021, 3:30am CST (UTC+8) / 4:30am JST (UTC+9) / 5:30am AEST
+        (UTC+10)
       </>
     ),
   },
@@ -739,42 +540,11 @@ const FAQItems: IAccordionItem[] = [
   },
 
   {
-    title: "Do not share pictures of your ticket",
-    description: (
-      <>
-        It is essential that you do not share any image of your ticket or any
-        information regarding your ticket anywhere to anyone. Doing so might
-        result in your ticket code, ticket number or personal URL being copied
-        and misused. If someone else logs into the event with your ticket data,
-        it might prevent your access to the event. In such case, the event
-        organizer is not liable or obliged to refund or replace your ticket.{" "}
-      </>
-    ),
-  },
-
-  {
     title: "Tickets as draw prizes",
     description: (
       <>
         The drawing of tickets is forbidden without the permission of the event
         organizer.
-      </>
-    ),
-  },
-
-  {
-    title: "The concerts have been rescheduled from March to May",
-    description: (
-      <>
-        The interactive "An Evening with Nightwish In a Virtual World" concert
-        experiences that will kick off the "Human. :II: Nature." World Tour have
-        been rescheduled from March until May due to changes in the band&apos;s
-        touring schedule. The new dates are Friday, May 28 and Saturday, May 29,
-        2021.
-        <br />
-        <br />
-        Tickets purchased for the original dates are automatically valid for the
-        new dates, or can be returned by March 12, 2021.
       </>
     ),
   },
@@ -790,96 +560,33 @@ const FAQItems: IAccordionItem[] = [
   },
 
   {
-    title: "Returning products",
+    title: "Full FAQ",
     description: (
       <>
-        If you want to return a product you have purchased (T-shirt or VIP
-        pass), you need to send the return notification within 14 days of
-        receiving the item.
-      </>
-    ),
-  },
-
-  {
-    title: "Return notification",
-    description: (
-      <>
-        Write an email and tittle it as "Nightwish: return notification" and
-        send it to the following recipients: sales@kapanen-production.de and
-        asiakaspalvelu@lippu.fi
-        <br />
-        <br />
-        Write the following information to your email:
-        <br />
-        <br />
-        Name: <br />
-        Phone number: <br />
-        Email: <br />
-        Order number: (you can find your order number from your pdf-ticket){" "}
-        <br />
-        Product you want to return:
-      </>
-    ),
-  },
-
-  {
-    title: "Shipping the product",
-    description: (
-      <>
-        Once you have sent the return notification email, please send the
-        product to Kapanen-production. The product must be sent within 14 days
-        of receiving it.
-        <br />
-        <br />
-        Address: <br />
-        Kapanen-production Almestr. 4-8 33649 Bielefeld GERMANY
-        <br />
-        <br />
-        Add the following information inside of your return package: <br />
-        Name: <br />
-        Phone number: <br />
-        Email: <br />
-        Order number: (you can find your order number from your pdf-ticket)
-        <br />
-        <br />
-        Once the returned product has arrived to Kapanen-production, Lippu.fi
-        will start the refund process and they will return your money to your
-        account.
-        <br />
-        <br />
-        Please notice that the item must be unused and intact. The purchaser is
-        responsible for the costs of returning the products. The refund right
-        only applies to the physical products. Concert ticket and virtual
-        session are non-refundable. Lippu.fi will refund the money only to the
-        original purchaser.
-      </>
-    ),
-  },
-
-  {
-    title: "Returning defective products",
-    description: (
-      <>
-        If the product you received is defective, please contact{" "}
-        <a className="underline" href="mailto:sales@kapanen-production.de">
-          sales@kapanen-production.de
+        You can read the full FAQ{" "}
+        <a
+          href="https://www.lippu.fi/obj/media/FI-eventim/downloads/nightwish-faq-en.pdf"
+          target="_blank"
+        >
+          here
         </a>
-        . Contact Kapanen-production within 14 days you received the product.
-        Title your email as "Nightwish: defective product."
+        .
       </>
     ),
   },
 
   {
-    title: "Changing the size of your t-shirt",
+    title: "FAQ in Finnish / Usein kysytyt kysymykset suomeksi",
     description: (
       <>
-        If you want to change the size of your T-shirt, please email to{" "}
-        <a className="underline" href="mailto:sales@kapanen-production.de">
-          sales@kapanen-production.de
-        </a>{" "}
-        within 14 days you received the T-shirt. Title your email as "Nightwish:
-        changing the size of the T-shirt".
+        Löydät usein kysytyt kysymykset suomeksi{" "}
+        <a
+          href="https://www.lippu.fi/obj/media/FI-eventim/downloads/nightwish-faq-fi.pdf"
+          target="_blank"
+        >
+          täältä
+        </a>
+        .
       </>
     ),
   },

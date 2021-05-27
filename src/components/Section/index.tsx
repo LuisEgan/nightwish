@@ -74,11 +74,9 @@ const Section: FC<ISection> = (props) => {
         </div>
 
         <div className={`${descriptionClassname} ${center && "flex-1"}`}>
-          {description && (
-            <div className="pb-5 text-xl text-brown-main leading-snug md:text-white md:text-lg md:font-light">
-              {description}
-            </div>
-          )}
+          <div className="pb-5 text-lg text-brown-main leading-snug md:text-white md:text-lg md:font-light">
+            {description}
+          </div>
 
           {onClick && (
             <div className="pt-4 pb-5 mb-7">

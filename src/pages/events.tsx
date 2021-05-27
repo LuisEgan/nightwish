@@ -1,21 +1,20 @@
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import party from "party-js";
 
-import api from "../../api";
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import { UserContext } from "../../contexts/user/user.context";
-import { EVENTS_BY_ID, ROUTES } from "../../lib/constants";
-import EventRow, { IEventRow } from "../../components/Pages/Event/EventRow";
+import api from "../api";
+import Button from "../components/Button";
+import Input from "../components/Input";
+import { UserContext } from "../contexts/user/user.context";
+import { EVENTS_BY_ID, ROUTES } from "../lib/constants";
+import EventRow, { IEventRow } from "../components/Pages/Event/EventRow";
 
 interface IForm {
   code: string;
 }
 
 interface IEvent extends IEventRow {
-  listOrder: number;
+  owned: boolean;
 }
 
 const Events = () => {
@@ -25,31 +24,28 @@ const Events = () => {
     formState: { errors },
   } = useForm<IForm>();
 
-  const { setUser } = useContext(UserContext);
+  const { setUser, user } = useContext(UserContext);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
-  const boom = () => {
-    const element = document.getElementById("redeem");
-    party.confetti(element, {
-      count: party.variation.range(20, 40),
-    });
-  };
-
   const events = () => {
     const c: IEvent[] = Object.keys(EVENTS_BY_ID).map((eventId) => {
-      const { title, date, listOrder } = EVENTS_BY_ID[eventId];
+      const { title, date } = EVENTS_BY_ID[eventId];
       return {
         eventId,
         title,
         date,
-        listOrder,
+        owned: user?.eventAccess.includes(+eventId),
       };
     });
 
-    c.sort((a, b) => (a.listOrder > b.listOrder ? 1 : -1));
+    // This sorts the events first by owned and then by date
+    c.sort((a, b) =>
+      a.owned === b.owned ? (a.date < b.date ? -1 : 1) : a.owned ? -1 : 1,
+    );
+    // c.sort((a, b) => (a.date < b.date ? -1 : 1));
     return c;
   };
 
@@ -59,9 +55,8 @@ const Events = () => {
     setSuccess("");
     try {
       const res = await api.redeemTicket(body);
-      const { user } = res;
-      setUser(user);
-      boom();
+      const { user: updatedUser } = res;
+      setUser(updatedUser);
       setSuccess("Success! Enjoy the show 🤘");
     } catch (e) {
       setError(e.message || e);
@@ -74,33 +69,29 @@ const Events = () => {
   return (
     <div className="page-container px-7 md:px-40">
       <div className="conffetti" />
-      <div className="py-12">
-        <div className="flex flex-col">
-          <span className="text-brown-main text-3xl">Redeem your ticket</span>
+      <div className="py-4">
+        <div className="flex flex-col items-end">
+          <span className="text-brown-main text-3xl">Register your ticket</span>
 
-          <Link href="/event/1">
-            <a className="text-white">event</a>
-          </Link>
-
-          <div className="flex flex-col py-10">
+          <div className="flex flex-col py-6">
             <div className="flex flex-col md:flex-row">
               <Input
                 {...register("code", {
-                  required: "Please input your ticket",
+                  required: "Please type in your ticket code",
                 })}
-                placeholder="Ticket code"
+                placeholder="Type your ticket code here"
                 error={errors.code?.message}
-                className="flex-1"
+                className="flex-1 mb-4"
+                style={{ minWidth: "16rem" }}
                 outline
               />
 
               <Button
-                id="redeem"
-                className="md:ml-5"
+                className="md:ml-5 mb-5"
                 onClick={handleSubmit(handleRedeem)}
                 disabled={loading}
               >
-                {loading ? "Validating..." : "Validate"}
+                {loading ? "Validating..." : "Register"}
               </Button>
             </div>
 
@@ -115,17 +106,18 @@ const Events = () => {
         </div>
 
         <div>
-          <span className="text-brown-main text-4xl">Available events</span>
+          <span className="text-brown-main text-4xl">Events</span>
           {events().map((event) => (
             <EventRow key={event.title} {...event} />
           ))}
         </div>
 
-        <div className="text-center text-brown-main py-5">
-          Need Help?{" "}
+        <div className="text-center text-xl text-brown-main py-5 mt-4">
+          Need Help? Visit our{" "}
           <Link href={ROUTES.PUBLIC_ROUTES.support}>
-            <a className="underline">Click here</a>
-          </Link>
+            <a className="underline">Support</a>
+          </Link>{" "}
+          page
         </div>
       </div>
     </div>

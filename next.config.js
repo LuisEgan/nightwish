@@ -9,25 +9,17 @@ module.exports = {
   },
 
   basePath: "/nightwish",
-  // async redirects() {
-  //   return [
-  //     {
-  //       source: "/",
-  //       destination: "/nightwish",
-  //       permanent: true,
-  //       basePath: false,
-  //     },
-  //   ];
-  // },
 
   exportPathMap: async function () {
     return {
       "/": { page: "/" },
       "/login": { page: "/login" },
-      "/redeem": { page: "/redeem" },
+      "/ticket": { page: "/ticket" },
       "/register": { page: "/register" },
+      "/forgot": { page: "/forgot" },
+      "/reset": { page: "/reset" },
       "/support": { page: "/support" },
-      "/event/all": { page: "/event/all" },
+      "/events": { page: "/events" },
     };
   },
 };

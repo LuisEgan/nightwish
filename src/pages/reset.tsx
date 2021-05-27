@@ -1,25 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { ReactSVG } from "react-svg";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import Input from "../components/Input";
-import { BASE_PATH, EMAIL_REGEX, ROUTES } from "../lib/constants";
+import { BASE_PATH, ROUTES } from "../lib/constants";
 
 import styles from "../components/Pages/Login/login.module.scss";
 import Button from "../components/Button";
 import api from "../api";
-import { UserContext } from "../contexts/user/user.context";
+import { getUrlParameter } from "../lib/strings";
 
 interface IForm {
-  email: string;
-  emailConfirm: string;
   password: string;
   passwordConfirm: string;
 }
 
-const Register = () => {
+const Reset = () => {
   const {
     register,
     handleSubmit,
@@ -28,23 +25,44 @@ const Register = () => {
   } = useForm<IForm>();
 
   const { push } = useRouter();
-  const { login } = useContext(UserContext);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showPassConfirm, setShowPassConfirm] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const [resetToken, setResetToken] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+
+  // * Check there's a code and an email in the url
+  useEffect(() => {
+    const urlToken = getUrlParameter("t");
+    const urlEmail = getUrlParameter("email");
+    if (!urlToken || !urlEmail) {
+      push(ROUTES.PUBLIC_ROUTES.login);
+    } else {
+      setResetToken(`${urlToken}`);
+      setEmail(`${urlEmail}`);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const onSubmit = async (values: IForm) => {
     setLoading(true);
     try {
-      const res = await api.register(values);
+      const res = await api.resetPassword({
+        email,
+        password: values.password,
+        resetToken,
+      });
 
-      const { accessToken, user } = res;
+      const { success: successRes } = res;
 
-      await login({ accessToken, user });
-
-      push(ROUTES.PRIVATE_ROUTES.ticket);
+      if (!successRes) {
+        throw new Error("There was a problem");
+      }
+      setSuccess(successRes);
     } catch (e) {
       setError(e.message || e);
     } finally {
@@ -55,51 +73,13 @@ const Register = () => {
   return (
     <div className="page-container bg-black flex justify-center items-center px-10 md:p-32">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h3
-          className={styles.title}
-          style={{ maxWidth: "32rem", marginLeft: "auto" }}
-        >
-          You need to create an account in order to register your ticket
-        </h3>
         <div className={styles.content}>
-          <div className={styles.subtitle}>Register</div>
-
-          <Input
-            title="Enter your email address"
-            type="email"
-            placeholder="your@email.com"
-            containerClassName="mb-2"
-            {...register("email", {
-              required: "Please input your email",
-              pattern: {
-                value: EMAIL_REGEX,
-                message: "Invalid email",
-              },
-            })}
-            error={errors.email?.message}
-          />
-
-          <Input
-            title="Confirm your email"
-            type="email"
-            placeholder="your@email.com"
-            containerClassName="mb-10"
-            {...register("emailConfirm", {
-              required: "Please validate your email",
-              validate: (value) =>
-                value !== getValues("email") ? "Emails don't match" : true,
-              pattern: {
-                value: EMAIL_REGEX,
-                message: "Invalid email",
-              },
-            })}
-            error={errors.emailConfirm?.message}
-          />
+          <div className={styles.subtitle}>Reset</div>
 
           <Input
             type={showPass ? "text" : "password"}
             placeholder="Min. 8 characters password"
-            title="Choose a password"
+            title="Enter your new password"
             containerClassName="mb-2"
             icon={
               <ReactSVG
@@ -125,7 +105,7 @@ const Register = () => {
           <Input
             type={showPassConfirm ? "text" : "password"}
             placeholder="Min. 8 characters password"
-            title="Cofirm your password"
+            title="Cofirm your new password"
             icon={
               <ReactSVG
                 src={
@@ -156,21 +136,30 @@ const Register = () => {
           )}
 
           <div className="flex justify-center pt-5">
-            <Button
-              type="submit"
-              className=""
-              variant="black"
-              disabled={loading}
-            >
-              {loading ? "Loading..." : "Register"}
-            </Button>
-          </div>
-
-          <div className="pt-6 text-center">
-            Already registered?{" "}
-            <Link href={ROUTES.PUBLIC_ROUTES.login}>
-              <a className="underline">Login here</a>
-            </Link>
+            {success ? (
+              <div className="flex flex-col">
+                <div className="text-green-700 pb-5">
+                  Success! You updated your password
+                </div>
+                <Button
+                  type="button"
+                  variant="black"
+                  disabled={loading}
+                  onClick={() => push(ROUTES.PUBLIC_ROUTES.login)}
+                >
+                  Go to login page
+                </Button>
+              </div>
+            ) : (
+              <Button
+                type="submit"
+                className=""
+                variant="black"
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Reset password"}
+              </Button>
+            )}
           </div>
         </div>
       </form>
@@ -178,4 +167,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Reset;

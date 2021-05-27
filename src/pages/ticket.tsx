@@ -3,7 +3,6 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
-import party from "party-js";
 import Link from "next/link";
 import styles from "../components/Pages/Login/login.module.scss";
 import Input from "../components/Input";
@@ -24,18 +23,11 @@ const LoginRedeem = () => {
   } = useForm<IForm>();
 
   const { push } = useRouter();
-  const { setUser } = useContext(UserContext);
+  const { setUser, ticketCode, setTicketCode } = useContext(UserContext);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
-
-  const boom = () => {
-    const element = document.getElementById("redeem");
-    party.confetti(element, {
-      count: party.variation.range(20, 40),
-    });
-  };
 
   const onSubmit = async (values: IForm) => {
     setLoading(true);
@@ -45,8 +37,8 @@ const LoginRedeem = () => {
 
       const { user } = res;
       setUser(user);
+      setTicketCode(null);
       setSuccess("Success! Enjoy the show 🤘");
-      boom();
 
       setTimeout(() => {
         push(ROUTES.PRIVATE_ROUTES.events);
@@ -61,15 +53,26 @@ const LoginRedeem = () => {
   return (
     <div className="page-container bg-black flex justify-center items-center px-10 md:p-32">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <h3
+          className={styles.title}
+          style={{
+            maxWidth: "32em",
+            marginLeft: "auto",
+          }}
+        >
+          Register your ticket
+        </h3>
         <div className={styles.content}>
           <div className={styles.subtitle}>Enter your ticket code</div>
 
           <Input
             {...register("code", {
-              required: "Please input your ticket",
+              required: "Please type in your ticket code",
             })}
-            placeholder="Ticket code"
+            placeholder="Ticket code here"
+            className="text-center"
             error={errors.code?.message}
+            defaultValue={ticketCode}
           />
 
           {error && (
@@ -92,14 +95,16 @@ const LoginRedeem = () => {
               variant="black"
               disabled={loading}
             >
-              {loading ? "Loading..." : "Redeem"}
+              {loading ? "Loading..." : "Register ticket"}
             </Button>
           </div>
 
-          <div className="pt-2 text-center">
-            <Link href={ROUTES.PRIVATE_ROUTES.events}>
-              <a className="underline">Continue to all events</a>
-            </Link>
+          <div className="pt-6 text-center">
+            Need help? See our{" "}
+            <Link href={ROUTES.PUBLIC_ROUTES.support}>
+              <a className="underline">Support</a>
+            </Link>{" "}
+            page
           </div>
         </div>
       </form>

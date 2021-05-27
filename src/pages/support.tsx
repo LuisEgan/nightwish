@@ -18,9 +18,26 @@ const Support = () => (
       <SupportAccordion items={FAQItems} />
     </div>
 
-    {/* <div className="py-10">
-      <SupportContactForm />
-    </div> */}
+    <div className="py-10 mb-6 md:mb-10">
+      <h2 className="text-6xl mb-10 text-brown-main">Support</h2>
+      <div className="md:flex">
+        <div className="flex-1 pr-0 md:pr-8 lg:pr-24">
+          <p className="text-brown-main text-xl">
+            If you couldn´t find help from the FAQ, please contact our customer
+            service and technical support here. Questions will be answered as
+            soon as possible.
+          </p>
+        </div>
+        <div className="py-4 mt-14 md:mt-0 text-center md:text-right">
+          <a
+            href="mailto:support@burst.fi"
+            className="px-16 lg:px-20 py-4 rounded-full bg-brown-main cursor-pointer"
+          >
+            Email Support Now
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 );
 

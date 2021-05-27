@@ -1,24 +1,33 @@
+export const BASE_PATH = "/nightwish";
+// export const BASE_PATH = "";
+
 export const ROUTES = {
   PRIVATE_ROUTES: {
-    events: "/event/all",
-    event: "/event/",
-    redeem: "/redeem",
+    events: "/events",
+    watch: "/watch/",
+    ticket: "/ticket",
   },
 
   PUBLIC_ROUTES: {
     index: "/",
     login: "/login",
-    terms: "/terms",
+    legal: "/legal",
     support: "/support",
     register: "/register",
+    forgot: "/forgot",
+    reset: "/reset",
   },
 };
 
-export const API_DNS = (() =>
-  typeof window !== "undefined" &&
-  window.location.hostname.indexOf("burst.fi") !== -1
-    ? "https://api.burst.fi/v1"
-    : "https://api.burst-staging.com/v1")();
+export const getApiURL = () => {
+  if (
+    typeof window !== "undefined" &&
+    window.location.hostname.indexOf("burst.fi/nightwish") !== -1
+  ) {
+    return "https://api.burst.fi/nightwish";
+  }
+  return "https://api.burst-staging.com/v1";
+};
 
 export const LOCAL_STORAGE = {
   USER_TOKEN: "USER_TOKEN",
@@ -39,29 +48,23 @@ export const BUY_TICKET_LINK = "https://www.nightwish.com/";
 
 export const FRIDAY_CONCERT_DATE = new Date("");
 
-export const BASE_PATH = "/nightwish";
-// export const BASE_PATH = "";
-
-export const EVENTS_BY_ID = {
+export const EVENTS_BY_ID: {
+  [eventId: number]: { title: string; date: Date };
+} = {
   1: {
-    title: "Friday Main Event",
-    listOrder: 2,
-    date: new Date("2021-05-28T17:00:00.000Z"),
+    title: "Show Friday",
+    date: new Date("2021-05-28T18:00:00.000Z"),
   },
   2: {
-    title: "Saturday Main Event",
-    listOrder: 3,
-    date: new Date("2021-05-29T23:00:00.000Z"),
+    title: "Show Saturday",
+    date: new Date("2021-05-30T00:00:00.000Z"),
   },
   11: {
-    title: "Friday VIP Session",
-    listOrder: 0,
-    date: new Date("2021-05-21T17:00:00.000Z"),
-    // date: new Date("2021-05-28T17:00:00.000Z"),
+    title: "VIP Virtual Session Friday",
+    date: new Date("2021-05-28T17:00:00.000Z"),
   },
   12: {
-    title: "Saturday VIP Session",
-    listOrder: 1,
+    title: "VIP Virtual Session Saturday",
     date: new Date("2021-05-29T23:00:00.000Z"),
   },
 };

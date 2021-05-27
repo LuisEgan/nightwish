@@ -1,4 +1,0 @@
-1. List of concerts separated by color
-2. Chat - moderation
-3. Livestream security: no more than 1 device streaming with the same account/ticket
-4. Ticket can only be redeemed once
