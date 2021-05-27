@@ -10,7 +10,7 @@ import { checkForURL, getRandomColor } from "../../lib/strings";
 import styles from "./chat.module.scss";
 
 import Button from "../Button";
-import { BASE_PATH, ROUTES } from "../../lib/constants";
+import { BASE_PATH, LOCAL_STORAGE, ROUTES } from "../../lib/constants";
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -28,7 +28,13 @@ const MAX_MESSAGES = 5;
 let MAX_MESSAGES_TIME_INTERVAL = 5000;
 let messagesSentCounter = 0;
 
-const Chat = () => {
+interface IChat {
+  showChatbutton?: boolean;
+}
+
+const Chat = (props: IChat) => {
+  const { showChatbutton = true } = props;
+
   const messagesBottom = useRef<HTMLDivElement>(null);
   const messageInput = useRef<HTMLInputElement>(null);
 
@@ -79,9 +85,26 @@ const Chat = () => {
           ? "wss://chat.burst-staging.com/ws"
           : "wss://chat.burst.fi/nightwish",
       );
-      setIsWSConnected(true);
+
+      ws.onopen = () => {
+        ws.send(
+          JSON.stringify({
+            action: "authenticate",
+            accessToken: localStorage.getItem(LOCAL_STORAGE.USER_TOKEN),
+          }),
+        );
+        setIsWSConnected(true);
+      };
+
+      ws.onclose = (event) => {
+        if (event.wasClean) {
+          ws.close(1000, "banned");
+        }
+      };
 
       ws.onmessage = (data) => {
+        // console.log("data: ", data);
+        // console.log("JSON.parse(data.data): ", JSON.parse(data.data));
         const { message, author, color } = JSON.parse(data.data)
           .body as IWSMessage;
 
@@ -236,19 +259,21 @@ const Chat = () => {
             </div>
           )
         ) : (
-          <div
-            className="absolute bottom-3 right-5 flex justify-center items-center h-14 w-14 ml-3 rounded-full bg-brown-main cursor-pointer"
-            onClick={() => setIsChatEnabled(true)}
-          >
-            <ReactSVG
-              src={`${BASE_PATH}/svg/chat.svg`}
-              height={20}
-              width={20}
-              beforeInjection={(svg) => {
-                svg.setAttribute("style", `width: ${30}px; height: ${30}px;`);
-              }}
-            />
-          </div>
+          showChatbutton && (
+            <div
+              className="fadeIn absolute bottom-3 right-5 flex justify-center items-center h-14 w-14 ml-3 rounded-full bg-brown-main cursor-pointer"
+              onClick={() => setIsChatEnabled(true)}
+            >
+              <ReactSVG
+                src={`${BASE_PATH}/svg/chat.svg`}
+                height={20}
+                width={20}
+                beforeInjection={(svg) => {
+                  svg.setAttribute("style", `width: ${30}px; height: ${30}px;`);
+                }}
+              />
+            </div>
+          )
         )}
       </div>
 

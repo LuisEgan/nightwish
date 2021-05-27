@@ -59,7 +59,7 @@ const UserProvider: FC = (props) => {
       ticketCode,
       setTicketCode,
     }),
-    [user, isLoggedIn],
+    [user, isLoggedIn, ticketCode],
   );
 
   return <UserContext.Provider {...{ value }}>{children}</UserContext.Provider>;

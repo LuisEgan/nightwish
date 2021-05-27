@@ -29,6 +29,8 @@ const Home = () => {
         router.push(ROUTES.PUBLIC_ROUTES.register);
       }
     }
+
+    // eslint-disable-next-line
   }, []);
 
   if (!width) return null;

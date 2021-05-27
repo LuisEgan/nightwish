@@ -13,6 +13,11 @@ import api from "../../api";
 // const testUrl =
 //   "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8";
 
+const INACTIVITY_SECONDS = 10;
+
+let countdownInterval: NodeJS.Timer;
+let countdown = INACTIVITY_SECONDS;
+
 const Event = () => {
   const { push, query } = useRouter();
 
@@ -21,6 +26,31 @@ const Event = () => {
   const [eventError, setEventError] = useState<string>("");
   const [showChat, setShowChat] = useState<boolean>(false);
 
+  const [noActivity, setNoActivity] = useState<boolean>(false);
+
+  // * Toggle user activity depending on mouse movement
+  useEffect(() => {
+    const onMouseMove = () => {
+      if (countdown === INACTIVITY_SECONDS) {
+        setNoActivity(false);
+      }
+      countdown = INACTIVITY_SECONDS;
+    };
+    document.addEventListener("mousemove", onMouseMove, false);
+
+    countdownInterval = setInterval(() => {
+      countdown -= 1;
+      if (countdown === 0) {
+        setNoActivity(true);
+      }
+    }, 1000);
+
+    return () => {
+      document.removeEventListener("mousemove", onMouseMove, false);
+      clearInterval(countdownInterval);
+    };
+  }, []);
+
   useEffect(() => {
     const event = async (id: string) => {
       try {
@@ -28,6 +58,7 @@ const Event = () => {
 
         // * Render chat only on live events
         setShowChat(res.live);
+        // setShowChat(true);
 
         setVideoJsOptions({
           muted: true,
@@ -35,6 +66,7 @@ const Event = () => {
           sources: [
             {
               src: res.url,
+              // src: testUrl,
               type: "application/x-mpegURL",
             },
           ],
@@ -82,16 +114,18 @@ const Event = () => {
       <div className="relative h-screen w-screen p-5 bg-black">
         {!player && <LoadingScreen />}
 
-        <div
-          className="absolute top-10 left-10 z-20 h-11 md:h-16 opacity-40 hover:opacity-100"
-          onClick={onLogoClick}
-        >
-          <img
-            className="object-contain cursor-pointer h-full sm:p-2 md:p-0"
-            src={`${BASE_PATH}/png/nightwishLogo.png`}
-            alt="logo"
-          />
-        </div>
+        {!noActivity && (
+          <div
+            className="fadeIn absolute top-10 left-10 z-20 h-11 md:h-16"
+            onClick={onLogoClick}
+          >
+            <img
+              className="object-contain cursor-pointer h-full sm:p-2 md:p-0"
+              src={`${BASE_PATH}/png/nightwishLogo.png`}
+              alt="logo"
+            />
+          </div>
+        )}
 
         <div className="h-1/2 md:h-full">
           {videoJsOptions && (
@@ -99,7 +133,7 @@ const Event = () => {
           )}
         </div>
 
-        {showChat && <Chat />}
+        {showChat && <Chat showChatbutton={!noActivity} />}
       </div>
     </>
   );
