@@ -16,10 +16,17 @@ const dev = process.env.NODE_ENV !== "production";
 
 let ws: ReconnectingWebSocket;
 
+interface IWSPayload {
+  body: { message: string; username: string; action: "message" | "remove" };
+  connectionId: string;
+  messageId: string;
+  timestamp: number;
+}
+
 interface IWSMessage {
   message: string;
-  author: string;
-  color: string;
+  action: string;
+  username: string;
 }
 
 const randomUserColor = getRandomColor();
@@ -44,6 +51,7 @@ const Chat = (props: IChat) => {
   const [isUsernameSet, setIsUsernameSet] = useState<boolean>(false);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [newMessage, setNewMessage] = useState<IMessage | null>();
+  const [removeMessageId, setRemoveMessageId] = useState<string | null>();
 
   const [mssg, setMssg] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -59,27 +67,9 @@ const Chat = (props: IChat) => {
     }
   };
 
-  const updateSentMessagesCounter = () => {
-    messagesSentCounter += 1;
-    setTimeout(() => {
-      messagesSentCounter -= 1;
-    }, MAX_MESSAGES_TIME_INTERVAL);
-  };
-
-  const addNewMessage = (message: IMessage) => {
-    const newMessages = [...messages, message];
-
-    if (newMessages.length > MESSAGES_QTY_LIMIT) {
-      newMessages.shift();
-    }
-
-    setMessages(newMessages);
-    updateSentMessagesCounter();
-  };
-
   // * Connect to socket
   useEffect(() => {
-    if (isChatEnabled && !isWSConnected) {
+    if (isChatEnabled && !isWSConnected && username) {
       ws = new ReconnectingWebSocket(
         dev
           ? "wss://chat.burst-staging.com/ws"
@@ -103,21 +93,26 @@ const Chat = (props: IChat) => {
       };
 
       ws.onmessage = (data) => {
-        // console.log("data: ", data);
-        // console.log("JSON.parse(data.data): ", JSON.parse(data.data));
-        const { message, author, color } = JSON.parse(data.data)
-          .body as IWSMessage;
+        const payload = JSON.parse(data.data) as IWSPayload;
+        if (!payload?.body) return;
 
-        if (color === randomUserColor) return;
+        const { body, connectionId, messageId } = payload;
+        const { action, message, username: usernamePayload } = body;
 
-        setNewMessage({
-          author,
-          body: message,
-          color: "white",
-        });
+        if (action === "remove") {
+          setRemoveMessageId(messageId);
+        } else {
+          setNewMessage({
+            username: usernamePayload,
+            message,
+            connectionId,
+            messageId,
+            color: usernamePayload === username ? randomUserColor : "white",
+          });
+        }
       };
     }
-  }, [isChatEnabled, isWSConnected]);
+  }, [isChatEnabled, isWSConnected, username]);
 
   // * Render new message
   useEffect(() => {
@@ -127,6 +122,15 @@ const Chat = (props: IChat) => {
     }
     // eslint-disable-next-line
   }, [newMessage]);
+
+  // * Remove message
+  useEffect(() => {
+    if (removeMessageId && isChatEnabled) {
+      deleteMessage(removeMessageId);
+      setRemoveMessageId(null);
+    }
+    // eslint-disable-next-line
+  }, [removeMessageId]);
 
   // * Scroll to bottom when chat is enabled and new message appears
   useEffect(() => {
@@ -160,25 +164,43 @@ const Chat = (props: IChat) => {
       setMssg("");
 
       // * Add message to current chat on the front
-      const body = mssg.trim();
-      addNewMessage({
-        author: username,
-        body,
-        color: randomUserColor,
-      });
+      const message = mssg.trim();
 
-      ws.send(
-        JSON.stringify({
-          action: "message",
-          message: body,
-          author: username,
-          color: randomUserColor,
-        }),
-      );
+      const sendNewMessage: IWSMessage = {
+        action: "message",
+        message,
+        username,
+      };
+      ws.send(JSON.stringify(sendNewMessage));
     } catch (e) {
       console.error("sendMessage - error: ", e);
       setError(e);
     }
+  };
+
+  const updateSentMessagesCounter = () => {
+    messagesSentCounter += 1;
+    setTimeout(() => {
+      messagesSentCounter -= 1;
+    }, MAX_MESSAGES_TIME_INTERVAL);
+  };
+
+  const addNewMessage = (message: IMessage) => {
+    const newMessages = [...messages, message];
+
+    if (newMessages.length > MESSAGES_QTY_LIMIT) {
+      newMessages.shift();
+    }
+
+    setMessages(newMessages);
+    updateSentMessagesCounter();
+  };
+
+  const deleteMessage = (removeId: string) => {
+    const newMessages = messages.filter(
+      ({ messageId }) => removeId !== messageId,
+    );
+    setMessages(newMessages);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -226,7 +248,7 @@ const Chat = (props: IChat) => {
         {isChatEnabled ? (
           isUsernameSet ? (
             messages.map((m) => (
-              <Message key={`${Math.random()}_${m.body}`} {...m} />
+              <Message key={`${Math.random()}_${m.message}`} {...m} />
             ))
           ) : (
             <div className="h-full flex justify-center items-center">
