@@ -93,7 +93,9 @@ const NavbarMenu = (props: INavbarMenu) => {
           : loggedInItems
         : loggedOutItems
       ).sort((a, b) =>
-        a.firstOnMobile && a.firstOnMobile !== b.firstOnMobile ? -1 : 1,
+        mobile && a.firstOnMobile && a.firstOnMobile !== b.firstOnMobile
+          ? -1
+          : 1,
       ),
     );
   }, [isLoggedIn, user]);

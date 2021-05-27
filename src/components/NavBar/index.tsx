@@ -22,7 +22,7 @@ const NavBar = () => {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
       >
         <Link href="/">
-          <a className={`py-7 ${isMobile ? "pl-6" : ""}`}>
+          <a className={`py-7 ${isMobile ? "pl-6" : "pl-10"}`}>
             <img
               style={{ height: "100%" }}
               src={`${BASE_PATH}/png/nw-logo.png`}
