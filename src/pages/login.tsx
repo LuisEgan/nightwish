@@ -25,7 +25,7 @@ const Login = () => {
   } = useForm<IForm>();
 
   const { push, query } = useRouter();
-  const { login } = useContext(UserContext);
+  const { login, ticketCode } = useContext(UserContext);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -40,7 +40,9 @@ const Login = () => {
 
       await login({ accessToken, user });
 
-      const redirectTo = query.redirectTo
+      const redirectTo = ticketCode
+        ? ROUTES.PRIVATE_ROUTES.ticket
+        : query.redirectTo
         ? query.redirectTo
         : user.eventAccess && user.eventAccess.length > 0
         ? ROUTES.PRIVATE_ROUTES.events
