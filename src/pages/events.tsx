@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import party from "party-js";
 
 import api from "../api";
 import Button from "../components/Button";
@@ -31,13 +30,6 @@ const Events = () => {
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
 
-  const boom = () => {
-    const element = document.getElementById("redeem");
-    party.confetti(element, {
-      count: party.variation.range(20, 40),
-    });
-  };
-
   const events = () => {
     const c: IEvent[] = Object.keys(EVENTS_BY_ID).map((eventId) => {
       const { title, date } = EVENTS_BY_ID[eventId];
@@ -65,7 +57,6 @@ const Events = () => {
       const res = await api.redeemTicket(body);
       const { user: updatedUser } = res;
       setUser(updatedUser);
-      boom();
       setSuccess("Success! Enjoy the show 🤘");
     } catch (e) {
       setError(e.message || e);
