@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IUser } from "../Types/user.types";
 
-import { API_DNS } from "../lib/constants";
+import { getApiURL } from "../lib/constants";
 
 export const setAxiosAuthorizationHeader = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -17,7 +17,7 @@ const register = async (body: IAuth) => {
       accessToken: string;
       success: boolean;
       user: IUser;
-    }>(`${API_DNS}/register`, body);
+    }>(`${getApiURL()}/register`, body);
 
     if (!res?.data.success) throw new Error("Error");
 
@@ -33,7 +33,7 @@ const login = async (body: IAuth) => {
       accessToken: string;
       success: boolean;
       user: IUser;
-    }>(`${API_DNS}/login`, body);
+    }>(`${getApiURL()}/login`, body);
 
     if (!res?.data.success) throw new Error("Error");
 
@@ -49,7 +49,7 @@ interface IRedeemTicket {
 const redeemTicket = async (body: IRedeemTicket) => {
   try {
     const res = await axios.post<{ success: boolean; user: IUser }>(
-      `${API_DNS}/ticket`,
+      `${getApiURL()}/ticket`,
       body,
     );
 
@@ -64,7 +64,7 @@ const redeemTicket = async (body: IRedeemTicket) => {
 const getUser = async () => {
   try {
     const res = await axios.get<{ success: boolean; user: IUser }>(
-      `${API_DNS}/user`,
+      `${getApiURL()}/user`,
     );
 
     if (!res?.data.success) throw new Error("Error");
@@ -85,7 +85,7 @@ const getEvent = async (params: IGetEvent) => {
       url?: string;
       error?: string;
       live: boolean;
-    }>(`${API_DNS}/playlist/${params.eventId}`);
+    }>(`${getApiURL()}/playlist/${params.eventId}`);
 
     if (!res?.data.success && res?.data.error)
       throw new Error(res?.data.error || "Error");
@@ -102,7 +102,7 @@ interface IForgotPasword {
 const forgotPasword = async (body: IForgotPasword) => {
   try {
     const res = await axios.post<{ success: boolean }>(
-      `${API_DNS}/forgot-password`,
+      `${getApiURL()}/forgot-password`,
       body,
     );
 
@@ -122,7 +122,7 @@ interface IResetPasword {
 const resetPassword = async (body: IResetPasword) => {
   try {
     const res = await axios.post<{ success: boolean }>(
-      `${API_DNS}/reset-password`,
+      `${getApiURL()}/reset-password`,
       body,
     );
 
