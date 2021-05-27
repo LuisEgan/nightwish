@@ -61,6 +61,10 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>Nightwish</title>
         <link rel="icon" href={`${BASE_PATH}/favicon.ico`} />
         <script
+          src="//rum-static.pingdom.net/pa-60afb0dc3a9c8c0011000100.js"
+          async
+        />
+        <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-3RN2GR3X75"
         />
