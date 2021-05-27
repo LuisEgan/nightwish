@@ -29,7 +29,7 @@ const Home = () => {
         router.push(ROUTES.PUBLIC_ROUTES.register);
       }
     }
-  }, []);
+  }, [isLoggedIn, setTicketCode]);
 
   if (!width) return null;
 
