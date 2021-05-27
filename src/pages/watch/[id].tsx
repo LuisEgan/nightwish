@@ -3,7 +3,6 @@ import { VideoJsPlayer, VideoJsPlayerOptions } from "video.js";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import VideoPlayer, { IOnPlayerLoader } from "../../components/VideoPlayer";
-import Chat from "../../components/Chat";
 import { BASE_PATH, EVENTS_BY_ID, ROUTES } from "../../lib/constants";
 import LoadingScreen from "../../components/LoadingScreen";
 import EventError from "../../components/Pages/Event/EventError";
@@ -24,7 +23,6 @@ const Event = () => {
   const [player, setPlayer] = useState<VideoJsPlayer>();
   const [videoJsOptions, setVideoJsOptions] = useState<VideoJsPlayerOptions>();
   const [eventError, setEventError] = useState<string>("");
-  const [showChat, setShowChat] = useState<boolean>(false);
 
   const [noActivity, setNoActivity] = useState<boolean>(false);
 
@@ -55,10 +53,6 @@ const Event = () => {
     const event = async (id: string) => {
       try {
         const res = await api.getEvent({ eventId: id });
-
-        // * Render chat only on live events
-        setShowChat(res.live);
-        // setShowChat(true);
 
         setVideoJsOptions({
           muted: true,
@@ -132,8 +126,6 @@ const Event = () => {
             <VideoPlayer {...{ onPlayerLoaded, ...videoJsOptions }} />
           )}
         </div>
-
-        {showChat && <Chat showChatbutton={!noActivity} />}
       </div>
     </>
   );

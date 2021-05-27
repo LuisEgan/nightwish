@@ -4,7 +4,6 @@ import ReconnectingWebSocket from "reconnecting-websocket";
 
 import Message, { IMessage } from "./Message";
 import Input from "../Input";
-import { useWindowSize } from "../../lib/hooks";
 import { checkForURL, getRandomColor } from "../../lib/strings";
 
 import styles from "./chat.module.scss";
@@ -45,8 +44,6 @@ const Chat = (props: IChat) => {
   const messagesBottom = useRef<HTMLDivElement>(null);
   const messageInput = useRef<HTMLInputElement>(null);
 
-  const { isMobile, isLandscape } = useWindowSize();
-
   const [username, setUsername] = useState<string>();
   const [isUsernameSet, setIsUsernameSet] = useState<boolean>(false);
   const [messages, setMessages] = useState<IMessage[]>([]);
@@ -55,7 +52,7 @@ const Chat = (props: IChat) => {
 
   const [mssg, setMssg] = useState<string>("");
   const [error, setError] = useState<string>("");
-  const [isChatEnabled, setIsChatEnabled] = useState<boolean>(true);
+  const [isChatEnabled, setIsChatEnabled] = useState<boolean>(false);
   const [isWSConnected, setIsWSConnected] = useState<boolean>(false);
 
   const scrollToBottom = () => {
@@ -69,7 +66,7 @@ const Chat = (props: IChat) => {
 
   // * Connect to socket
   useEffect(() => {
-    if (isChatEnabled && !isWSConnected && username) {
+    if (isChatEnabled && !isWSConnected && isUsernameSet) {
       ws = new ReconnectingWebSocket(
         dev
           ? "wss://chat.burst-staging.com/ws"
@@ -112,7 +109,7 @@ const Chat = (props: IChat) => {
         }
       };
     }
-  }, [isChatEnabled, isWSConnected, username]);
+  }, [isChatEnabled, isWSConnected, username, isUsernameSet]);
 
   // * Render new message
   useEffect(() => {
@@ -140,14 +137,20 @@ const Chat = (props: IChat) => {
   }, [isChatEnabled, messages]);
 
   const sendMessage = async () => {
-    if (messagesSentCounter >= MAX_MESSAGES) {
-      MAX_MESSAGES_TIME_INTERVAL += MAX_MESSAGES_TIME_INTERVAL * 0.01;
-      return;
-    }
-
-    if (!mssg || !ws) return;
-
     try {
+      if (messagesSentCounter >= MAX_MESSAGES) {
+        MAX_MESSAGES_TIME_INTERVAL += MAX_MESSAGES_TIME_INTERVAL * 0.01;
+        throw new Error("Don't spam!");
+      }
+
+      if (!mssg) {
+        throw new Error("No message!");
+      }
+
+      if (!ws) {
+        throw new Error("Conn error");
+      }
+
       if (mssg.length > 100) {
         throw new Error("Message too large! Max 100 characters");
       }
@@ -174,7 +177,7 @@ const Chat = (props: IChat) => {
       ws.send(JSON.stringify(sendNewMessage));
     } catch (e) {
       console.error("sendMessage - error: ", e);
-      setError(e);
+      setError(e.message || e);
     }
   };
 
@@ -215,13 +218,13 @@ const Chat = (props: IChat) => {
     }
   };
 
-  const xSize = isMobile || isLandscape ? "2vw" : "1vw";
+  const xSize = "20px";
 
   return (
     <div
       className={`${
-        isChatEnabled ? "bg-black bg-opacity-50" : ""
-      } flex flex-col p-7 pb-0 px-0 h-1/2 w-full md:absolute md:right-0 md:top-0 md:p-3 md:pb-0 md:w-1/5 md:h-90vh`}
+        isChatEnabled ? "bg-black md:bg-opacity-70" : ""
+      } z-50 fixed bottom-0 flex flex-col p-7 pb-0 px-10 h-75vh w-full rounded-t-3xl md:rounded-3xl md:right-0 md:p-3 md:pb-0 md:w-1/4 md:h-90vh`}
       onKeyDown={handleKeyDown}
     >
       <div className="relative flex justify-center items-center text-3xl pb-5 text-brown-light">
@@ -230,9 +233,6 @@ const Chat = (props: IChat) => {
           <ReactSVG
             src={`${BASE_PATH}/svg/x.svg`}
             className="cursor-pointer absolute top-0 right-4"
-            style={{
-              transform: "translateY(50%)",
-            }}
             onClick={() => setIsChatEnabled(false)}
             beforeInjection={(svg) => {
               svg.setAttribute(
@@ -300,7 +300,7 @@ const Chat = (props: IChat) => {
       </div>
 
       {isChatEnabled && isUsernameSet && (
-        <div className="flex items-center pt-5">
+        <div className="flex items-center pb-10">
           <Input
             id="messageInput"
             ref={messageInput}
@@ -311,6 +311,7 @@ const Chat = (props: IChat) => {
             className={styles.input}
             maxLength={100}
             error={error}
+            autoComplete="off"
           />
 
           <div
