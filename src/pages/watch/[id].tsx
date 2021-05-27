@@ -14,7 +14,8 @@ import api from "../../api";
 //   "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8";
 
 const Event = () => {
-  const { push, query } = useRouter();
+  const router = useRouter();
+  const { push, query } = router;
 
   const [player, setPlayer] = useState<VideoJsPlayer>();
   const [videoJsOptions, setVideoJsOptions] = useState<VideoJsPlayerOptions>();
@@ -22,7 +23,7 @@ const Event = () => {
   const [showChat, setShowChat] = useState<boolean>(false);
 
   useEffect(() => {
-    const event = async (id: string) => {
+    const fetchEventPlaylistURL = async (id: string) => {
       try {
         const res = await api.getEvent({ eventId: id });
 
@@ -46,7 +47,14 @@ const Event = () => {
     };
 
     if (query?.id) {
-      event(query.id as string);
+      if (
+        new Date().getTime() - 1000 * 60 * 61 <
+        EVENTS_BY_ID[String(query.id)].date.getTime()
+      ) {
+        router.replace(ROUTES.PRIVATE_ROUTES.events);
+        return;
+      }
+      fetchEventPlaylistURL(query.id as string);
     }
   }, [query]);
 
