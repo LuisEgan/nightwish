@@ -118,7 +118,7 @@ const Login = () => {
 
           <div className="pt-2 text-center flex flex-col">
             <div>
-              Don&apos;t have an account yet?{" "}
+              Don´t have an account yet?{" "}
               <Link href={ROUTES.PUBLIC_ROUTES.register}>
                 <a className="underline">Register here</a>
               </Link>

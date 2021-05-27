@@ -19,7 +19,7 @@ const Message = (props: IMessage) => {
         <span className="font-bold" style={{ color }}>
           {author}
         </span>
-        : &nbsp;<span>{body}</span>
+        : <span>{body}</span>
       </div>
     </div>
   );
