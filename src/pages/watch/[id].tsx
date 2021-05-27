@@ -6,20 +6,12 @@ import VideoPlayer, { IOnPlayerLoader } from "../../components/VideoPlayer";
 import Chat from "../../components/Chat";
 import { BASE_PATH, EVENTS_BY_ID, ROUTES } from "../../lib/constants";
 import LoadingScreen from "../../components/LoadingScreen";
-import api from "../../api";
 import EventError from "../../components/Pages/Event/EventError";
+import MainEventNotification from "../../components/Pages/Event/MainEventNotification";
+import api from "../../api";
 
-// const videoJsOptions: VideoJsPlayerOptions = {
-//   muted: true,
-//   // fluid: true,
-//   sources: [
-//     {
-//       src:
-//         "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8",
-//       type: "application/x-mpegURL",
-//     },
-//   ],
-// };
+// const testUrl =
+//   "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8";
 
 const Event = () => {
   const { push, query } = useRouter();
@@ -84,6 +76,9 @@ const Event = () => {
           />
         )}
       </Head>
+
+      <MainEventNotification />
+
       <div className="relative h-screen w-screen p-5 bg-black">
         {!player && <LoadingScreen />}
 

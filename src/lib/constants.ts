@@ -44,22 +44,24 @@ export const BUY_TICKET_LINK = "https://www.nightwish.com/";
 
 export const FRIDAY_CONCERT_DATE = new Date("");
 
-export const EVENTS_BY_ID = {
+export const EVENTS_BY_ID: {
+  [eventId: number]: { title: string; date: Date };
+} = {
   1: {
     title: "Show Friday",
-    date: new Date("2021-05-26T21:00:00.000Z"),
+    date: new Date("2021-05-28T18:00:00.000Z"),
   },
   2: {
     title: "Show Saturday",
-    date: new Date("2021-05-26T24:00:00.000Z"),
+    date: new Date("2021-05-30T00:00:00.000Z"),
   },
   11: {
     title: "VIP Virtual Session Friday",
-    date: new Date("2021-05-26T20:00:00.000Z"),
+    date: new Date("2021-05-28T17:00:00.000Z"),
   },
   12: {
     title: "VIP Virtual Session Saturday",
-    date: new Date("2021-05-26T23:00:00.000Z"),
+    date: new Date("2021-05-29T23:00:00.000Z"),
   },
 };
 

@@ -96,7 +96,6 @@ const replaceVowelCombinations = (params: IReplaceVowelCombinations) => {
     excludes: [...excludes, vowel],
   });
 };
-
 export const getFoulWords = () => {
   // * This will generate all the profanity words from a base pool
   const basePool = [
