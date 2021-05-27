@@ -129,7 +129,8 @@ const Home = () => {
       <Section
         title="Chat with other fans. Engage with your friends and meet other fans around the world."
         titleClassname="text-left text-4xl text-center py-7 md:py-0 md:text-left md:text-2xl px-7 md:px-0"
-        descriptionClassname="px-7 md:px-0"
+        descriptionClassname="px-7 py-7 md:px-0"
+        description="The chat will open soon. Please be patient."
         img={`${BASE_PATH}/png/iphone@2x.png`}
         imageClassname="object-contain"
         imgSize="flex-1"
