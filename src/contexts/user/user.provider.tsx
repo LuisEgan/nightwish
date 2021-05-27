@@ -9,6 +9,7 @@ const UserProvider: FC = (props) => {
 
   const [user, setUser] = useState<IUser>();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [ticketCode, setTicketCode] = useState(null);
 
   useEffect(() => {
     const isLoggedInCached =
@@ -55,6 +56,8 @@ const UserProvider: FC = (props) => {
       login,
       logout,
       isLoggedIn,
+      ticketCode,
+      setTicketCode,
     }),
     [user, isLoggedIn],
   );

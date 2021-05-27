@@ -8,6 +8,8 @@ export interface ILogin {
 interface IUserMethods {
   user: IUser;
   setUser: (params: IUser) => void;
+  ticketCode: string | null;
+  setTicketCode: (ticketCode: string) => void;
   login: (params: ILogin) => Promise<void>;
   logout: () => void;
   isLoggedIn: boolean;
@@ -15,7 +17,9 @@ interface IUserMethods {
 
 const methods = {
   user: null,
+  ticketCode: null,
   setUser: () => {},
+  setTicketCode: () => {},
   login: async () => {},
   logout: () => {},
   isLoggedIn: false,

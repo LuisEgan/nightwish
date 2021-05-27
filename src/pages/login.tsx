@@ -62,7 +62,7 @@ const Login = () => {
 
           <Input
             {...register("email", {
-              required: "Please input your email",
+              required: "Please type in your email",
               pattern: {
                 value: EMAIL_REGEX,
                 message: "Invalid email",
@@ -92,7 +92,7 @@ const Login = () => {
               />
             }
             {...register("password", {
-              required: "Please input your password",
+              required: "Please type in your password",
             })}
             error={errors.password?.message}
           />
@@ -100,10 +100,15 @@ const Login = () => {
           {error && (
             <div className="text-base text-center text-red-500 py-3">
               {error}
+              <br />
+              <Link href={ROUTES.PUBLIC_ROUTES.register}>
+                <a className="underline">Register here</a>
+              </Link>{" "}
+              if you don´t have an account
             </div>
           )}
 
-          <div className="flex justify-center pt-5">
+          <div className="flex justify-center pt-5 mb-5">
             <Button type="submit" variant="black" disabled={loading}>
               {loading ? "Loading..." : "Login"}
             </Button>

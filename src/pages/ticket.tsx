@@ -23,7 +23,7 @@ const LoginRedeem = () => {
   } = useForm<IForm>();
 
   const { push } = useRouter();
-  const { setUser } = useContext(UserContext);
+  const { setUser, ticketCode, setTicketCode } = useContext(UserContext);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -37,6 +37,7 @@ const LoginRedeem = () => {
 
       const { user } = res;
       setUser(user);
+      setTicketCode(null);
       setSuccess("Success! Enjoy the show 🤘");
 
       setTimeout(() => {
@@ -71,6 +72,7 @@ const LoginRedeem = () => {
             placeholder="Ticket code here"
             className="text-center"
             error={errors.code?.message}
+            defaultValue={ticketCode}
           />
 
           {error && (
