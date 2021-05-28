@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/user/user.context";
+import api from "../../api";
 
 let rootRSI;
 
