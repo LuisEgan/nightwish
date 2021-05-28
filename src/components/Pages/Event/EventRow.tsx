@@ -98,20 +98,28 @@ const EventRow = (props: IEventRow) => {
         )}
       </div>
 
-      <Button
-        className="md:w-1/5"
-        onClick={onClick}
-        variant={
-          isHighlighted
-            ? isTimeToRock && isOwned
-              ? "orange"
-              : "brown"
-            : "primary"
-        }
-        outline={!isOwned}
-      >
-        {setButtonText()}
-      </Button>
+      <div className="md:w-1/5 flex flex-col text-center">
+        <Button
+          className="w-full"
+          onClick={onClick}
+          variant={
+            isHighlighted
+              ? isTimeToRock && isOwned
+                ? "orange"
+                : "brown"
+              : "primary"
+          }
+          outline={!isOwned}
+        >
+          {setButtonText()}
+        </Button>
+        {isOwned && (
+          <small className="mt-2 leading-none">
+            You can access the live stream here, about 1 hour before the event
+            starts
+          </small>
+        )}
+      </div>
     </div>
   );
 };

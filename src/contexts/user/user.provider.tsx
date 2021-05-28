@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
-import { setAxiosAuthorizationHeader } from "../../api";
+import { setAxiosAuthorizationHeader, fetchRSI } from "../../api";
 import { LOCAL_STORAGE } from "../../lib/constants";
 import { IUser } from "../../Types/user.types";
 import { ILogin, UserContext } from "./user.context";
@@ -10,6 +10,7 @@ const UserProvider: FC = (props) => {
   const [user, setUser] = useState<IUser>();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
   const [ticketCode, setTicketCode] = useState<string | undefined>(undefined);
+  const [rsi, setRSI] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const isLoggedInCached =
@@ -26,6 +27,24 @@ const UserProvider: FC = (props) => {
       localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(user));
     }
   }, [user]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setRSI(undefined);
+      return;
+    }
+
+    if (isLoggedIn && rsi === undefined) {
+      (async () => {
+        try {
+          const res = await fetchRSI();
+          if (res.rsi) setRSI(res.rsi);
+        } catch (error) {
+          console.error("rsi fetching");
+        }
+      })();
+    }
+  }, [isLoggedIn, rsi]);
 
   const login = (params: ILogin): Promise<void> =>
     new Promise((resolve, reject) => {
@@ -60,8 +79,10 @@ const UserProvider: FC = (props) => {
       isLoggedIn,
       ticketCode,
       setTicketCode,
+      rsi,
+      setRSI,
     }),
-    [user, isLoggedIn, ticketCode],
+    [user, isLoggedIn, ticketCode, rsi],
   );
 
   return <UserContext.Provider {...{ value }}>{children}</UserContext.Provider>;

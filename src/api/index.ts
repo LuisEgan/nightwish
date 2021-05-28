@@ -140,6 +140,20 @@ const resetPassword = async (body: IResetPasword) => {
   }
 };
 
+export const fetchRSI = async () => {
+  try {
+    const res = await axios.get<{ success: boolean; rsi: string }>(
+      `${getApiURL()}/rsi`,
+    );
+    if (!res?.data.success) {
+      throw new Error("Unsuccessful");
+    }
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.error || "Could not fetch the RSI");
+  }
+};
+
 export default {
   register,
   login,
@@ -148,4 +162,5 @@ export default {
   getEvent,
   forgotPasword,
   resetPassword,
+  fetchRSI,
 };

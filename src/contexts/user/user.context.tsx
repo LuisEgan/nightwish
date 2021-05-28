@@ -4,6 +4,7 @@ import { IUser } from "../../Types/user.types";
 export interface ILogin {
   user?: IUser;
   accessToken: string;
+  rsi?: string;
 }
 interface IUserMethods {
   user: IUser;
@@ -13,6 +14,8 @@ interface IUserMethods {
   login: (params: ILogin) => Promise<void>;
   logout: () => void;
   isLoggedIn: boolean | undefined;
+  rsi: string | undefined;
+  setRSI?: () => void;
 }
 
 const methods = {
@@ -23,5 +26,7 @@ const methods = {
   login: async () => {},
   logout: () => {},
   isLoggedIn: undefined,
+  rsi: undefined,
+  setRSI: () => {},
 };
 export const UserContext = createContext<IUserMethods>(methods);

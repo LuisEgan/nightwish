@@ -16,7 +16,9 @@ import "video.js/src/css/vjs.scss";
 import "../styles/globals.scss";
 import "../styles/animations.scss";
 import "../styles/accordion.scss";
+
 import Chat from "../components/Chat";
+import RSI from "../components/RSI";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -83,6 +85,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <Chat />
         <Footer />
       </div>
+      <RSI />
     </UserProvider>
   );
 };
