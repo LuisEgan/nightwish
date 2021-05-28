@@ -2,6 +2,7 @@
   "name": "nightwish",
   "version": "1.1.0",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "yarn clean && next dev -p 4000",
     "build": "npm run clean && next build && next export -o build/",
