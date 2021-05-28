@@ -107,22 +107,19 @@ const Home = () => {
       />
 
       <Section
-        title="How to get the full VIP experience"
+        title="How to watch the concert later"
         titleClassname="px-7 md:pl-8 lg:pl-10"
         descriptionClassname="px-7 md:pl-8 lg:pl-10"
         className="pb-10"
         description={
           <>
-            The VIP packages include a virtual session with the yet unrevealed
-            bass player of Nightwish’s “Human. :II: Nature.” tour, among other
-            perks. The identity of the bass player will be revealed on the live
-            session included in the VIP package on Friday, May 28, 2021.
+            Ticket holders will be able to access a recording of the stream for
+            48 hours after the concert. <br />
+            <br /> Please notice that it&apos;s not possible to watch the
+            recording immediately after the concert. It is uploaded to the
+            platform 4-6 hours after the show
           </>
         }
-        onClick={() => {
-          window.open("https://www.nightwish.com/#tickets", "_blank");
-        }}
-        buttonText="Get Your VIP Package"
         img={`${BASE_PATH}/png/middle@2x.png`}
       />
 
@@ -130,7 +127,7 @@ const Home = () => {
         title="Chat with other fans. Engage with your friends and meet other fans around the world."
         titleClassname="text-left text-4xl text-center py-7 md:py-0 md:text-left md:text-2xl px-7 md:px-0"
         descriptionClassname="px-7 py-7 md:px-0"
-        description="The chat will open soon. Please be patient."
+        description=""
         img={`${BASE_PATH}/png/iphone@2x.png`}
         imageClassname="object-contain"
         imgSize="flex-1"
@@ -156,9 +153,9 @@ const Home = () => {
         descriptionClassname="px-7 md:pr-8 lg:pr-10 text-center md:text-right"
         description={
           <>
-            Registration of purchased tickets is now open! You can register your
-            ticket in two ways: by using personal web address or personal ticket
-            code. Read more about this on Support Page.
+            You can register your ticket in two ways: by using personal web
+            address or personal ticket code. <br /> Read more about this on
+            Support page.
           </>
         }
         onClick={() => router.push("/support")}
