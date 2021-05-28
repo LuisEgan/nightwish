@@ -3,6 +3,9 @@ import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from "video.js";
 import { BASE_PATH } from "../../lib/constants";
 import RSI from "../RSI";
 
+// set some global configs
+videojs.options.autoplay = true;
+
 export interface IOnPlayerLoader {
   videoNode: HTMLVideoElement;
   player: VideoJsPlayer;
@@ -44,6 +47,19 @@ const videoJsOptions: VideoJsPlayerOptions = {
   //   aspectRatio: "640:267",
 };
 
+// const handlePlayerError = function (error) {
+//   console.error(error);
+// };
+
+// const handlePlayerPause = function (event) {
+//   this.bigPlayButton.show();
+//   // Now the issue is that we need to hide it again if we start playing
+//   // So every time we do this, we can create a one-time listener for play events.
+//   this.one("play", function () {
+//     this.bigPlayButton.hide();
+//   });
+// };
+
 const VideoPlayer = (props: IVideoPlayer) => {
   const { onPlayerLoaded, fullscreen, className, poster } = props;
 
@@ -53,17 +69,21 @@ const VideoPlayer = (props: IVideoPlayer) => {
   useEffect(() => {
     if (player) return null;
 
-    setPlayer(
-      videojs(
-        videoNode,
-        { ...videoJsOptions, ...props },
-        function onPlayerReady() {
-          if (onPlayerLoaded) {
-            onPlayerLoaded({ player: this, videoNode });
-          }
-        },
-      ),
+    const myPlayer = videojs(
+      videoNode,
+      { ...videoJsOptions, ...props },
+      function onPlayerReady() {
+        if (onPlayerLoaded) {
+          onPlayerLoaded({ player: this, videoNode });
+        }
+      },
     );
+
+    // myPlayer.on("error", handlePlayerError);
+    // myPlayer.on("pause", handlePlayerPause);
+    // myPlayer.on("play", () => console.log("play event")); // @ts-ignore
+
+    setPlayer(myPlayer);
 
     return () => {
       if (player) {

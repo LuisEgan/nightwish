@@ -146,11 +146,11 @@ const fetchRSI = async () => {
       `${getApiURL()}/rsi`,
     );
     if (!res?.data.success) {
-      throw new Error("Unsuccessful");
+      return false;
     }
     return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.error || "Could not fetch the RSI");
+    return false;
   }
 };
 
