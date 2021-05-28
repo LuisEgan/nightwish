@@ -47,7 +47,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       dataLayer.push(args);
     }
     gtag("js", new Date());
-    gtag("config", "G-3RN2GR3X75");
+    gtag("config", "G-Z0RMDLK6K5");
   }, []);
 
   const privateRoutes = Object.keys(ROUTES.PRIVATE_ROUTES).map((r) => {
@@ -69,7 +69,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         />
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-3RN2GR3X75"
+          src="https://www.googletagmanager.com/gtag/js?id=G-Z0RMDLK6K5"
         />
       </Head>
       <div id="website" className={isChrome ? "isChrome" : ""}>
