@@ -25,7 +25,7 @@ const Login = () => {
   } = useForm<IForm>();
 
   const { push, query } = useRouter();
-  const { login } = useContext(UserContext);
+  const { login, ticketCode } = useContext(UserContext);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -40,7 +40,9 @@ const Login = () => {
 
       await login({ accessToken, user });
 
-      const redirectTo = query.redirectTo
+      const redirectTo = ticketCode
+        ? ROUTES.PRIVATE_ROUTES.ticket
+        : query.redirectTo
         ? query.redirectTo
         : user.eventAccess && user.eventAccess.length > 0
         ? ROUTES.PRIVATE_ROUTES.events
@@ -55,7 +57,7 @@ const Login = () => {
   };
 
   return (
-    <div className="page-container bg-black flex justify-center items-center px-10 md:p-32">
+    <div className="page-container bg-black flex justify-center items-center px-10 md:p-32 md:pt-0">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.content}>
           <div className={styles.subtitle}>Login</div>
@@ -116,7 +118,7 @@ const Login = () => {
 
           <div className="pt-2 text-center flex flex-col">
             <div>
-              Don&apos;t have an account yet?{" "}
+              Don´t have an account yet?{" "}
               <Link href={ROUTES.PUBLIC_ROUTES.register}>
                 <a className="underline">Register here</a>
               </Link>

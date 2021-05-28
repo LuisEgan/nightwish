@@ -22,7 +22,7 @@ export const ROUTES = {
 export const getApiURL = () => {
   if (
     typeof window !== "undefined" &&
-    window.location.hostname.indexOf("burst.fi/nightwish") !== -1
+    window.location.href.indexOf("burst.fi/nightwish") !== -1
   ) {
     return "https://api.burst.fi/nightwish";
   }

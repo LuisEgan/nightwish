@@ -53,7 +53,7 @@ const Register = () => {
   };
 
   return (
-    <div className="page-container bg-black flex justify-center items-center px-10 md:p-32">
+    <div className="page-container bg-black flex justify-center items-center px-10 md:p-32 md:pt-0">
       <form onSubmit={handleSubmit(onSubmit)}>
         <h3
           className={styles.title}

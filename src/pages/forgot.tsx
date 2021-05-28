@@ -36,7 +36,7 @@ const Forgot = () => {
         throw new Error("The was a problem");
       }
     } catch (e) {
-      setError(e.message || e);
+      setError(e.message || e.error || e);
     } finally {
       setLoading(false);
     }

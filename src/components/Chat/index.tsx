@@ -265,8 +265,7 @@ const Chat = (props: IChat) => {
                   <div className="text-brown-light text-xs text-center mt-5">
                     <b>Disclaimer:</b> Remember that the chat is for the fans
                     only and not for unnecessary profanities or technical
-                    support. If you&apos;re having problems, please check out
-                    our{" "}
+                    support. If you´re having problems, please check out our{" "}
                     <a
                       className="underline"
                       href={`${BASE_PATH}${ROUTES.PUBLIC_ROUTES.support}`}

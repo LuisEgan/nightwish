@@ -36,6 +36,18 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // @ts-ignore
+    window.dataLayer = window.dataLayer || [];
+    function gtag(...args) {
+      // @ts-ignore
+      dataLayer.push(args);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-3RN2GR3X75");
+  }, []);
+
   const privateRoutes = Object.keys(ROUTES.PRIVATE_ROUTES).map((r) => {
     if (`/${r}/` === ROUTES.PRIVATE_ROUTES.watch) {
       return `${ROUTES.PRIVATE_ROUTES[r]}[id]`;
@@ -49,6 +61,14 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>Nightwish</title>
         <link rel="icon" href={`${BASE_PATH}/favicon.ico`} />
+        <script
+          src="//rum-static.pingdom.net/pa-60afb0dc3a9c8c0011000100.js"
+          async
+        />
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-3RN2GR3X75"
+        />
       </Head>
       <div id="website" className={isChrome ? "isChrome" : ""}>
         <NavBar />

@@ -102,14 +102,12 @@ const MainEventNotification = () => {
 
         {redirectCountdown >= 0 && isRedirect ? (
           <div>
-            <span>
-              &nbsp;Redirecting you in {redirectCountdown} seconds...{" "}
-            </span>
+            <span>Redirecting you in {redirectCountdown} seconds... </span>
             <span
               className="underline cursor-pointer"
               onClick={onCancelRedirect}
             >
-              &nbsp;CANCEL REDIRECT
+              CANCEL REDIRECT
             </span>
           </div>
         ) : (
@@ -121,7 +119,7 @@ const MainEventNotification = () => {
               )
             }
           >
-            &nbsp;Go to main event
+            Go to main event
           </span>
         )}
       </div>

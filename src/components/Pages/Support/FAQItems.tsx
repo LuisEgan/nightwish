@@ -246,7 +246,7 @@ const FAQItems: IAccordionItem[] = [
   {
     title: "What internet browser is best to watch the events?",
     description:
-      "In order to have the best user experience, we recommend you to use the most up to date version of Google Chrome. Other web browsers recommended are Edge 89, Firefox 86 and Safari 14. If the internet browser you are using doesn&apos;t work, please try another browser.",
+      "In order to have the best user experience, we recommend you to use the most up to date version of Google Chrome. Other web browsers recommended are Edge 89, Firefox 86 and Safari 14. If the internet browser you are using doesn´t work, please try another browser.",
   },
 
   {
@@ -259,23 +259,22 @@ const FAQItems: IAccordionItem[] = [
   {
     title: "Can I participate from anywhere in the world?",
     description:
-      "Yes, you will be able to participate from anywhere in the world. Please notice that the organizer is not responsible, if it&apos;s not possible to watch the shows for the following reasons: government restricts the watching, your internet connection doesn't work or is not strong enough, your electricity is cut off, or any other reason beyond the organizer&apos;s control.",
+      "Yes, you will be able to participate from anywhere in the world. Please notice that the organizer is not responsible, if it´s not possible to watch the shows for the following reasons: government restricts the watching, your internet connection doesn't work or is not strong enough, your electricity is cut off, or any other reason beyond the organizer´s control.",
   },
 
   {
     title: "What can I do if the sound or video is breaking?",
     description: (
       <>
-        Check if there&apos;s someone else who is using the same internet
-        connection to play a videogame, downloading big video files or other
-        things that will heavily affect the internet connection. You can check
-        the speed of your connection for example here:{" "}
-        <ELink url="www.speedtest.net" />
+        Check if there´s someone else who is using the same internet connection
+        to play a videogame, downloading big video files or other things that
+        will heavily affect the internet connection. You can check the speed of
+        your connection for example here: <ELink url="www.speedtest.net" />
         <br />
         <br />
         Check that the version of the web browser you are using is the latest.
-        If it&apos;s not, you might need to update your browser. You can also
-        try another browser.
+        If it´s not, you might need to update your browser. You can also try
+        another browser.
         <br />
         <br />
         VPN might also cause some problems.
@@ -285,12 +284,12 @@ const FAQItems: IAccordionItem[] = [
         automatically streamed with lower quality.
         <br />
         <br />
-        If you cannot hear any sound, check that your device&apos;s sound is on.
+        If you cannot hear any sound, check that your device´s sound is on.
         Please also check that your web browser is not muted and also that a
         certain tab is not muted.
         <br />
         <br />
-        If any of the tips above don&apos;t work, you can try to shut down and
+        If any of the tips above don´t work, you can try to shut down and
         restart your device.
       </>
     ),
@@ -331,10 +330,10 @@ const FAQItems: IAccordionItem[] = [
         for messages from these senders. Please also check your spam folder.{" "}
         <br />
         <br /> If you cannot find your tickets from <ELink url="www.lippu.fi" />{" "}
-        or from your email, please contact lippu.fi&apos;s customer service:
-        tel. +358 10 633 1030 / (asiakaspalvelu@lippu.fi). The service is open
-        on weekdays 9:00 AM - 1:00 PM CEST. lippu.fi provides customer service
-        in English, Finnish and Swedish. On the event day you can contact the
+        or from your email, please contact lippu.fi´s customer service: tel.
+        +358 10 633 1030 / (asiakaspalvelu@lippu.fi). The service is open on
+        weekdays 9:00 AM - 1:00 PM CEST. lippu.fi provides customer service in
+        English, Finnish and Swedish. On the event day you can contact the
         customer service at the bottom of this page <br />
         <br /> We recommend you to check well in advance that you can find your
         ticket from your email. Please note that the customer service will be
@@ -352,27 +351,27 @@ const FAQItems: IAccordionItem[] = [
     description: (
       <>
         Try to click "login here" link on your ticket again. <br />
-        <br /> If the link won&apos;t open automatically, you can also manually
-        copy and paste that link to the address bar of your browser (paint the
-        whole link dark by using your mouse cursor. Then click the right button
-        on your mouse and choose "copy". Then go to the address bar of your
-        browser and click the right button and choose "paste". After this click
-        the "Enter" button on your keyboard.) <br />
+        <br /> If the link won´t open automatically, you can also manually copy
+        and paste that link to the address bar of your browser (paint the whole
+        link dark by using your mouse cursor. Then click the right button on
+        your mouse and choose "copy". Then go to the address bar of your browser
+        and click the right button and choose "paste". After this click the
+        "Enter" button on your keyboard.) <br />
         <br />
         You can also type the "login here" link manually to the address bar of
         your internet browser by one letter at a time. <br />
-        <br /> If the link still doesn&apos;t work, you can also copy the long
-        ticket code that you can see on your ticket next to the text "Your
-        ticket code". The ticket code starts with numbers 00. Copy or write
-        manually the ticket code on section "Register Your ticket" on
+        <br /> If the link still doesn´t work, you can also copy the long ticket
+        code that you can see on your ticket next to the text "Your ticket
+        code". The ticket code starts with numbers 00. Copy or write manually
+        the ticket code on section "Register Your ticket" on
         <Link href={ROUTES.PUBLIC_ROUTES.index}>
           <a className="underline">www.burst.fi/nightwish</a>
         </Link>
         . <br />
         <br /> The link / ticket code has to be perfectly correct, in order for
-        it to work. So don&apos;t misspell any numbers or leave any numbers out.
-        If the ticket link or ticket code doesn&apos;t work after several
-        attempts, please contact the support:{" "}
+        it to work. So don´t misspell any numbers or leave any numbers out. If
+        the ticket link or ticket code doesn´t work after several attempts,
+        please contact the support:{" "}
         <Link href={ROUTES.PUBLIC_ROUTES.support}>
           <a className="underline">www.burst.fi/nightwish/support</a>
         </Link>
@@ -387,10 +386,10 @@ const FAQItems: IAccordionItem[] = [
       <>
         After you have registered all your tickets, you can see those events
         active on upcoming events list. If the status of some of the event reads
-        "Buy ticket", it means that you don&apos;t have access to watch said
-        event and if you want to watch it, you will have to buy another ticket.
-        If you think you already have a ticket that should grant you the access
-        to that event, please check that you have registered all your tickets.
+        "Buy ticket", it means that you don´t have access to watch said event
+        and if you want to watch it, you will have to buy another ticket. If you
+        think you already have a ticket that should grant you the access to that
+        event, please check that you have registered all your tickets.
         <br />
         <br />
         You can try to register your ticket code again. If you have bought
@@ -423,16 +422,15 @@ const FAQItems: IAccordionItem[] = [
         It has become more and more common on Facebook to have so-called fake
         events or fake event pages. These fake events are usually created by the
         trolls. The purpose is for example to trick participants to give their
-        credit card information or other personal information. Don&apos;t join
-        any suspicious Facebook events. This event&apos;s official Facebook
-        event is:
+        credit card information or other personal information. Don´t join any
+        suspicious Facebook events. This event´s official Facebook event is:
         <ELink url="www.facebook.com/events/780388779565649" />
         <br />
         <br />
-        Also, don&apos;t click any suspicious links that may be shared by
-        so-called trolls in the comments on this official Facebook event page.
-        Please be careful not to enter your ticket code, ticket link or payment
-        details into any service other than the official ticket shop or platform
+        Also, don´t click any suspicious links that may be shared by so-called
+        trolls in the comments on this official Facebook event page. Please be
+        careful not to enter your ticket code, ticket link or payment details
+        into any service other than the official ticket shop or platform
         mentioned in this guide.
       </>
     ),
@@ -455,10 +453,10 @@ const FAQItems: IAccordionItem[] = [
       <>
         Tickets are on sale on <ELink url="www.nightwish.com" /> and{" "}
         <ELink url="www.lippu.fi/nightwish" />. Kindly notice that buying your
-        ticket from this event&apos;s official ticket shop is the only way you
-        can make sure that your ticket is valid. If you are redirected from
-        another website, please check that you make the purchase on lippu.fi
-        online store, which is the official ticket shop of the event.
+        ticket from this event´s official ticket shop is the only way you can
+        make sure that your ticket is valid. If you are redirected from another
+        website, please check that you make the purchase on lippu.fi online
+        store, which is the official ticket shop of the event.
       </>
     ),
   },
@@ -534,7 +532,7 @@ const FAQItems: IAccordionItem[] = [
     description: (
       <>
         The pdf-ticket will be sent to your email right after the payment has
-        been received. Please also check your email&apos;s spam folder.{" "}
+        been received. Please also check your email´s spam folder.{" "}
       </>
     ),
   },
