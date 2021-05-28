@@ -55,9 +55,9 @@ const Event = () => {
 
   useEffect(() => {
     const searchEventId = window.location.href.match(
-      /nightwish\/watch\/[0-9]{1,2}\/?/,
+      /nightwish\/watch\/([0-9]{1,2})\/?/,
     );
-    const eventId = searchEventId ? searchEventId[0] : query?.id;
+    const eventId = searchEventId ? searchEventId[1] : query?.id;
 
     if (!eventId) {
       router.replace(ROUTES.PRIVATE_ROUTES.events);
