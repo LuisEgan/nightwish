@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ReactSVG } from "react-svg";
 import ReconnectingWebSocket from "reconnecting-websocket";
 
@@ -16,7 +16,12 @@ const dev = process.env.NODE_ENV !== "production";
 let ws: ReconnectingWebSocket;
 
 interface IWSPayload {
-  body: { message: string; username: string; action: "message" | "remove" };
+  body: {
+    message?: string;
+    username?: string;
+    action: "message" | "remove";
+    messageId?: string;
+  };
   connectionId: string;
   messageId: string;
   timestamp: number;
@@ -144,19 +149,19 @@ const Chat = (props: IChat) => {
       }
 
       if (!mssg) {
-        throw new Error("No message!");
+        return;
       }
 
       if (!ws) {
-        throw new Error("Conn error");
+        throw new Error("Connection to the chat data highway is weak");
       }
 
       if (mssg.length > 100) {
-        throw new Error("Message too large! Max 100 characters");
+        throw new Error("Small messages please. Max 100 characters");
       }
 
       if (checkForURL(mssg)) {
-        throw new Error("Message can't contain URLs");
+        throw new Error("Ehm, don't send links.");
       }
 
       // * Reset error
@@ -176,7 +181,6 @@ const Chat = (props: IChat) => {
       };
       ws.send(JSON.stringify(sendNewMessage));
     } catch (e) {
-      console.error("sendMessage - error: ", e);
       setError(e.message || e);
     }
   };
@@ -206,130 +210,159 @@ const Chat = (props: IChat) => {
     setMessages(newMessages);
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter") {
-      sendMessage();
-    }
-  };
-
   const confirmUsername = () => {
     if (username) {
       setIsUsernameSet(true);
     }
   };
 
-  const xSize = "20px";
+  const handleMessageSubmit = (e) => {
+    e.preventDefault();
+    sendMessage();
+  };
+
+  const xSize = "1rem";
 
   return (
-    <div
-      className={`${
-        isChatEnabled ? "bg-black md:bg-opacity-70" : ""
-      } z-50 fixed bottom-0 flex flex-col p-7 pb-0 px-10 h-75vh w-full rounded-t-3xl md:rounded-3xl md:right-0 md:p-3 md:pb-0 md:w-1/4 md:h-90vh`}
-      onKeyDown={handleKeyDown}
-    >
-      <div className="relative flex justify-center items-center text-3xl pb-5 text-brown-light">
-        {isChatEnabled ? "Chat" : ""}
-        {isChatEnabled && (
-          <ReactSVG
-            src={`${BASE_PATH}/svg/x.svg`}
-            className="cursor-pointer absolute top-0 right-4"
-            onClick={() => setIsChatEnabled(false)}
-            beforeInjection={(svg) => {
-              svg.setAttribute(
-                "style",
-                `width: ${xSize}; height: ${xSize}; fill:white`,
-              );
-            }}
-          />
-        )}
-      </div>
-
-      <div ref={messagesBottom} className="flex-1 w-full overflow-auto">
-        {isChatEnabled ? (
-          isUsernameSet ? (
-            messages.map((m) => (
-              <Message key={`${Math.random()}_${m.message}`} {...m} />
-            ))
-          ) : (
-            <div className="h-full flex justify-center items-center">
-              <div className="flex flex-col">
-                <div className="flex flex-col justify-center">
-                  <Input
-                    placeholder="Chat username"
-                    onChange={(e) => setUsername(e.target.value.substr(0, 10))}
-                    variant="black"
-                    className={styles.input}
-                    maxLength={10}
-                  />
-                  <Button onClick={confirmUsername}>Set username</Button>
-                  <div className="text-brown-light text-xs text-center mt-5">
-                    <b>Disclaimer:</b> Remember that the chat is for the fans
-                    only and not for unnecessary profanities or technical
-                    support. If you&apos;re having problems, please check out
-                    our{" "}
-                    <a
-                      className="underline"
-                      href={`${BASE_PATH}${ROUTES.PUBLIC_ROUTES.support}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Support Page
-                    </a>
+    <>
+      <div
+        className={`${
+          isChatEnabled ? "chat-enabled" : "chat-disabled"
+        } bg-black z-50 fixed bottom-0 flex flex-col top-24 lg:top-28 md:right-0 w-full md:w-1/2 lg:w-1/3 xl:w-1/4`}
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.85);" }}
+      >
+        <div className="relative flex justify-center items-center text-3xl pb-5 text-brown-light">
+          {isChatEnabled && (
+            <ReactSVG
+              src={`${BASE_PATH}/svg/x.svg`}
+              className="cursor-pointer absolute top-0 right-0 p-4"
+              onClick={() => setIsChatEnabled(false)}
+              beforeInjection={(svg) => {
+                svg.setAttribute(
+                  "style",
+                  `width: ${xSize}; height: ${xSize}; fill:white`,
+                );
+              }}
+            />
+          )}
+        </div>
+        <div
+          ref={messagesBottom}
+          className="flex-1 w-full overflow-auto chat-messages"
+        >
+          {isChatEnabled ? (
+            isUsernameSet ? (
+              messages.map((m) => (
+                <Message key={`${Math.random()}_${m.message}`} {...m} />
+              ))
+            ) : (
+              <div className="h-full flex justify-center items-center">
+                <div className="flex flex-col">
+                  <div className="flex flex-col justify-center">
+                    <div className="text-brown-light text-sm text-center -mt-20 mb-10">
+                      <h3 className="text-3xl mb-5">
+                        Welcome to the
+                        <br />
+                        Nightwish event chat
+                      </h3>
+                      <p className="px-10">
+                        Remember that the chat is for fans only and not for
+                        unnecessary profanities, toxic behaviour or technical
+                        support. If you´re having problems, please check out our{" "}
+                        <a
+                          className="underline"
+                          href={`${BASE_PATH}${ROUTES.PUBLIC_ROUTES.support}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Support Page
+                        </a>
+                        .
+                      </p>
+                    </div>
+                    <form className="px-10 text-center">
+                      <p className="text-brown-light mb-2 text-sm">
+                        Your handle
+                      </p>
+                      <Input
+                        placeholder="Type in your handle"
+                        onChange={(e) =>
+                          setUsername(e.target.value.substr(0, 10))
+                        }
+                        variant="black"
+                        className={`${styles.input} text-center text-lg`}
+                        maxLength={10}
+                      />
+                      <Button
+                        onClick={confirmUsername}
+                        className="mx-auto mt-3 px-9 py-3 "
+                      >
+                        Join
+                      </Button>
+                    </form>
                   </div>
                 </div>
               </div>
-            </div>
-          )
-        ) : (
-          showChatbutton && (
+            )
+          ) : null}
+        </div>
+        {isChatEnabled && isUsernameSet && (
+          <form
+            className="flex items-center pb-1 px-4"
+            onSubmit={handleMessageSubmit}
+          >
+            <Input
+              id="messageInput"
+              ref={messageInput}
+              placeholder="Type your message here"
+              onChange={(e) => setMssg(e.target.value)}
+              variant="black"
+              containerClassName="flex-1"
+              maxLength={100}
+              error={error}
+              autoComplete="off"
+              className={`${
+                error ? "" : "mb-5"
+              } bg-transparent text-brown-light placeholder-yellow-800::placeholder`}
+            />
+
+            <button
+              className="flex justify-center items-center border-none ml-3 rounded-full bg-brown-main cursor-pointer px-3"
+              onClick={sendMessage}
+            >
+              <ReactSVG
+                src={`${BASE_PATH}/svg/send.svg`}
+                height={20}
+                width={20}
+                beforeInjection={(svg) => {
+                  svg.setAttribute("style", `width: ${20}px; height: ${20}px;`);
+                }}
+                style={{ marginTop: "2px", marginRight: "2px" }}
+              />
+            </button>
+          </form>
+        )}
+        {!isChatEnabled && showChatbutton && (
+          <div className="absolute bottom-5 right-5" style={{ width: "11rem" }}>
             <div
-              className="fadeIn absolute bottom-3 right-5 flex justify-center items-center h-14 w-14 ml-3 rounded-full bg-brown-main cursor-pointer"
+              className="fadeIn flex justify-center items-center rounded-full bg-brown-main cursor-pointer pr-6 pl-5 pt-3 pb-3 text-lg"
               onClick={() => setIsChatEnabled(true)}
             >
               <ReactSVG
                 src={`${BASE_PATH}/svg/chat.svg`}
                 height={20}
                 width={20}
+                className="mr-2"
                 beforeInjection={(svg) => {
                   svg.setAttribute("style", `width: ${30}px; height: ${30}px;`);
                 }}
               />
+              <span style={{ marginBottom: "0.15rem" }}>Open chat</span>
             </div>
-          )
+          </div>
         )}
       </div>
-
-      {isChatEnabled && isUsernameSet && (
-        <div className="flex items-center pb-10">
-          <Input
-            id="messageInput"
-            ref={messageInput}
-            placeholder="Type a message"
-            onChange={(e) => setMssg(e.target.value)}
-            variant="black"
-            containerClassName="flex-1"
-            className={styles.input}
-            maxLength={100}
-            error={error}
-            autoComplete="off"
-          />
-
-          <div
-            className="flex justify-center items-center h-10 w-10 ml-3 rounded-full bg-brown-main cursor-pointer"
-            onClick={sendMessage}
-          >
-            <ReactSVG
-              src={`${BASE_PATH}/svg/send.svg`}
-              height={20}
-              width={20}
-              beforeInjection={(svg) => {
-                svg.setAttribute("style", `width: ${20}px; height: ${20}px;`);
-              }}
-            />
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 

@@ -128,3 +128,21 @@ button {
     margin-top: -25vh;
   }
 }
+
+#messageInput {
+  background-color: transparent;
+}
+#messageInput::placeholder {
+  opacity: 0.666 !important;
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+.chat-messages::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-enabled {
+}
+.chat-disabled {
+  width: 0 !important;
+}

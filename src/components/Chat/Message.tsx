@@ -14,14 +14,11 @@ const Message = (props: IMessage) => {
   const { username, message, color = "white" } = props;
 
   return (
-    <div className="relative flex w-full h-auto bg-transparent text-white mb-2 p-1 break-all">
-      <div className="absolute h-full w-full top-0 left-0" />
-      <div className="z-10 flex flex-col">
-        <span className="font-bold" style={{ color }}>
-          {username}
-        </span>
-        <span>{message}</span>
-      </div>
+    <div className="text-white break-all px-5 py-1">
+      <span className="mr-1">
+        <strong style={{ color }}>{username}</strong>:
+      </span>
+      <span>{message}</span>
     </div>
   );
 };
