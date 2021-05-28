@@ -15,7 +15,7 @@ interface IUserMethods {
   logout: () => void;
   isLoggedIn: boolean | undefined;
   rsi: string | undefined;
-  setRSI?: () => void;
+  setRSI: (param: string) => void;
 }
 
 const methods = {

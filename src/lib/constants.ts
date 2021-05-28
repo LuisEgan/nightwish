@@ -75,19 +75,19 @@ export const EVENTS_BY_ID: {
 } = {
   1: {
     title: "Show Friday",
-    date: new Date("2021-05-28T18:00:00.000Z"),
+    date: new Date("2021-05-28T08:00:00.000Z"),
   },
   2: {
     title: "Show Saturday",
-    date: new Date("2021-05-30T00:00:00.000Z"),
+    date: new Date("2021-05-28T09:00:00.000Z"),
   },
   11: {
     title: "VIP Virtual Session Friday",
-    date: new Date("2021-05-28T17:00:00.000Z"),
+    date: new Date("2021-05-28T07:00:00.000Z"),
   },
   12: {
     title: "VIP Virtual Session Saturday",
-    date: new Date("2021-05-29T23:00:00.000Z"),
+    date: new Date("2021-05-28T08:45:00.000Z"),
   },
 };
 
