@@ -52,7 +52,7 @@ const Chat = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [newMessage, setNewMessage] = useState<IMessage | null>();
   const [removeMessageId, setRemoveMessageId] = useState<string | null>();
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, user } = useContext(UserContext);
 
   const [mssg, setMssg] = useState<string>("");
   const [error, setError] = useState<string>("");
@@ -71,9 +71,16 @@ const Chat = () => {
 
   useEffect(() => {
     if (isLoggedIn === undefined) return;
+    if (!isLoggedIn) return;
+    if (
+      !user.registeredTicketTypes ||
+      user.registeredTicketTypes.length === 0
+    ) {
+      return;
+    }
     setIsChatEnabled(false);
     setShowChatButton(isLoggedIn);
-  }, [isLoggedIn]);
+  }, [isLoggedIn, user]);
 
   // * Connect to socket
   useEffect(() => {

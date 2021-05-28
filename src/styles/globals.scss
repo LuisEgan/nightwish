@@ -147,3 +147,15 @@ button {
 .chat-disabled {
   width: 0 !important;
 }
+
+.is-vip {
+  color: black;
+  text-shadow: 0px 0px 4px crimson;
+}
+.is-vip span {
+  color: #ccc;
+}
+.is-operator span {
+  color: yellow;
+  text-shadow: 0px 0px 4px yellow;
+}

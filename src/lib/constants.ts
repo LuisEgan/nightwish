@@ -22,6 +22,12 @@ export const ROUTES = {
 export const getApiURL = () => {
   if (
     typeof window !== "undefined" &&
+    window.location.href.indexOf("localhost:4000/nightwish") !== -1
+  ) {
+    return "http://localhost:3000/local";
+  }
+  if (
+    typeof window !== "undefined" &&
     window.location.href.indexOf("burst.fi/nightwish") !== -1
   ) {
     return "https://api.burst.fi/nightwish";
@@ -30,6 +36,12 @@ export const getApiURL = () => {
 };
 
 export const getChatEndpoint = () => {
+  if (
+    typeof window !== "undefined" &&
+    window.location.href.indexOf("localhost:4000/nightwish") !== -1
+  ) {
+    return "ws://localhost:3001";
+  }
   if (
     typeof window !== "undefined" &&
     window.location.href.indexOf("burst.fi/nightwish") !== -1
