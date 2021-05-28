@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
+import { useRouter } from "next/router";
 import { ReactSVG } from "react-svg";
 import ReconnectingWebSocket from "reconnecting-websocket";
 
@@ -44,6 +45,8 @@ let MAX_MESSAGES_TIME_INTERVAL = 5000;
 let messagesSentCounter = 0;
 
 const Chat = () => {
+  const router = useRouter();
+
   const messagesBottom = useRef<HTMLDivElement>(null);
   const messageInput = useRef<HTMLInputElement>(null);
 
@@ -52,13 +55,14 @@ const Chat = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [newMessage, setNewMessage] = useState<IMessage | null>();
   const [removeMessageId, setRemoveMessageId] = useState<string | null>();
-  const { isLoggedIn, user } = useContext(UserContext);
+  const { isLoggedIn, user, activity } = useContext(UserContext);
 
   const [mssg, setMssg] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [showChatbutton, setShowChatButton] = useState<boolean>(false);
   const [isChatEnabled, setIsChatEnabled] = useState<boolean>(false);
   const [isWSConnected, setIsWSConnected] = useState<boolean>(false);
+  const [inStream, setInStream] = useState<boolean>(false);
 
   const scrollToBottom = () => {
     if (messagesBottom.current) {
@@ -68,6 +72,11 @@ const Chat = () => {
       messagesBottom.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
     }
   };
+
+  useEffect(() => {
+    if (!router.pathname) return;
+    setInStream(router.pathname.indexOf("/watch/") !== -1);
+  }, [router]);
 
   useEffect(() => {
     if (isLoggedIn === undefined) return;
@@ -360,8 +369,13 @@ const Chat = () => {
             </button>
           </form>
         )}
-        {!isChatEnabled && showChatbutton && (
-          <div className="absolute bottom-5 right-5" style={{ width: "11rem" }}>
+        {!isChatEnabled && showChatbutton && activity && (
+          <div
+            className={`absolute ${
+              inStream ? "top-5 right-5" : "bottom-5 right-5"
+            }`}
+            style={{ width: "11rem" }}
+          >
             <div
               className="fadeIn flex justify-center items-center rounded-full bg-brown-main cursor-pointer pr-6 pl-5 pt-3 pb-3 text-lg"
               onClick={() => setIsChatEnabled(true)}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { VideoJsPlayer, VideoJsPlayerOptions } from "video.js";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -8,11 +8,12 @@ import LoadingScreen from "../../components/LoadingScreen";
 import EventFeedback from "../../components/Pages/Event/EventFeedback";
 import MainEventNotification from "../../components/Pages/Event/MainEventNotification";
 import api, { EEventStatus } from "../../api";
+import { UserContext } from "../../contexts/user/user.context";
 
 // const testUrl =
 //   "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8";
 
-const INACTIVITY_SECONDS = 10;
+const INACTIVITY_SECONDS = 5;
 
 let countdownInterval: NodeJS.Timer;
 let countdown = INACTIVITY_SECONDS;
@@ -21,8 +22,9 @@ const Event = () => {
   const router = useRouter();
   const { push, query } = router;
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const { setActivity } = useContext(UserContext);
 
+  const [loading, setLoading] = useState<boolean>(true);
   const [player, setPlayer] = useState<VideoJsPlayer>();
   const [videoJsOptions, setVideoJsOptions] = useState<VideoJsPlayerOptions>();
   const [eventStatus, setEventStatus] = useState<EEventStatus>();
@@ -35,6 +37,7 @@ const Event = () => {
     const onMouseMove = () => {
       if (countdown === INACTIVITY_SECONDS) {
         setNoActivity(false);
+        setActivity(true);
       }
       countdown = INACTIVITY_SECONDS;
     };
@@ -44,13 +47,17 @@ const Event = () => {
       countdown -= 1;
       if (countdown === 0) {
         setNoActivity(true);
+        setActivity(false);
       }
     }, 1000);
 
     return () => {
       document.removeEventListener("mousemove", onMouseMove, false);
       clearInterval(countdownInterval);
+      setActivity(true);
+      setNoActivity(false);
     };
+    // @ts-ignore
   }, []);
 
   useEffect(() => {

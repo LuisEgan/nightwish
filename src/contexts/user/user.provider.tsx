@@ -11,6 +11,7 @@ const UserProvider: FC = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
   const [ticketCode, setTicketCode] = useState<string | undefined>(undefined);
   const [rsi, setRSI] = useState<string | undefined>(undefined);
+  const [activity, setActivity] = useState<boolean>(true);
 
   useEffect(() => {
     const isLoggedInCached =
@@ -86,8 +87,10 @@ const UserProvider: FC = (props) => {
       setTicketCode,
       rsi,
       setRSI,
+      activity,
+      setActivity,
     }),
-    [user, isLoggedIn, ticketCode, rsi],
+    [user, isLoggedIn, ticketCode, rsi, activity],
   );
 
   return <UserContext.Provider {...{ value }}>{children}</UserContext.Provider>;
