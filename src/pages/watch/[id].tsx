@@ -29,7 +29,6 @@ const Event = () => {
   const [videoJsOptions, setVideoJsOptions] = useState<VideoJsPlayerOptions>();
   const [eventStatus, setEventStatus] = useState<EEventStatus>();
   const [error, setError] = useState<string>("");
-
   const [noActivity, setNoActivity] = useState<boolean>(false);
 
   // * Toggle user activity depending on mouse movement
@@ -145,7 +144,11 @@ const Event = () => {
 
       <MainEventNotification />
 
-      <div className="relative h-screen w-screen p-5 bg-black">
+      <div
+        className={`relative h-screen w-screen p-5 bg-black ${
+          noActivity ? "no-activity" : ""
+        }`}
+      >
         {(!player || loading) && <LoadingScreen />}
 
         {!noActivity && (

@@ -91,7 +91,7 @@ const VideoPlayer = (props: IVideoPlayer) => {
         preload="none"
         poster={poster || `${BASE_PATH}/png/nightwishLogo.png`}
       />
-      <RSI randomize />
+      <RSI />
     </div>
   );
 };

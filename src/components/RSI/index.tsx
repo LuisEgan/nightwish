@@ -13,6 +13,7 @@ export default function RSI() {
     fontFamily: "SF Mono, Courier New, monospace",
     fontSize: "0.75rem",
     backgroundColor: "black",
+    zIndex: "100000000",
   };
 
   const leftBottom = {
@@ -37,13 +38,13 @@ export default function RSI() {
 
   const bottom = () => ({
     bottom: "1rem",
-    left: `${Math.floor(Math.random() * 100)  }%`,
+    left: `${Math.floor(Math.random() * 100)}%`,
     transform: "translateXY(-50%, 0)",
   });
 
   const top = {
     top: "1rem",
-    left: `${Math.floor(Math.random() * 100)  }%`,
+    left: `${Math.floor(Math.random() * 100)}%`,
     transform: "translateXY(-50%, 0)",
   };
 
