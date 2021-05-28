@@ -4,7 +4,7 @@ import ReconnectingWebSocket from "reconnecting-websocket";
 
 import Message, { IMessage } from "./Message";
 import Input from "../Input";
-import { checkForURL, getRandomColor } from "../../lib/strings";
+import { checkForURL } from "../../lib/strings";
 
 import styles from "./chat.module.scss";
 
@@ -37,7 +37,7 @@ interface IWSMessage {
   username: string;
 }
 
-const randomUserColor = getRandomColor();
+// const randomUserColor = getRandomColor();
 const MESSAGES_QTY_LIMIT = 20;
 const MAX_MESSAGES = 5;
 let MAX_MESSAGES_TIME_INTERVAL = 5000;
@@ -118,7 +118,6 @@ const Chat = () => {
             message,
             connectionId,
             messageId,
-            color: usernamePayload === username ? randomUserColor : "white",
           });
         }
       };
@@ -261,9 +260,7 @@ const Chat = () => {
         >
           {isChatEnabled ? (
             isUsernameSet ? (
-              messages.map((m) => (
-                <Message key={`${Math.random()}_${m.message}`} {...m} />
-              ))
+              messages.map((m) => <Message key={m.messageId} {...m} />)
             ) : (
               <div className="h-full flex justify-center items-center">
                 <div className="flex flex-col">
