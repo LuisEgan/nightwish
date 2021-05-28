@@ -22,7 +22,7 @@ const NavBar = () => {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.85)" }}
       >
         <Link href="/">
-          <a className="pl-12 py-7">
+          <a className={`py-7 ${isMobile ? "pl-6" : "pl-10"}`}>
             <img
               style={{ height: "100%" }}
               src={`${BASE_PATH}/png/nw-logo.png`}
@@ -30,14 +30,6 @@ const NavBar = () => {
             />
           </a>
         </Link>
-
-        {/* <div className="flex-1 flex items-center pl-14">
-          <Link href="/events">
-            <a className="border border-solid bg-brown-main border-brown-main text-center py-3 px-9 rounded-full">
-              Watch
-            </a>
-          </Link>
-        </div> */}
 
         {isMobile ? <Hamburger /> : <NavbarMenu />}
       </div>

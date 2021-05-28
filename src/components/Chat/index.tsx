@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { ReactSVG } from "react-svg";
 import ReconnectingWebSocket from "reconnecting-websocket";
 
@@ -10,6 +10,7 @@ import styles from "./chat.module.scss";
 
 import Button from "../Button";
 import { BASE_PATH, LOCAL_STORAGE, ROUTES } from "../../lib/constants";
+import { UserContext } from "../../contexts/user/user.context";
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -39,13 +40,7 @@ const MAX_MESSAGES = 5;
 let MAX_MESSAGES_TIME_INTERVAL = 5000;
 let messagesSentCounter = 0;
 
-interface IChat {
-  showChatbutton?: boolean;
-}
-
-const Chat = (props: IChat) => {
-  const { showChatbutton = true } = props;
-
+const Chat = () => {
   const messagesBottom = useRef<HTMLDivElement>(null);
   const messageInput = useRef<HTMLInputElement>(null);
 
@@ -54,9 +49,11 @@ const Chat = (props: IChat) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [newMessage, setNewMessage] = useState<IMessage | null>();
   const [removeMessageId, setRemoveMessageId] = useState<string | null>();
+  const { isLoggedIn } = useContext(UserContext);
 
   const [mssg, setMssg] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [showChatbutton, setShowChatButton] = useState<boolean>(false);
   const [isChatEnabled, setIsChatEnabled] = useState<boolean>(false);
   const [isWSConnected, setIsWSConnected] = useState<boolean>(false);
 
@@ -68,6 +65,12 @@ const Chat = (props: IChat) => {
       messagesBottom.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn === undefined) return;
+    setIsChatEnabled(false);
+    setShowChatButton(isLoggedIn);
+  }, [isLoggedIn]);
 
   // * Connect to socket
   useEffect(() => {

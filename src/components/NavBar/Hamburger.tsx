@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import { ReactSVG } from "react-svg";
-// import tw from "../../../tailwind.config.js";
-// import { BASE_PATH } from "../../lib/constants.js";
+import { ReactSVG } from "react-svg";
+import tw from "../../../tailwind.config.js";
+import { BASE_PATH } from "../../lib/constants";
 
 import styles from "./navbar.module.scss";
 import NavbarMenu from "./NavbarMenu";
@@ -15,11 +15,9 @@ const Hamburguer = () => {
       setTimeout(() => {
         setIsOpen(false);
         setInitClose(false);
-      }, 495);
+      }, 195);
     }
   }, [initClose]);
-
-  return null;
 
   return (
     <>
@@ -28,11 +26,11 @@ const Hamburguer = () => {
         className="flex justify-center items-center px-5"
         onClick={() => setIsOpen(true)}
       >
-        {/* <ReactSVG
+        <ReactSVG
           src={`${BASE_PATH}/svg/hamburger.svg`}
           height={70}
           width={70}
-        /> */}
+        />
       </div>
 
       {isOpen && (
@@ -44,12 +42,13 @@ const Hamburguer = () => {
             onClick={() => setInitClose(true)}
           />
           <div
-            className={`absolute z-50 right-0 h-screen w-3/5 bg-white flex flex-col items-center ${
+            className={`absolute z-50 right-0 h-screen bg-white flex flex-col items-center ${
               initClose ? "slideOutRight" : "slideInRight"
             }`}
+            style={{ minWidth: "95%", width: "95%" }}
           >
-            <div className="w-full flex justify-end p-10">
-              {/* <ReactSVG
+            <div className="w-full flex justify-end items-stretch justify-items-stretch p-10">
+              <ReactSVG
                 src={`${BASE_PATH}/svg/x.svg`}
                 className="cursor-pointer"
                 onClick={() => setInitClose(true)}
@@ -59,7 +58,7 @@ const Hamburguer = () => {
                     `width: 5vw; height: 5vw; fill:${tw.theme.extend.colors.brown.main}`,
                   );
                 }}
-              /> */}
+              />
             </div>
 
             <NavbarMenu mobile onItemClick={() => setInitClose(true)} />

@@ -8,20 +8,20 @@ export interface ILogin {
 interface IUserMethods {
   user: IUser;
   setUser: (params: IUser) => void;
-  ticketCode: string | null;
+  ticketCode: string | undefined;
   setTicketCode: (ticketCode: string) => void;
   login: (params: ILogin) => Promise<void>;
   logout: () => void;
-  isLoggedIn: boolean;
+  isLoggedIn: boolean | undefined;
 }
 
 const methods = {
   user: null,
-  ticketCode: null,
+  ticketCode: undefined,
   setUser: () => {},
   setTicketCode: () => {},
   login: async () => {},
   logout: () => {},
-  isLoggedIn: false,
+  isLoggedIn: undefined,
 };
 export const UserContext = createContext<IUserMethods>(methods);

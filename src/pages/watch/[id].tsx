@@ -18,7 +18,8 @@ let countdownInterval: NodeJS.Timer;
 let countdown = INACTIVITY_SECONDS;
 
 const Event = () => {
-  const { push, query } = useRouter();
+  const router = useRouter();
+  const { push, query } = router;
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -53,19 +54,26 @@ const Event = () => {
   }, []);
 
   useEffect(() => {
-    const pathname = window.location.pathname.split("/");
-    const eventId = pathname[pathname.length - 2];
-    if (eventId || query?.id) {
-      getEvent((eventId || query?.id) as string);
+    const searchEventId = window.location.href.match(
+      /nightwish\/watch\/[0-9]{1,2}\/?/,
+    );
+    const eventId = searchEventId ? searchEventId[0] : query?.id;
+
+    if (!eventId) {
+      router.replace(ROUTES.PRIVATE_ROUTES.events);
     }
+
+    fetchEventStatusAndURL(eventId as string);
+
     // eslint-disable-next-line
   }, [query]);
 
-  const getEvent = async (id: string) => {
+  const fetchEventStatusAndURL = async (id: string) => {
     try {
       const res = await api.getEvent({ eventId: id });
 
       setEventStatus(res.status);
+
       if (res?.url) {
         setVideoJsOptions({
           muted: false,
@@ -73,7 +81,6 @@ const Event = () => {
           sources: [
             {
               src: res.url,
-              // src: testUrl,
               type: "application/x-mpegURL",
             },
           ],
@@ -83,12 +90,12 @@ const Event = () => {
       if (res.status === "pre-waiting") {
         // * If waiting for event to start, refetch every 10 seconds
         setTimeout(() => {
-          getEvent(id);
+          fetchEventStatusAndURL(id);
         }, 10000);
       } else if (res.status === "post-waiting") {
         // * If waiting for VOD to be available, refetch every 2 minutes
         setTimeout(() => {
-          getEvent(id);
+          fetchEventStatusAndURL(id);
         }, 1000 * 120);
       }
     } catch (e) {

@@ -70,7 +70,7 @@ const Events = () => {
     <div className="page-container px-7 md:px-40">
       <div className="conffetti" />
       <div className="py-4">
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col md:items-end">
           <span className="text-brown-main text-3xl">Register your ticket</span>
 
           <div className="flex flex-col py-6">

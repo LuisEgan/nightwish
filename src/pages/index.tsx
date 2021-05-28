@@ -12,26 +12,28 @@ import { useWindowSize } from "../lib/hooks";
 const Home = () => {
   const { isMobile, width, height } = useWindowSize();
   const router = useRouter();
-  const { setTicketCode, isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, setTicketCode, ticketCode } = useContext(UserContext);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    // check if we have ticket ID
+
     const hasTicketInUrl = window.location.href.match(
       /nightwish\/[0-9]{20,30}/,
     );
-    if (hasTicketInUrl) {
-      const ticketCodeFromURL = hasTicketInUrl[0].substr(10);
+
+    if (!hasTicketInUrl) return;
+
+    const ticketCodeFromURL = hasTicketInUrl[0].substr(10);
+    if (ticketCodeFromURL && !ticketCode) {
       setTicketCode(ticketCodeFromURL);
-      if (isLoggedIn) {
-        router.push(ROUTES.PRIVATE_ROUTES.ticket);
-      } else {
-        router.push(ROUTES.PUBLIC_ROUTES.register);
-      }
     }
 
-    // eslint-disable-next-line
-  }, []);
+    if (isLoggedIn === undefined) return; // User logged in state hasn't been checked yet
+
+    router.replace(
+      isLoggedIn ? ROUTES.PRIVATE_ROUTES.ticket : ROUTES.PUBLIC_ROUTES.register,
+    );
+  }, [isLoggedIn, setTicketCode, ticketCode, router]);
 
   if (!width) return null;
 
@@ -127,7 +129,8 @@ const Home = () => {
       <Section
         title="Chat with other fans. Engage with your friends and meet other fans around the world."
         titleClassname="text-left text-4xl text-center py-7 md:py-0 md:text-left md:text-2xl px-7 md:px-0"
-        descriptionClassname="px-7 md:px-0"
+        descriptionClassname="px-7 py-7 md:px-0"
+        description="The chat will open soon. Please be patient."
         img={`${BASE_PATH}/png/iphone@2x.png`}
         imageClassname="object-contain"
         imgSize="flex-1"
