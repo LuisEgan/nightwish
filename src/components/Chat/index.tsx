@@ -72,9 +72,10 @@ const Chat = () => {
   useEffect(() => {
     if (isLoggedIn === undefined) return;
     if (!isLoggedIn) {
-      if (ws) {
+      if (ws && isWSConnected) {
         ws.close(1000, "banned");
         ws = undefined;
+        setIsWSConnected(false);
       }
       setIsUsernameSet(false);
       setUsername(undefined);
