@@ -84,8 +84,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 
         <Chat />
         <Footer />
+        <RSI />
       </div>
-      <RSI />
     </UserProvider>
   );
 };
