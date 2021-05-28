@@ -28,6 +28,17 @@ const UserProvider: FC = (props) => {
     }
   }, [user]);
 
+  const getRSI = async () => {
+    try {
+      const res = await fetchRSI();
+      if (res.rsi) {
+        setRSI(res.rsi);
+      }
+    } catch (error) {
+      console.error("rsi fetching");
+    }
+  };
+
   useEffect(() => {
     if (!isLoggedIn) {
       setRSI(undefined);
@@ -35,14 +46,7 @@ const UserProvider: FC = (props) => {
     }
 
     if (isLoggedIn && rsi === undefined) {
-      (async () => {
-        try {
-          const res = await fetchRSI();
-          if (res.rsi) setRSI(res.rsi);
-        } catch (error) {
-          console.error("rsi fetching");
-        }
-      })();
+      getRSI();
     }
   }, [isLoggedIn, rsi]);
 
