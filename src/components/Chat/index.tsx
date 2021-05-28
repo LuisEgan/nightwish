@@ -9,10 +9,13 @@ import { checkForURL, getRandomColor } from "../../lib/strings";
 import styles from "./chat.module.scss";
 
 import Button from "../Button";
-import { BASE_PATH, LOCAL_STORAGE, ROUTES } from "../../lib/constants";
+import {
+  getChatEndpoint,
+  BASE_PATH,
+  LOCAL_STORAGE,
+  ROUTES,
+} from "../../lib/constants";
 import { UserContext } from "../../contexts/user/user.context";
-
-const dev = process.env.NODE_ENV !== "production";
 
 let ws: ReconnectingWebSocket;
 
@@ -75,11 +78,7 @@ const Chat = () => {
   // * Connect to socket
   useEffect(() => {
     if (isChatEnabled && !isWSConnected && isUsernameSet) {
-      ws = new ReconnectingWebSocket(
-        dev
-          ? "wss://chat.burst-staging.com/ws"
-          : "wss://chat.burst.fi/nightwish",
-      );
+      ws = new ReconnectingWebSocket(getChatEndpoint());
 
       ws.onopen = () => {
         ws.send(
