@@ -29,6 +29,16 @@ export const getApiURL = () => {
   return "https://api.burst-staging.com/v1";
 };
 
+export const getChatEndpoint = () => {
+  if (
+    typeof window !== "undefined" &&
+    window.location.href.indexOf("burst.fi/nightwish") !== -1
+  ) {
+    return "wss://chat.burst.fi/nightwish";
+  }
+  return "wss://chat.burst-staging.com/ws";
+};
+
 export const LOCAL_STORAGE = {
   USER_TOKEN: "USER_TOKEN",
   USER: "USER",
