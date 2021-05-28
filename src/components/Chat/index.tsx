@@ -255,8 +255,8 @@ const Chat = () => {
   return (
     <>
       <div
-        className={`${
-          isChatEnabled ? "chat-enabled" : "chat-disabled"
+        className={`${isChatEnabled ? "chat-enabled" : "chat-disabled"} ${
+          inStream ? "top-0" : "top-24 lg:top-28"
         } bg-black z-50 fixed bottom-0 flex flex-col top-24 lg:top-28 md:right-0 w-full md:w-1/2 lg:w-1/3 xl:w-1/4`}
         style={{ backgroundColor: "rgba(0, 0, 0, 0.85);" }}
       >

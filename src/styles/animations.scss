@@ -9,6 +9,22 @@
   }
 }
 
+@keyframes fadeinout {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.fade-in-out {
+  animation: fadeinout 10s forwards ease-in-out;
+}
+
 .fadeIn {
   animation: fadeIn 0.5s ease-in;
 }

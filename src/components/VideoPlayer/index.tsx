@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from "video.js";
 import { BASE_PATH } from "../../lib/constants";
+import RSI from "../RSI";
 
 export interface IOnPlayerLoader {
   videoNode: HTMLVideoElement;
@@ -90,6 +91,7 @@ const VideoPlayer = (props: IVideoPlayer) => {
         preload="none"
         poster={poster || `${BASE_PATH}/png/nightwishLogo.png`}
       />
+      <RSI randomize />
     </div>
   );
 };

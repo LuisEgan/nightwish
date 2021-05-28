@@ -15,7 +15,7 @@ interface IUserMethods {
   isLoggedIn: boolean | undefined;
   rsi: string | undefined;
   setRSI: (param: string) => void;
-  activity: boolean | undefined;
+  activity: boolean;
   setActivity: (param: boolean) => void;
 }
 

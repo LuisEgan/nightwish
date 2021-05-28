@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
-import api, { setAxiosAuthorizationHeader } from "../../api";
+import { setAxiosAuthorizationHeader } from "../../api";
 import { LOCAL_STORAGE } from "../../lib/constants";
 import { IUser } from "../../Types/user.types";
 import { ILogin, UserContext } from "./user.context";
@@ -29,29 +29,6 @@ const UserProvider: FC = (props) => {
     }
   }, [user]);
 
-  const getRSI = async () => {
-    try {
-      const res = await api.fetchRSI();
-      if (res.rsi) {
-        setRSI(res.rsi);
-      }
-    } catch (error) {
-      console.error("rsi fetching");
-    }
-  };
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      if (rsi) {
-        setRSI(undefined);
-      }
-      return;
-    }
-    if (!rsi) {
-      getRSI();
-    }
-  }, [rsi, isLoggedIn]);
-
   const login = (params: ILogin): Promise<void> =>
     new Promise((resolve, reject) => {
       const { user: loginUser, accessToken } = params;
@@ -62,9 +39,7 @@ const UserProvider: FC = (props) => {
       setIsLoggedIn(true);
       localStorage.setItem(LOCAL_STORAGE.USER_TOKEN, accessToken);
       localStorage.setItem(LOCAL_STORAGE.USER, JSON.stringify(loginUser));
-
       setAxiosAuthorizationHeader(accessToken);
-
       resolve();
     });
 
