@@ -71,7 +71,7 @@ export default function RSI() {
 
   const getRSI = async () => {
     const result = await api.fetchRSI();
-    if (result.rsi) {
+    if (result && result.rsi) {
       rootRSI = result.rsi;
       setRSI(result.rsi);
     } else {
