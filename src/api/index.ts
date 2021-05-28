@@ -140,7 +140,7 @@ const resetPassword = async (body: IResetPasword) => {
   }
 };
 
-export const fetchRSI = async () => {
+const fetchRSI = async () => {
   try {
     const res = await axios.get<{ success: boolean; rsi: string }>(
       `${getApiURL()}/rsi`,
