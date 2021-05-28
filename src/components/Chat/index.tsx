@@ -71,7 +71,16 @@ const Chat = () => {
 
   useEffect(() => {
     if (isLoggedIn === undefined) return;
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) {
+      if (ws) {
+        ws.close(1000, "banned");
+        ws = undefined;
+      }
+      setIsUsernameSet(false);
+      setUsername(undefined);
+      setIsChatEnabled(false);
+      setShowChatButton(false);
+    }
     if (
       !user.registeredTicketTypes ||
       user.registeredTicketTypes.length === 0
