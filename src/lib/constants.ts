@@ -70,47 +70,47 @@ export const BUY_TICKET_LINK = "https://www.nightwish.com/";
 
 export const FRIDAY_CONCERT_DATE = new Date("");
 
-export const EVENTS_BY_ID: {
-  [eventId: number]: { title: string; date: Date };
-} = {
-  1: {
-    title: "Show Friday",
-    date: new Date("2021-05-28T18:00:00.000Z"),
-  },
-  2: {
-    title: "Show Saturday",
-    date: new Date("2021-05-30T00:00:00.000Z"),
-  },
-  11: {
-    title: "VIP Virtual Session Friday",
-    date: new Date("2021-05-28T17:00:00.000Z"),
-  },
-  12: {
-    title: "VIP Virtual Session Saturday",
-    date: new Date("2021-05-29T23:00:00.000Z"),
-  },
-};
-
 // export const EVENTS_BY_ID: {
 //   [eventId: number]: { title: string; date: Date };
 // } = {
 //   1: {
 //     title: "Show Friday",
-//     date: new Date("2021-05-28T08:00:00.000Z"),
+//     date: new Date("2021-05-28T18:00:00.000Z"),
 //   },
 //   2: {
 //     title: "Show Saturday",
-//     date: new Date("2021-05-28T09:00:00.000Z"),
+//     date: new Date("2021-05-30T00:00:00.000Z"),
 //   },
 //   11: {
 //     title: "VIP Virtual Session Friday",
-//     date: new Date("2021-05-28T07:00:00.000Z"),
+//     date: new Date("2021-05-28T17:00:00.000Z"),
 //   },
 //   12: {
 //     title: "VIP Virtual Session Saturday",
-//     date: new Date("2021-05-28T08:45:00.000Z"),
+//     date: new Date("2021-05-29T23:00:00.000Z"),
 //   },
 // };
+
+export const EVENTS_BY_ID: {
+  [eventId: number]: { title: string; date: Date };
+} = {
+  11: {
+    title: "VIP Virtual Session Friday",
+    date: new Date("2021-05-28T10:00:00.000Z"),
+  },
+  1: {
+    title: "Show Friday",
+    date: new Date("2021-05-28T10:10:00.000Z"),
+  },
+  12: {
+    title: "VIP Virtual Session Saturday",
+    date: new Date("2021-05-28T10:30:00.000Z"),
+  },
+  2: {
+    title: "Show Saturday",
+    date: new Date("2021-05-28T10:40:00.000Z"),
+  },
+};
 
 export const TICKET_TYPES_BY_ID = {
   1: { eventId: [1], events: ["Friday"] },
