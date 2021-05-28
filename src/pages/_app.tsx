@@ -16,6 +16,7 @@ import "video.js/src/css/vjs.scss";
 import "../styles/globals.scss";
 import "../styles/animations.scss";
 import "../styles/accordion.scss";
+import Chat from "../components/Chat";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -79,6 +80,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           <Component {...pageProps} />
         )}
 
+        <Chat />
         <Footer />
       </div>
     </UserProvider>

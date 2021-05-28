@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useContext } from "react";
-// import Countdown from "react-countdown";
 import dayjs from "dayjs";
 
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -8,6 +7,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { UserContext } from "../../../contexts/user/user.context";
 import { ROUTES } from "../../../lib/constants";
 import Button from "../../Button";
+import { getDatesDifference } from "../../../lib/dates";
 
 dayjs.extend(relativeTime);
 
@@ -26,8 +26,16 @@ const EventRow = (props: IEventRow) => {
   const isTicketOwned = user?.eventAccess.includes(+eventId);
   const [isOwned, setIsOwned] = useState(isTicketOwned);
 
-  const hoursDiff = (date.getTime() - new Date().getTime()) / 36e5;
+  const hoursDiff = getDatesDifference({
+    date1: date,
+    date2: new Date(),
+    unit: "hours",
+  });
   const showCountdown = hoursDiff <= 12 && hoursDiff > -2;
+
+  const isHighlighted = hoursDiff > -6 && hoursDiff <= 12;
+  const eventHappened = hoursDiff < 0;
+
   const isTimeToRock = hoursDiff <= 1;
 
   useEffect(() => {
@@ -74,7 +82,7 @@ const EventRow = (props: IEventRow) => {
   return (
     <div
       className={`rounded-3xl border-brown-main border-2 flex flex-col mt-5 md:flex-row md:items-center ${
-        showCountdown ? "bg-brown-main text-black" : "text-brown-main"
+        isHighlighted ? "bg-brown-main text-black" : "text-brown-main"
       } ${small ? "px-10 py-8" : "px-10 py-10"}`}
     >
       <div className="flex-1 mb-5 md:mb-0 md:text-2xl">
@@ -83,14 +91,18 @@ const EventRow = (props: IEventRow) => {
       </div>
 
       <div className="text-2xl mb-5 md:mb-0 md:px-10">
-        {showCountdown && <>Starts {dayjs().to(dayjs(date))}</>}
+        {showCountdown && (
+          <>
+            {eventHappened ? "Started" : "Starts"} {dayjs().to(dayjs(date))}
+          </>
+        )}
       </div>
 
       <Button
         className="md:w-1/5"
         onClick={onClick}
         variant={
-          showCountdown
+          isHighlighted
             ? isTimeToRock && isOwned
               ? "orange"
               : "brown"

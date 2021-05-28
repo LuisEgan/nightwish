@@ -14,6 +14,10 @@ module.exports = {
         },
       },
 
+      backgroundImage: () => ({
+        eclipse: "url('/jpg/eclipse.jpg')",
+      }),
+
       flex: {
         1.5: "1.5",
         2: "2",
