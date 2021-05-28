@@ -78,13 +78,19 @@ const getUser = async () => {
 interface IGetEvent {
   eventId: string;
 }
+export type EEventStatus =
+  | "pre-waiting"
+  | "live"
+  | "post-waiting"
+  | "vod"
+  | "ended";
 const getEvent = async (params: IGetEvent) => {
   try {
     const res = await axios.get<{
-      success: boolean;
+      status: EEventStatus;
       url?: string;
       error?: string;
-      live: boolean;
+      success?: boolean;
     }>(`${getApiURL()}/playlist/${params.eventId}`);
 
     if (!res?.data.success && res?.data.error)

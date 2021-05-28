@@ -5,9 +5,9 @@ import Head from "next/head";
 import VideoPlayer, { IOnPlayerLoader } from "../../components/VideoPlayer";
 import { BASE_PATH, EVENTS_BY_ID, ROUTES } from "../../lib/constants";
 import LoadingScreen from "../../components/LoadingScreen";
-import EventError from "../../components/Pages/Event/EventError";
+import EventFeedback from "../../components/Pages/Event/EventFeedback";
 import MainEventNotification from "../../components/Pages/Event/MainEventNotification";
-import api from "../../api";
+import api, { EEventStatus } from "../../api";
 
 // const testUrl =
 //   "https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8";
@@ -20,9 +20,12 @@ let countdown = INACTIVITY_SECONDS;
 const Event = () => {
   const { push, query } = useRouter();
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   const [player, setPlayer] = useState<VideoJsPlayer>();
   const [videoJsOptions, setVideoJsOptions] = useState<VideoJsPlayerOptions>();
-  const [eventError, setEventError] = useState<string>("");
+  const [eventStatus, setEventStatus] = useState<EEventStatus>();
+  const [error, setError] = useState<string>("");
 
   const [noActivity, setNoActivity] = useState<boolean>(false);
 
@@ -50,12 +53,22 @@ const Event = () => {
   }, []);
 
   useEffect(() => {
-    const event = async (id: string) => {
-      try {
-        const res = await api.getEvent({ eventId: id });
+    const pathname = window.location.pathname.split("/");
+    const eventId = pathname[pathname.length - 2];
+    if (eventId || query?.id) {
+      getEvent((eventId || query?.id) as string);
+    }
+    // eslint-disable-next-line
+  }, [query]);
 
+  const getEvent = async (id: string) => {
+    try {
+      const res = await api.getEvent({ eventId: id });
+
+      setEventStatus(res.status);
+      if (res?.url) {
         setVideoJsOptions({
-          muted: true,
+          muted: false,
           autoplay: true,
           sources: [
             {
@@ -65,16 +78,26 @@ const Event = () => {
             },
           ],
         });
-      } catch (error) {
-        console.error("event error: ", error);
-        setEventError(error?.message || error);
       }
-    };
 
-    if (query?.id) {
-      event(query.id as string);
+      if (res.status === "pre-waiting") {
+        // * If waiting for event to start, refetch every 10 seconds
+        setTimeout(() => {
+          getEvent(id);
+        }, 10000);
+      } else if (res.status === "post-waiting") {
+        // * If waiting for VOD to be available, refetch every 2 minutes
+        setTimeout(() => {
+          getEvent(id);
+        }, 1000 * 120);
+      }
+    } catch (e) {
+      console.error("event error: ", e);
+      setError(e?.message || e);
+    } finally {
+      setLoading(false);
     }
-  }, [query]);
+  };
 
   const onPlayerLoaded = ({ player: loadedPlayer }: IOnPlayerLoader) => {
     setPlayer(loadedPlayer);
@@ -88,8 +111,11 @@ const Event = () => {
     push(ROUTES.PRIVATE_ROUTES.events);
   };
 
-  if (eventError) {
-    return <EventError error={eventError} />;
+  if (
+    !loading &&
+    (error || (eventStatus !== "live" && eventStatus !== "vod"))
+  ) {
+    return <EventFeedback {...{ error, eventStatus }} />;
   }
 
   return (
@@ -106,7 +132,7 @@ const Event = () => {
       <MainEventNotification />
 
       <div className="relative h-screen w-screen p-5 bg-black">
-        {!player && <LoadingScreen />}
+        {(!player || loading) && <LoadingScreen />}
 
         {!noActivity && (
           <div
