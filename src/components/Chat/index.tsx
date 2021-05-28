@@ -83,11 +83,13 @@ const Chat = () => {
       setShowChatButton(false);
     }
     if (
+      !user ||
       !user.registeredTicketTypes ||
       user.registeredTicketTypes.length === 0
     ) {
       return;
     }
+
     setIsChatEnabled(false);
     setShowChatButton(isLoggedIn);
   }, [isLoggedIn, user]);
