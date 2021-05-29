@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useContext,
+  SyntheticEvent,
+} from "react";
 import { useRouter } from "next/router";
 import { ReactSVG } from "react-svg";
 import ReconnectingWebSocket from "reconnecting-websocket";
@@ -229,7 +235,10 @@ const Chat = () => {
     }
 
     setMessages(newMessages);
-    updateSentMessagesCounter();
+
+    if (message.username === username) {
+      updateSentMessagesCounter();
+    }
   };
 
   const deleteMessage = (removeId: string) => {
@@ -245,7 +254,7 @@ const Chat = () => {
     }
   };
 
-  const handleMessageSubmit = (e) => {
+  const handleMessageSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     sendMessage();
   };
@@ -364,7 +373,9 @@ const Chat = () => {
                 beforeInjection={(svg) => {
                   svg.setAttribute("style", `width: ${20}px; height: ${20}px;`);
                 }}
-                style={{ marginTop: "2px", marginRight: "2px" }}
+                style={{
+                  margin: "2px 2px 0 0",
+                }}
               />
             </button>
           </form>

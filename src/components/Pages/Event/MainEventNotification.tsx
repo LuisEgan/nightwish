@@ -22,8 +22,13 @@ const MainEventNotification = () => {
 
   // * Get the main event Id
   useEffect(() => {
-    if (query?.id) {
-      const getMainEventId = +query.id - 10;
+    const searchEventId = window.location.href.match(
+      /nightwish\/watch\/([0-9]{1,2})\/?/,
+    );
+    const eventId = searchEventId ? searchEventId[1] : query?.id;
+
+    if (eventId) {
+      const getMainEventId = +eventId - 10;
       setMainEventId(getMainEventId);
     }
   }, [query]);
@@ -32,7 +37,12 @@ const MainEventNotification = () => {
   // * for the main event start to show the notification
   // * Only show in VIP events and 10 mins before the main event
   useEffect(() => {
-    if (query?.id && !showNotification && !checkInterval) {
+    const searchEventId = window.location.href.match(
+      /nightwish\/watch\/([0-9]{1,2})\/?/,
+    );
+    const eventId = searchEventId ? searchEventId[1] : query?.id;
+
+    if (eventId && !showNotification && !checkInterval) {
       checkShowNotification(+query.id);
       checkInterval = setInterval(() => {
         checkShowNotification(+query.id);
