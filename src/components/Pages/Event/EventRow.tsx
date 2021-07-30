@@ -65,7 +65,9 @@ const EventRow = (props: IEventRow) => {
     if (isTicketOwned) {
       if (isTimeToRock) {
         // * go to event
-        push(`${ROUTES.PRIVATE_ROUTES.watch}${eventId}`);
+        push(`${ROUTES.PRIVATE_ROUTES.watch}${eventId}`, {
+          query: { id: eventId },
+        });
       } else {
         return null;
       }

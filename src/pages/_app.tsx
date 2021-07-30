@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { AppProps } from "next/dist/next-server/lib/router/router";
-import { BASE_PATH, LOCAL_STORAGE, ROUTES } from "../lib/constants";
+import { BASE_PATH, LOCAL_STORAGE } from "../lib/constants";
 import PrivateRoute from "../components/Auth/PrivateRoute";
 
 import UserProvider from "../contexts/user/user.provider";
@@ -19,8 +19,12 @@ import "../styles/accordion.scss";
 
 import Chat from "../components/Chat";
 import RSI from "../components/RSI";
+import routes from "../routes";
+import { IRoute, RouteLayout } from "../routes/types";
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = (props: AppProps) => {
+  const { Component, pageProps } = props;
+
   const router = useRouter();
 
   const [isChrome, setIsChrome] = useState(
@@ -58,6 +62,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     return ROUTES.PRIVATE_ROUTES[r];
   });
 
+  const AdminLayout = () => <div></div>;
+  const ProviderLayout = () => <div></div>;
+
   return (
     <UserProvider>
       <Head>
@@ -74,12 +81,18 @@ const App = ({ Component, pageProps }: AppProps) => {
       </Head>
       <div id="website" className={isChrome ? "isChrome" : ""}>
         <NavBar />
+
+        <Routes {...props} />
+
+
         {privateRoutes.includes(router.pathname) ? (
           <PrivateRoute>
             <Component {...pageProps} />
           </PrivateRoute>
         ) : (
-          <Component {...pageProps} />
+          <RouteLayout>
+            <Component {...pageProps} />
+          </RouteLayout>
         )}
 
         <Chat />
